@@ -25,5 +25,7 @@ class ColorConstant {
   static const dialogboxgradientcolor3 = Color(0xff4335E5);
   static const dialogboxgradientcolor4 = Color(0xffDA336E);
   static const gradientContainerColor = Color(0xff8948EF);
+   static const dashboardGradientColor = Color(0xffDA336E);
+    static const dashboardGradientColor1 = Color(0xff4335E5);
 }
 

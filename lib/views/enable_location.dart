@@ -90,13 +90,22 @@ class _AddPhotoState extends State<EnableLocation> {
                       activeColor: ColorConstant.headingcolor,
                       trackColor: ColorConstant.headingcolor,
                       value: onTap,
-                      onChanged: (value) {
+                      onChanged: (value) async {
                         setState(() {
                           onTap = !onTap;
-                          if (value) {
-                            getAddress();
-                          }
                         });
+                        if (value) {
+                          try {
+                            await getCurrentLocation(); // Wait for getCurrentLocation to complete
+                            await getAddress();
+                          } catch (e) {
+                            print(e);
+                          }
+                        }
+                        //  if (value) {
+
+                        //    await getAddress();
+                        //   }
                       }),
                 ),
               ),
@@ -117,24 +126,25 @@ class _AddPhotoState extends State<EnableLocation> {
           height: DimensionConstants.d30.h,
         ),
         CommonWidgets.gradientContainer(
-          text: currentLocation ??
-              StringConstants.locationValue,
+          text: currentLocation ?? StringConstants.locationValue,
           imagePath: ImageConstants.locationIcon,
-          // ontap: () {
-          //   setState(() {
-          //     exactLoaction = getCurrentLocation() as Position?;
-          //   });
-          // }
         ),
         SizedBox(
           height: DimensionConstants.d40.h,
         ),
-        CommonWidgets.commonButton(StringConstants.continueText),
+        GestureDetector(
+            onTap: () {
+              if (currentLocation == null) {
+                CommonWidgets.showflushbar(
+                    context, StringConstants.enableLocationError);
+              }
+            },
+            child: CommonWidgets.commonButton(StringConstants.continueText)),
       ]),
     ));
   }
 
-  void getCurrentLocation() async {
+  getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -163,17 +173,25 @@ class _AddPhotoState extends State<EnableLocation> {
     }
 
     exactLoaction = await Geolocator.getCurrentPosition();
+    setState(() {});
   }
 
-  getAddress() async {
+  Future<void> getAddress() async {
     try {
-      List<Placemark> placeMarks = placemarkFromCoordinates(
-          exactLoaction!.latitude.toDouble(),
-          exactLoaction!.longitude.toDouble()) as List<Placemark>;
-      Placemark place = placeMarks[0];
-      setState(() {
-        currentLocation = "${place.country},${place.locality}";
-      });
+      if (exactLoaction != null) {
+        List<Placemark> placeMarks = await placemarkFromCoordinates(
+            exactLoaction!.latitude.toDouble(),
+            exactLoaction!.longitude.toDouble());
+        Placemark place = placeMarks[0];
+        setState(() {
+          currentLocation = "${place.locality},${place.country}";
+        });
+        setState(() {});
+      }
+      //  else {
+      //   CommonWidgets.showflushbar(
+      //       context, StringConstants.confirmPasswordError);
+      // }
     } catch (e) {
       print(e);
     }

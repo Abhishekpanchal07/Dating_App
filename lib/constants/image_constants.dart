@@ -25,4 +25,9 @@ static const addIcon =  "assets/images/add_icon.svg";
 static const crossIcon =  "assets/images/cross_icon.svg";
 static const dropDownIconFilterScreen =  "assets/images/dropdown_Icon_For_Filter_Option_Screen.svg";
 static const locationIcon =  "assets/images/location_icon.svg";
+static const bellIcon =  "assets/images/bell_icon.svg";
+static const dashboardIcon =  "assets/images/dashboard_icon.svg";
+static const dashboardMenuIcon =  "assets/images/dashboard_menu_icon.svg";
+static const chattingIcon =  "assets/images/chatting_icon.svg";
+static const accountIcon =  "assets/images/account_icon.svg";
 }

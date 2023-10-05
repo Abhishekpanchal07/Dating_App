@@ -4,6 +4,7 @@ import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/views/add_photo.dart';
 import 'package:demoapp/views/create_new_account.dart';
+import 'package:demoapp/views/dashboard.dart';
 import 'package:demoapp/views/enable_location.dart';
 import 'package:demoapp/views/filter_option.dart';
 import 'package:demoapp/views/interest_screen.dart';
@@ -43,6 +44,8 @@ class MyRoutes {
       return MaterialPageRoute(builder: (_)=>  const FilterOption());
       case RouteConstants.enableLocation:
       return MaterialPageRoute(builder: (_)=>  const EnableLocation());
+       case RouteConstants.dashboardScreen:
+      return MaterialPageRoute(builder: (_)=>  const DashboardScreen());
     }
     return MaterialPageRoute(builder: (_) => Scaffold(body: const Text("no page found").semiBold(ColorConstant.headingcolor, TextAlign.center, DimensionConstants.d10),));
   }

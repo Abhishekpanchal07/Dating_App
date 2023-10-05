@@ -132,5 +132,6 @@ class StringConstants {
   static const disableLocation = 'Location services are disabled';
   static const deniedLocation ='Location permissions are denied';
   static const permanentlyDeniedLocation ='Location permissions are permanently denied, we cannot request permissions.';
-
+  static const enableLocationError ='Please enable the location';
+  static const home ='Home';
 }

@@ -12,4 +12,5 @@ static const interestScreen = 'Interests';
 static const addPhotoScreen = 'AddPhoto';
 static const filterOptionScreen = 'FilterOption';
 static const enableLocation = 'EnableLocation';
+static const dashboardScreen = 'DashboardScreen';
 }
