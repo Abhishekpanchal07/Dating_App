@@ -30,4 +30,9 @@ static const dashboardIcon =  "assets/images/dashboard_icon.svg";
 static const dashboardMenuIcon =  "assets/images/dashboard_menu_icon.svg";
 static const chattingIcon =  "assets/images/chatting_icon.svg";
 static const accountIcon =  "assets/images/account_icon.svg";
+static const dashboardHomeIcon =  "assets/images/dashboard_home.svg";
+static const dashboardMenu1Icon =  "assets/images/dashboard_menu.svg";
+static const dashboardChattingIcon =  "assets/images/chatt_icon.svg";
+static const personAccountIcon =  "assets/images/person_account.svg";
+static const sendMessageScreenPic =  "assets/images/send_message_screen_pic.png";
 }

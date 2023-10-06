@@ -4,7 +4,7 @@ import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/views/add_photo.dart';
 import 'package:demoapp/views/create_new_account.dart';
-import 'package:demoapp/views/dashboard.dart';
+import 'package:demoapp/views/bottom_navigationbar.dart';
 import 'package:demoapp/views/enable_location.dart';
 import 'package:demoapp/views/filter_option.dart';
 import 'package:demoapp/views/interest_screen.dart';
@@ -12,6 +12,7 @@ import 'package:demoapp/views/find_your_best_match.dart';
 import 'package:demoapp/views/login_screen.dart';
 import 'package:demoapp/views/profile_details.dart';
 import 'package:demoapp/views/reset_password.dart';
+import 'package:demoapp/views/send_message.dart';
 import 'package:demoapp/views/sign_in_option_screen.dart';
 import 'package:demoapp/views/sign_in_screen.dart';
 import 'package:demoapp/views/splash_screen.dart';
@@ -44,8 +45,10 @@ class MyRoutes {
       return MaterialPageRoute(builder: (_)=>  const FilterOption());
       case RouteConstants.enableLocation:
       return MaterialPageRoute(builder: (_)=>  const EnableLocation());
-       case RouteConstants.dashboardScreen:
-      return MaterialPageRoute(builder: (_)=>  const DashboardScreen());
+       case RouteConstants.bottonNavigationScreen:
+      return MaterialPageRoute(builder: (_)=>  const BottomNavigationScreen());
+       case RouteConstants.sendMessageScreen:
+      return MaterialPageRoute(builder: (_)=>  const SendMessageScreen());
     }
     return MaterialPageRoute(builder: (_) => Scaffold(body: const Text("no page found").semiBold(ColorConstant.headingcolor, TextAlign.center, DimensionConstants.d10),));
   }

@@ -122,16 +122,24 @@ class StringConstants {
   static const chatting = "for Chatting Only";
   static const filterScreenErrorMessage = "Make new Friends field is required";
   static const filterScreenErrorMessage1 = "Want to Meet field is required";
-  static const filterScreenErrorMessage2 = "preferrence Age Range field is required";
-  static const filterScreenErrorMessage3 =  "preferred language field is required";
+  static const filterScreenErrorMessage2 =
+      "preferrence Age Range field is required";
+  static const filterScreenErrorMessage3 =
+      "preferred language field is required";
   static const locationScreenText = "Let the app location you to provide best";
   static const locationScreenText1 = "searching result around you";
   static const enableLocation = "Enable location";
   static const currentLoaction = "Current location";
   static const locationValue = "keywood place, florida, US..";
   static const disableLocation = 'Location services are disabled';
-  static const deniedLocation ='Location permissions are denied';
-  static const permanentlyDeniedLocation ='Location permissions are permanently denied, we cannot request permissions.';
-  static const enableLocationError ='Please enable the location';
-  static const home ='Home';
+  static const deniedLocation = 'Location permissions are denied';
+  static const permanentlyDeniedLocation =
+      'Location permissions are permanently denied, we cannot request permissions.';
+  static const enableLocationError = 'Please enable the location';
+  static const home = 'Home';
+  static const sendMessageScreenText = 'It\'s a match, Jake!';
+  static const sendMessageScreenText1 =
+      'Start a conversation now  with each other';
+  static const sendMessage = 'Send a Message';
+  static const keepSwiping = 'Keep Swiping';
 }
