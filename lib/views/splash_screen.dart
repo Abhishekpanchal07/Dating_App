@@ -1,6 +1,7 @@
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
+import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,8 +43,8 @@ class FirstScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text("Get ").semiBold(ColorConstant.bottongradientcolor1,TextAlign.center,DimensionConstants.d20.sp),
-        const Text("Started").semiBold(ColorConstant.bottongradientcolor2,TextAlign.center,DimensionConstants.d20.sp),
+        const Text(StringConstants.getText).semiBold(ColorConstant.bottongradientcolor1,TextAlign.center,DimensionConstants.d20.sp),
+        const Text(StringConstants.startedText).semiBold(ColorConstant.bottongradientcolor2,TextAlign.center,DimensionConstants.d20.sp),
        
         SizedBox(
           width: DimensionConstants.d4.w,

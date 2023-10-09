@@ -88,7 +88,7 @@ class CommonWidgets {
               end: Alignment.bottomCenter,
               colors: [
                 ColorConstant.buttongradientcolor1,
-                ColorConstant.buttongradientcolor2,
+                ColorConstant.bottongradientcolor2,
               ])),
       child: Container(
         width: DimensionConstants.d370.w,

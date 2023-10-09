@@ -10,12 +10,15 @@ import 'package:demoapp/views/filter_option.dart';
 import 'package:demoapp/views/interest_screen.dart';
 import 'package:demoapp/views/find_your_best_match.dart';
 import 'package:demoapp/views/login_screen.dart';
+import 'package:demoapp/views/matches.dart';
 import 'package:demoapp/views/profile_details.dart';
 import 'package:demoapp/views/reset_password.dart';
 import 'package:demoapp/views/send_message.dart';
 import 'package:demoapp/views/sign_in_option_screen.dart';
 import 'package:demoapp/views/sign_in_screen.dart';
+import 'package:demoapp/views/signin_with_name_screen.dart';
 import 'package:demoapp/views/splash_screen.dart';
+import 'package:demoapp/views/user_details.dart';
 import 'package:flutter/material.dart';
 
 class MyRoutes {
@@ -49,6 +52,12 @@ class MyRoutes {
       return MaterialPageRoute(builder: (_)=>  const BottomNavigationScreen());
        case RouteConstants.sendMessageScreen:
       return MaterialPageRoute(builder: (_)=>  const SendMessageScreen());
+      case RouteConstants.signInWithNameScreen:
+      return MaterialPageRoute(builder: (_)=>  SignInByName());
+      case RouteConstants.matchScreen:
+      return MaterialPageRoute(builder: (_)=>  const MatchScreen());
+      case RouteConstants.userDetailScreen:
+      return MaterialPageRoute(builder: (_)=>  const UserDetail());
     }
     return MaterialPageRoute(builder: (_) => Scaffold(body: const Text("no page found").semiBold(ColorConstant.headingcolor, TextAlign.center, DimensionConstants.d10),));
   }

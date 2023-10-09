@@ -4,6 +4,7 @@ import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/views/enable_location.dart';
 import 'package:demoapp/views/filter_option.dart';
 import 'package:demoapp/views/login_screen.dart';
+import 'package:demoapp/views/matches.dart';
 import 'package:demoapp/views/profile_details.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class _DashboardScreenState extends State<BottomNavigationScreen> {
   bool onClick = false;
   List<Widget> screeens = [
     const EnableLocation(),
-    const LoginScreen(),
+    const MatchScreen(),
     const ProfileDetails(),
     const FilterOption(),
   ];

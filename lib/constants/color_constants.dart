@@ -8,8 +8,9 @@ class ColorConstant {
   static const pink = Color(0xffFD397F);
   static const navyblue = Color(0xff2C1166);
   static const lightpink = Color(0xffF85183);
-   static const darkpink = Color(0xffEC356E);
+  static const darkpink = Color(0xffEC356E);
   static const grey = Color(0xff898A8D);
+  static const offwhite = Color(0xffE8E6EA);
   static const lightblack = Color(0xff000000);
   static const darkgrey = Color(0xff595959);
   static const bggradientcolor1 = Color(0xffEDFBFF);
@@ -29,5 +30,6 @@ class ColorConstant {
   static const dashboardGradientColor1 = Color(0xff4335E5);
   static const red = Color(0xffE94057);
   static const black = Color(0xff000000);
+  static const textfieldgradientColor = Color(0xff8948EF);
 }
 

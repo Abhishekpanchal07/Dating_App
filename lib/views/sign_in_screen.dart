@@ -1,6 +1,7 @@
 import 'package:demoapp/constants/Image_Constants.dart';
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
+import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
 import 'package:flutter/material.dart';
@@ -29,21 +30,21 @@ class SignInScreen extends StatelessWidget {
            SizedBox(
             height: DimensionConstants.d30.h,
            ),
-           const Text("lorem ipsum dolor sit amet, consectetur").regularText(ColorConstant.headingcolor, TextAlign.center, DimensionConstants.d16.sp),
-            const Text("adipiscing edit, sed do eiusmod tempor").regularText(ColorConstant.headingcolor, TextAlign.center, DimensionConstants.d16.sp),
-             const Text("incididunt ut labore").regularText(ColorConstant.headingcolor, TextAlign.center, DimensionConstants.d16.sp),
+           const Text(StringConstants.signInScreenDummyText).regularText(ColorConstant.headingcolor, TextAlign.center, DimensionConstants.d16.sp),
+            const Text(StringConstants.signInScreenDummyText1).regularText(ColorConstant.headingcolor, TextAlign.center, DimensionConstants.d16.sp),
+             const Text(StringConstants.signInScreenDummyText2).regularText(ColorConstant.headingcolor, TextAlign.center, DimensionConstants.d16.sp),
              SizedBox(
             height: DimensionConstants.d20.h,
            ),
-           CommonWidgets.gradientBorderButton("Create Account"),
+           CommonWidgets.gradientBorderButton(StringConstants.createNewAccount),
              SizedBox(
             height: DimensionConstants.d20.h,
            ),
-            CommonWidgets.gradientBorderButton("Sign In"),
+            CommonWidgets.gradientBorderButton(StringConstants.signInText),
              SizedBox(
             height: DimensionConstants.d20.h,
            ),
-           const Text("Trouble signing In ?").regularText(ColorConstant.headingcolor, TextAlign.center, DimensionConstants.d20.sp)
+           const Text(StringConstants.signInTroubleText).regularText(ColorConstant.headingcolor, TextAlign.center, DimensionConstants.d20.sp)
   
 
           ],

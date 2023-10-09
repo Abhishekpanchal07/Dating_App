@@ -35,4 +35,10 @@ static const dashboardMenu1Icon =  "assets/images/dashboard_menu.svg";
 static const dashboardChattingIcon =  "assets/images/chatt_icon.svg";
 static const personAccountIcon =  "assets/images/person_account.svg";
 static const sendMessageScreenPic =  "assets/images/send_message_screen_pic.png";
+static const searchIcon =  "assets/images/search_icon.svg";
+static const notificationIcon =  "assets/images/notification_icon.svg";
+static const matchScreenCrossIcon =  "assets/images/cross_icon_of_matchscreen.svg";
+static const backwardIcon =  "assets/images/backward_icon.svg";
+static const locationIconUserDetailScreen =  "assets/images/location_icon_userdetail_screen.svg";
+static const userDetailScreenGirlImage =  "assets/images/userdetail_screen_girl_image.png";
 }
