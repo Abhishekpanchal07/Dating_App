@@ -259,7 +259,7 @@ class CommonWidgets {
               ColorConstant.bottongradientcolor1,
               ColorConstant.bottongradientcolor2
             ]),
-        borderRadius: BorderRadius.circular(DimensionConstants.d10.r),
+        borderRadius: BorderRadius.circular(DimensionConstants.d12.r),
       ),
       child: Container(
         height: DimensionConstants.d59.h,
@@ -267,7 +267,7 @@ class CommonWidgets {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: ColorConstant.buttonbgcolor,
-          borderRadius: BorderRadius.circular(DimensionConstants.d10.r),
+          borderRadius: BorderRadius.circular(DimensionConstants.d12.r),
         ),
         child: Text(containerText).regularText(ColorConstant.headingcolor,
             TextAlign.center, DimensionConstants.d14.sp),

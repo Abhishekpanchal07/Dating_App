@@ -145,6 +145,14 @@ class StringConstants {
   static const atchText = "atch";
   static const esText = "es";
   static const todayText = "Today";
+  static const jesicaParker = "Jessica Parker,23";
+  static const aboutJesica = "My Name is Jessica Parker And I Enjoy meeting ";
+  static const aboutJesica1 = "new people and finding way to help them have ";
+  static const aboutJesica2 = "and uplifting experience. I enjoy reading... ";
+  static const readMore = "Read More ";
+  static const jessicaLoaction = "Chicago,IL United States ";
+  static const onekm = "1 km ";
+  static const interests = "Interests ";
   
 
 }

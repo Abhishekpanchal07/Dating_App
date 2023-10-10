@@ -5,6 +5,7 @@ import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
+import 'package:demoapp/widgets/bottom_sheet.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,7 +37,6 @@ class _InterestState extends State<InterestScreen> {
 
   @override
   void initState() {
-    
     super.initState();
     for (var i = 1; i <= containerText.length; i++) {
       selectInterest.add(false);
@@ -103,7 +103,16 @@ class _InterestState extends State<InterestScreen> {
                         setState(() {
                           selectInterest[index] = !selectInterest[index];
                           itemTapped = true;
+                         
                         });
+
+                         if (selectInterest[index]) {
+                            String selectedContainerText = containerText[index];
+                            Navigator.pushNamed(
+                                context, RouteConstants.showBottomSheetScreen,arguments: selectedContainerText
+                                
+                                 );
+                          }
                       },
                       child: selectInterest[index]
                           ? CommonWidgets.gradientGridViewContainer(
@@ -144,6 +153,7 @@ class _InterestState extends State<InterestScreen> {
                       Navigator.pushNamed(
                           context, RouteConstants.profileDetaisScreen);
                     }
+                    
                   });
                 },
                 child:

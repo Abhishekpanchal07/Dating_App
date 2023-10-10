@@ -19,46 +19,58 @@ import 'package:demoapp/views/sign_in_screen.dart';
 import 'package:demoapp/views/signin_with_name_screen.dart';
 import 'package:demoapp/views/splash_screen.dart';
 import 'package:demoapp/views/user_details.dart';
+import 'package:demoapp/widgets/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class MyRoutes {
   static Route<dynamic> ongenerateroute(RouteSettings settings) {
-    switch(settings.name){
+    final args = settings.arguments;
+    switch (settings.name) {
       case RouteConstants.splashPage:
-      return MaterialPageRoute(builder: (_)=> const FirstScreen() );
-       case RouteConstants.findYourMatchScreen:
-      return MaterialPageRoute(builder: (_)=> const FindYourBestMatchScreen());
-        case RouteConstants.signInScreen:
-      return MaterialPageRoute(builder: (_)=> const SignInScreen());
-       case RouteConstants.signInOptionScreen:
-      return MaterialPageRoute(builder: (_)=> const SignInOptionScreen());
-       case RouteConstants.loginScreen:
-      return MaterialPageRoute(builder: (_)=> const LoginScreen());
-       case RouteConstants.resetPasswordScreen:
-      return MaterialPageRoute(builder: (_)=> const ResetPasswordScreen());
+        return MaterialPageRoute(builder: (_) => const FirstScreen());
+      case RouteConstants.findYourMatchScreen:
+        return MaterialPageRoute(
+            builder: (_) => const FindYourBestMatchScreen());
+      case RouteConstants.signInScreen:
+        return MaterialPageRoute(builder: (_) => const SignInScreen());
+      case RouteConstants.signInOptionScreen:
+        return MaterialPageRoute(builder: (_) => const SignInOptionScreen());
+      case RouteConstants.loginScreen:
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case RouteConstants.resetPasswordScreen:
+        return MaterialPageRoute(builder: (_) => const ResetPasswordScreen());
       case RouteConstants.createNewAccountScreen:
-      return MaterialPageRoute(builder: (_)=> const CreateNewAccount());
+        return MaterialPageRoute(builder: (_) => const CreateNewAccount());
       case RouteConstants.profileDetaisScreen:
-      return MaterialPageRoute(builder: (_)=> const ProfileDetails());
+        return MaterialPageRoute(builder: (_) => const ProfileDetails());
       case RouteConstants.interestScreen:
-      return MaterialPageRoute(builder: (_)=>  const InterestScreen());
+        return MaterialPageRoute(builder: (_) => const InterestScreen());
       case RouteConstants.addPhotoScreen:
-      return MaterialPageRoute(builder: (_)=>  const AddPhoto());
+        return MaterialPageRoute(builder: (_) => const AddPhoto());
       case RouteConstants.filterOptionScreen:
-      return MaterialPageRoute(builder: (_)=>  const FilterOption());
+        return MaterialPageRoute(builder: (_) => const FilterOption());
       case RouteConstants.enableLocation:
-      return MaterialPageRoute(builder: (_)=>  const EnableLocation());
-       case RouteConstants.bottonNavigationScreen:
-      return MaterialPageRoute(builder: (_)=>  const BottomNavigationScreen());
-       case RouteConstants.sendMessageScreen:
-      return MaterialPageRoute(builder: (_)=>  const SendMessageScreen());
+        return MaterialPageRoute(builder: (_) => const EnableLocation());
+      case RouteConstants.bottonNavigationScreen:
+        return MaterialPageRoute(
+            builder: (_) => const BottomNavigationScreen());
+      case RouteConstants.sendMessageScreen:
+        return MaterialPageRoute(builder: (_) => const SendMessageScreen());
       case RouteConstants.signInWithNameScreen:
-      return MaterialPageRoute(builder: (_)=>  SignInByName());
+        return MaterialPageRoute(builder: (_) => SignInByName());
       case RouteConstants.matchScreen:
-      return MaterialPageRoute(builder: (_)=>  const MatchScreen());
+        return MaterialPageRoute(builder: (_) => const MatchScreen());
       case RouteConstants.userDetailScreen:
-      return MaterialPageRoute(builder: (_)=>  const UserDetail());
-    }
-    return MaterialPageRoute(builder: (_) => Scaffold(body: const Text("no page found").semiBold(ColorConstant.headingcolor, TextAlign.center, DimensionConstants.d10),));
+        return MaterialPageRoute(builder: (_) => const UserDetail());
+      case RouteConstants.showBottomSheetScreen:
+        return MaterialPageRoute(builder: (_) =>  ShowBottomSheet(conatinerChildTextValue: [args as String],));
+ }
+    return MaterialPageRoute(
+        builder: (_) => Scaffold(
+              body: const Text("no page found").semiBold(
+                  ColorConstant.headingcolor,
+                  TextAlign.center,
+                  DimensionConstants.d10),
+            ));
   }
 }

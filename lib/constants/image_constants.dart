@@ -41,4 +41,6 @@ static const matchScreenCrossIcon =  "assets/images/cross_icon_of_matchscreen.sv
 static const backwardIcon =  "assets/images/backward_icon.svg";
 static const locationIconUserDetailScreen =  "assets/images/location_icon_userdetail_screen.svg";
 static const userDetailScreenGirlImage =  "assets/images/userdetail_screen_girl_image.png";
+static const sendMessaageButton =  "assets/images/send_message_btn.svg";
+static const seenIcon =  "assets/images/seen_icon.svg";
 }

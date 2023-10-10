@@ -17,4 +17,5 @@ static const sendMessageScreen = 'SendMeassageScreen';
 static const signInWithNameScreen = 'SignInByName';
 static const matchScreen = 'MatchScreen';
 static const userDetailScreen = 'UserDetailScreen';
+static const showBottomSheetScreen = 'BottomSheet';
 }

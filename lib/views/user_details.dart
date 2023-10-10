@@ -29,10 +29,10 @@ class _UserDetailState extends State<UserDetail> {
               left: DimensionConstants.d20.w,
               child: const ImageView(path: ImageConstants.backwardIcon,)),
                Positioned(
-              top: DimensionConstants.d420.h,
+              top: DimensionConstants.d300.h,
              // child: const ShowBottomSheet(),
-               child: Container(
-                height: DimensionConstants.d499.h,
+               child: SizedBox(
+                height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child:const ShowBottomSheet() ,
                  ),
