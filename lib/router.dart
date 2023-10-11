@@ -11,6 +11,7 @@ import 'package:demoapp/views/interest_screen.dart';
 import 'package:demoapp/views/find_your_best_match.dart';
 import 'package:demoapp/views/login_screen.dart';
 import 'package:demoapp/views/matches.dart';
+import 'package:demoapp/views/message_screen.dart';
 import 'package:demoapp/views/profile_details.dart';
 import 'package:demoapp/views/reset_password.dart';
 import 'package:demoapp/views/send_message.dart';
@@ -24,7 +25,7 @@ import 'package:flutter/material.dart';
 
 class MyRoutes {
   static Route<dynamic> ongenerateroute(RouteSettings settings) {
-    final args = settings.arguments;
+    
     switch (settings.name) {
       case RouteConstants.splashPage:
         return MaterialPageRoute(builder: (_) => const FirstScreen());
@@ -61,9 +62,12 @@ class MyRoutes {
       case RouteConstants.matchScreen:
         return MaterialPageRoute(builder: (_) => const MatchScreen());
       case RouteConstants.userDetailScreen:
-        return MaterialPageRoute(builder: (_) => const UserDetail());
+      final  args   = settings.arguments as List? ;
+        return MaterialPageRoute(builder: (_) =>  UserDetail(passedArguments: args,));
       case RouteConstants.showBottomSheetScreen:
-        return MaterialPageRoute(builder: (_) =>  ShowBottomSheet(conatinerChildTextValue: [args as String],));
+        return MaterialPageRoute(builder: (_) =>  const ShowBottomSheet(conatinerChildTextValue: [],));
+          case RouteConstants.messageScreen:
+        return MaterialPageRoute(builder: (_) =>  const MessageScreen());
  }
     return MaterialPageRoute(
         builder: (_) => Scaffold(

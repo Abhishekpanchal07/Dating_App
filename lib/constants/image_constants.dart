@@ -43,4 +43,9 @@ static const locationIconUserDetailScreen =  "assets/images/location_icon_userde
 static const userDetailScreenGirlImage =  "assets/images/userdetail_screen_girl_image.png";
 static const sendMessaageButton =  "assets/images/send_message_btn.svg";
 static const seenIcon =  "assets/images/seen_icon.svg";
+static const addImageIcon =  "assets/images/add_image_icon.svg";
+static const galleryIconMessageScreen =  "assets/images/galleryicon_message_screen.svg";
+static const cameraIconMessageScreen =  "assets/images/cameraicon_message_screen.svg";
+static const mikeIconMessageScreen =  "assets/images/mike_icon.svg";
+static const sendMessageIconMessageScreen =  "assets/images/sendmessage_icon_message_screen.svg";
 }

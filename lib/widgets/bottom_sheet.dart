@@ -3,14 +3,13 @@ import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
-import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShowBottomSheet extends StatefulWidget {
-  final List<String>? conatinerChildTextValue;
-  const ShowBottomSheet({Key? key, this.conatinerChildTextValue}) : super(key: key);
+  final List? conatinerChildTextValue;
+  const ShowBottomSheet({Key? key, required this.conatinerChildTextValue}) : super(key: key);
 
   @override
   State<ShowBottomSheet> createState() => _ShowBottomSheetState();
@@ -142,7 +141,7 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                             ColorConstant.black,
                             TextAlign.center,
                             DimensionConstants.d16.sp),
-                        const Text(StringConstants.aboutJesica2).regularText(
+                        const Text(StringConstants.aboutJesica2,maxLines: 2,).regularText(
                             ColorConstant.black,
                             TextAlign.center,
                             DimensionConstants.d16.sp),
@@ -173,8 +172,8 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                                 childAspectRatio: DimensionConstants.d4,
                               ),
                               itemBuilder: (context, index) {
-                                return gradientcontainer(
-                                    containerchildText: widget.conatinerChildTextValue![index]);
+                                return widget.conatinerChildTextValue!.isNotEmpty ? gradientcontainer(
+                                    containerchildText: widget.conatinerChildTextValue![index]) : const SizedBox() ;
                               }),
                         )
                       ],
@@ -201,7 +200,7 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
             ]),
       ),
       child: Container(
-        height: DimensionConstants.d32.h,
+        height: DimensionConstants.d29.h,
         width: DimensionConstants.d118.w,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(DimensionConstants.d5),

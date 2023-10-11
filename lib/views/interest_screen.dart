@@ -5,7 +5,6 @@ import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
-import 'package:demoapp/widgets/bottom_sheet.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,6 +33,7 @@ class _InterestState extends State<InterestScreen> {
   ];
   List<bool> selectInterest = [];
   bool itemTapped = false;
+  List<String>? passArguments = [];
 
   @override
   void initState() {
@@ -102,17 +102,11 @@ class _InterestState extends State<InterestScreen> {
                       onTap: () {
                         setState(() {
                           selectInterest[index] = !selectInterest[index];
-                          itemTapped = true;
-                         
+                          String selectedContainerText = containerText[index];
+                          selectInterest[index]
+                              ? passArguments!.add(selectedContainerText)
+                              : passArguments!.remove(selectedContainerText);
                         });
-
-                         if (selectInterest[index]) {
-                            String selectedContainerText = containerText[index];
-                            Navigator.pushNamed(
-                                context, RouteConstants.showBottomSheetScreen,arguments: selectedContainerText
-                                
-                                 );
-                          }
                       },
                       child: selectInterest[index]
                           ? CommonWidgets.gradientGridViewContainer(
@@ -146,14 +140,15 @@ class _InterestState extends State<InterestScreen> {
             GestureDetector(
                 onTap: () {
                   setState(() {
-                    if (itemTapped == false) {
-                      CommonWidgets.showflushbar(
-                          context, StringConstants.unTapInterestError);
+                    if (passArguments!.isEmpty) {
+                      // CommonWidgets.showflushbar(
+                      //     context, StringConstants.unTapInterestError);
+                           Navigator.pushNamed(
+                          context, RouteConstants.userDetailScreen,arguments:[] );
                     } else {
                       Navigator.pushNamed(
-                          context, RouteConstants.profileDetaisScreen);
+                          context, RouteConstants.userDetailScreen,arguments: passArguments);
                     }
-                    
                   });
                 },
                 child:

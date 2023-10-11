@@ -153,6 +153,12 @@ class StringConstants {
   static const jessicaLoaction = "Chicago,IL United States ";
   static const onekm = "1 km ";
   static const interests = "Interests ";
+  static const grace = "Grace";
+  static const online = "Online";
+  static const graceAge = "Grace , 23";
+  static const friendsOnDating = "you're Friends on Dating ";
+  static const liveIn = "Live in CA, USA ";
+  static const yourMessage = "Your message";
   
 
 }

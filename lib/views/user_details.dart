@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserDetail extends StatefulWidget {
-  const UserDetail({super.key});
+  final List? passedArguments;
+   const UserDetail({Key ? key, 
+ required this.passedArguments}):super(key: key);
 
   @override
   State<UserDetail> createState() => _UserDetailState();
@@ -17,32 +19,35 @@ class _UserDetailState extends State<UserDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
-        height:MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height,
         child: Stack(
-          children:  [
-            const ImageView(path: ImageConstants.userDetailScreenGirlImage,),
+          children: [
+            const ImageView(
+              path: ImageConstants.userDetailScreenGirlImage,
+            ),
             SizedBox(
               height: DimensionConstants.d43.h,
             ),
             Positioned(
-              top: DimensionConstants.d52.h,
-              left: DimensionConstants.d20.w,
-              child: const ImageView(path: ImageConstants.backwardIcon,)),
-               Positioned(
+                top: DimensionConstants.d52.h,
+                left: DimensionConstants.d20.w,
+                child: const ImageView(
+                  path: ImageConstants.backwardIcon,
+                )),
+            Positioned(
               top: DimensionConstants.d300.h,
-             // child: const ShowBottomSheet(),
-               child: SizedBox(
+              child: SizedBox(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                child:const ShowBottomSheet() ,
-                 ),
-               //const ShowBottomSheet(),
-               ),
-             
+                child:  ShowBottomSheet(
+                  conatinerChildTextValue:  widget.passedArguments ,
+                ),
+              ),
+              
+            ),
           ],
         ),
       ),
     );
   }
- 
 }
