@@ -7,6 +7,7 @@ import 'package:demoapp/views/create_new_account.dart';
 import 'package:demoapp/views/bottom_navigationbar.dart';
 import 'package:demoapp/views/enable_location.dart';
 import 'package:demoapp/views/filter_option.dart';
+import 'package:demoapp/views/inbox_screen.dart';
 import 'package:demoapp/views/interest_screen.dart';
 import 'package:demoapp/views/find_your_best_match.dart';
 import 'package:demoapp/views/login_screen.dart';
@@ -63,11 +64,13 @@ class MyRoutes {
         return MaterialPageRoute(builder: (_) => const MatchScreen());
       case RouteConstants.userDetailScreen:
       final  args   = settings.arguments as List? ;
-        return MaterialPageRoute(builder: (_) =>  UserDetail(passedArguments: args,));
+        return MaterialPageRoute(builder: (_) =>  UserDetail(passedArguments: args ?? [],));
       case RouteConstants.showBottomSheetScreen:
         return MaterialPageRoute(builder: (_) =>  const ShowBottomSheet(conatinerChildTextValue: [],));
           case RouteConstants.messageScreen:
         return MaterialPageRoute(builder: (_) =>  const MessageScreen());
+         case RouteConstants.inboxScreen:
+        return MaterialPageRoute(builder: (_) =>  const InboxScreen());
  }
     return MaterialPageRoute(
         builder: (_) => Scaffold(

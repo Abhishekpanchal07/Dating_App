@@ -315,4 +315,52 @@ class CommonWidgets {
       Navigator.pushNamed(context, RouteConstants.findYourMatchScreen);
     }
   }
+  // user chat card 
+  static Widget userchatCard({String? imagepath,String? username,String? userMessage}) {
+    return Row(
+      children: [
+        Container(
+          height: DimensionConstants.d57.h,
+          width: DimensionConstants.d57.w,
+          decoration: const BoxDecoration(shape: BoxShape.circle),
+          child: ImageView(
+             height: DimensionConstants.d57.h,
+          width: DimensionConstants.d57.w,
+            circleCrop: true,
+            fit: BoxFit.cover,
+            path: imagepath,
+          ),
+        ),
+        SizedBox(
+          width: DimensionConstants.d15.w,
+        ),
+        Column(
+          children: [
+            Text(username!).regularText(ColorConstant.black, TextAlign.center, DimensionConstants.d19.sp),
+              Text(userMessage!).regularText(ColorConstant.black.withOpacity(0.4), TextAlign.center, DimensionConstants.d19.sp),
+          ],
+        ),
+        SizedBox(
+          width: DimensionConstants.d240.w,
+        ),
+        Container(
+          height: DimensionConstants.d24.h,
+          width: DimensionConstants.d24.w,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+              ColorConstant.dashboardGradientColor1,
+              ColorConstant.inboxScreenGradientColor
+            ])
+          ),
+          child: Center(
+            child: const Text("1").regularText(ColorConstant.textcolor, TextAlign.center, DimensionConstants.d13.sp),
+          )
+        )
+      ],
+    );
+  }
 }

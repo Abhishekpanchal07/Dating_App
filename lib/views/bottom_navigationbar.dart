@@ -3,7 +3,6 @@ import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/views/enable_location.dart';
 import 'package:demoapp/views/filter_option.dart';
-import 'package:demoapp/views/login_screen.dart';
 import 'package:demoapp/views/matches.dart';
 import 'package:demoapp/views/profile_details.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';

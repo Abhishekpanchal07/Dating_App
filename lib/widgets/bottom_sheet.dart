@@ -1,6 +1,7 @@
 import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
@@ -9,13 +10,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShowBottomSheet extends StatefulWidget {
   final List? conatinerChildTextValue;
-  const ShowBottomSheet({Key? key, required this.conatinerChildTextValue}) : super(key: key);
+  const ShowBottomSheet({Key? key, required this.conatinerChildTextValue})
+      : super(key: key);
 
   @override
   State<ShowBottomSheet> createState() => _ShowBottomSheetState();
 }
 
 class _ShowBottomSheetState extends State<ShowBottomSheet> {
+  bool readMore = false;
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -66,8 +69,11 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                                     DimensionConstants.d14.sp),
                               ],
                             ),
-                            const ImageView(
-                              path: ImageConstants.sendMessaageButton,
+                            GestureDetector(
+                              onTap: () => Navigator.pushNamed(context, RouteConstants.messageScreen),
+                              child: const ImageView(
+                                path: ImageConstants.sendMessaageButton,
+                              ),
                             )
                           ],
                         ),
@@ -133,22 +139,19 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                         SizedBox(
                           height: DimensionConstants.d5.h,
                         ),
-                        const Text(StringConstants.aboutJesica).regularText(
-                            ColorConstant.black,
-                            TextAlign.center,
-                            DimensionConstants.d16.sp),
-                        const Text(StringConstants.aboutJesica1).regularText(
-                            ColorConstant.black,
-                            TextAlign.center,
-                            DimensionConstants.d16.sp),
-                        const Text(StringConstants.aboutJesica2,maxLines: 2,).regularText(
-                            ColorConstant.black,
-                            TextAlign.center,
-                            DimensionConstants.d16.sp),
-                        const Text(StringConstants.readMore).bold(
-                            ColorConstant.red,
-                            TextAlign.center,
-                            DimensionConstants.d14.sp),
+                        
+                          const Text(StringConstants.jessicaDescription,).regularText(ColorConstant.black, TextAlign.start, DimensionConstants.d14.sp,maxLines:readMore? 6 : 2 ),
+                          GestureDetector(
+                            onTap: (){
+                            setState(() {
+                              readMore = !readMore;
+                            });
+                            },
+                            child:  const Text(StringConstants.readMore).bold(
+                              ColorConstant.red,
+                              TextAlign.center,
+                              DimensionConstants.d14.sp),
+                              ),
                         SizedBox(
                           height: DimensionConstants.d30.h,
                         ),
@@ -163,17 +166,21 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                           height: DimensionConstants.d200.h,
                           width: MediaQuery.of(context).size.width,
                           child: GridView.builder(
-                            itemCount: widget.conatinerChildTextValue!.length,
+                              itemCount: widget.conatinerChildTextValue!.length,
                               gridDelegate:
-                                   SliverGridDelegateWithFixedCrossAxisCount(
+                                  SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
                                 crossAxisSpacing: DimensionConstants.d7.w,
                                 mainAxisSpacing: DimensionConstants.d10.h,
                                 childAspectRatio: DimensionConstants.d4,
                               ),
                               itemBuilder: (context, index) {
-                                return widget.conatinerChildTextValue!.isNotEmpty ? gradientcontainer(
-                                    containerchildText: widget.conatinerChildTextValue![index]) : const SizedBox() ;
+                                return widget
+                                        .conatinerChildTextValue!.isNotEmpty
+                                    ? gradientcontainer(
+                                        containerchildText: widget
+                                            .conatinerChildTextValue![index])
+                                    : const SizedBox();
                               }),
                         )
                       ],

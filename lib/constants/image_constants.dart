@@ -48,4 +48,6 @@ static const galleryIconMessageScreen =  "assets/images/galleryicon_message_scre
 static const cameraIconMessageScreen =  "assets/images/cameraicon_message_screen.svg";
 static const mikeIconMessageScreen =  "assets/images/mike_icon.svg";
 static const sendMessageIconMessageScreen =  "assets/images/sendmessage_icon_message_screen.svg";
+static const notificationIconInboxScreen =  "assets/images/notification_icon_inbox_screen.svg";
+static const addIconInboxScreen =  "assets/images/add_icon_inbox_screen.svg";
 }

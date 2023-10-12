@@ -1,6 +1,7 @@
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/modals/matchscreen_images.dart';
@@ -17,32 +18,48 @@ class MatchScreen extends StatefulWidget {
 
 class _MatchScreenState extends State<MatchScreen> {
   List<MatchScreenImages> imageData = [
-    MatchScreenImages(name: "leilani,",
-    imageUrl:"https://images.pexels.com/photos/2248516/pexels-photo-2248516.jpeg?auto=compress&cs=tinysrgb&w=600",
-    age: 19 ),
-    MatchScreenImages(name: "leilani,",
-    imageUrl:"https://images.pexels.com/photos/3687770/pexels-photo-3687770.jpeg?auto=compress&cs=tinysrgb&w=600",
-    age: 19 ),
-     MatchScreenImages(name: "leilani,",
-    imageUrl:"https://images.pexels.com/photos/2248516/pexels-photo-2248516.jpeg?auto=compress&cs=tinysrgb&w=600",
-    age: 19 ),
-    MatchScreenImages(name: "leilani,",
-    imageUrl:"https://images.pexels.com/photos/3687770/pexels-photo-3687770.jpeg?auto=compress&cs=tinysrgb&w=600",
-    age: 19 ),
-     MatchScreenImages(name: "leilani,",
-    imageUrl:"https://images.pexels.com/photos/2248516/pexels-photo-2248516.jpeg?auto=compress&cs=tinysrgb&w=600",
-    age: 19 ),
-    MatchScreenImages(name: "leilani,",
-    imageUrl:"https://images.pexels.com/photos/3687770/pexels-photo-3687770.jpeg?auto=compress&cs=tinysrgb&w=600",
-    age: 19 ),
-     MatchScreenImages(name: "leilani,",
-    imageUrl:"https://images.pexels.com/photos/2248516/pexels-photo-2248516.jpeg?auto=compress&cs=tinysrgb&w=600",
-    age: 19 ),
-    MatchScreenImages(name: "leilani,",
-    imageUrl:"https://images.pexels.com/photos/3687770/pexels-photo-3687770.jpeg?auto=compress&cs=tinysrgb&w=600",
-    age: 19 ),
+    MatchScreenImages(
+        name: StringConstants.lelani,
+        imageUrl:
+            StringConstants.imageurlInboxScreen,
+        age: StringConstants.age as int?),
+    MatchScreenImages(
+        name: StringConstants.lelani,
+        imageUrl:
+            StringConstants.imageurlInboxScreen,
+        age: StringConstants.age as int?),
+    MatchScreenImages(
+        name: StringConstants.lelani,
+        imageUrl:
+            StringConstants.imageurlInboxScreen,
+        age: StringConstants.age as int?),
+    MatchScreenImages(
+        name: StringConstants.lelani,
+        imageUrl:
+            StringConstants.imageurlInboxScreen,
+        age: StringConstants.age as int?),
+    MatchScreenImages(
+        name: StringConstants.lelani,
+        imageUrl:
+            StringConstants.imageurlInboxScreen,
+        age: StringConstants.age as int?),
+    MatchScreenImages(
+        name: StringConstants.lelani,
+        imageUrl:
+            StringConstants.imageurlInboxScreen,
+        age: StringConstants.age as int?),
+    MatchScreenImages(
+        name: StringConstants.lelani,
+        imageUrl:
+            StringConstants.imageurlInboxScreen,
+        age: StringConstants.age as int?),
+    MatchScreenImages(
+        name: StringConstants.lelani,
+        imageUrl:
+            StringConstants.imageurlInboxScreen,
+        age: StringConstants.age as int?),
   ];
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,8 +141,16 @@ class _MatchScreenState extends State<MatchScreen> {
                     crossAxisSpacing: DimensionConstants.d30.w,
                   ),
                   itemBuilder: (context, index) {
-                    return imageContainer(
-                     imageurl: imageData[index].imageUrl,name: imageData[index].name,age: imageData[index].age   );
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, RouteConstants.userDetailScreen);
+                      },
+                      child: imageContainer(
+                          imageurl: imageData[index].imageUrl,
+                          name: imageData[index].name,
+                          age: imageData[index].age),
+                    );
                   }),
             ),
           ],
@@ -147,8 +172,8 @@ class _MatchScreenState extends State<MatchScreen> {
           ClipRRect(
               borderRadius: BorderRadius.circular(DimensionConstants.d15),
               child: ImageView(
-                 height: DimensionConstants.d174.h,
-                 width: DimensionConstants.d152.w,
+                height: DimensionConstants.d174.h,
+                width: DimensionConstants.d152.w,
                 path: imageurl,
                 fit: BoxFit.cover,
               )),

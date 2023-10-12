@@ -8,12 +8,15 @@ class StringConstants {
   static const signInText = "Sign In";
   static const forgetPasswordText = "Forget Password";
   static const unFillPasswordText = "password field is required";
-  static const passwordErrorText = "The password must be contain special symbol,numberor letters";
+  static const passwordErrorText =
+      "The password must be contain special symbol,numberor letters";
   static const unFillEmailText = "Email field is required";
   static const emailErrorText = "Invalid Email";
   static const emailVerificationText = "^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-.]+[a-z]";
-  static const passwordVerificationText = r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\w)";
-  static const passwordLengthErrorText = "password should  be atleast eight characters ";
+  static const passwordVerificationText =
+      r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\w)";
+  static const passwordLengthErrorText =
+      "password should  be atleast eight characters ";
   static const dummyText = "lorem ipsum dolor sit amet, consectetur";
   static const dummyText1 = "adipiscing edit, sed do eiusmod tempor";
   static const dummyText2 = "incididunt ut labore";
@@ -26,7 +29,8 @@ class StringConstants {
   static const continueText = "Continue";
   static const createNewAccount = 'create Account';
   static const confirmPassword = 'confirm password';
-  static const confirmPasswordError = 'confirm password and Entered password does not match.';
+  static const confirmPasswordError =
+      'confirm password and Entered password does not match.';
   static const unFillConfirmPassword = 'Confirm Password Field is Required';
   static const skipText = 'Skip';
   static const profileDetails = 'Profile Details';
@@ -91,7 +95,8 @@ class StringConstants {
   static const dummyAddPhotosText2 = "printing and typesetting industry ";
   static const uploadImageError = " please upload a image";
   static const filterOption = " Filter Option";
-  static const filterOptionScreenText = "Manage and set your preferences to find the ";
+  static const filterOptionScreenText =
+      "Manage and set your preferences to find the ";
   static const filterOptionScreenText1 = " best match for you, keep enjoying! ";
   static const hereto = "Here To ";
   static const makeNewFriends = "Make New Friends ";
@@ -117,8 +122,10 @@ class StringConstants {
   static const chatting = "for Chatting Only";
   static const filterScreenErrorMessage = "Make new Friends field is required";
   static const filterScreenErrorMessage1 = "Want to Meet field is required";
-  static const filterScreenErrorMessage2 = "preferrence Age Range field is required";
-  static const filterScreenErrorMessage3 =  "preferred language field is required";
+  static const filterScreenErrorMessage2 =
+      "preferrence Age Range field is required";
+  static const filterScreenErrorMessage3 =
+      "preferred language field is required";
   static const locationScreenText = "Let the app location you to provide best";
   static const locationScreenText1 = "searching result around you";
   static const enableLocation = "Enable location";
@@ -126,18 +133,22 @@ class StringConstants {
   static const locationValue = "keywood place, florida, US..";
   static const disableLocation = 'Location services are disabled';
   static const deniedLocation = 'Location permissions are denied';
-  static const permanentlyDeniedLocation = 'Location permissions are permanently denied, we cannot request permissions.';
+  static const permanentlyDeniedLocation =
+      'Location permissions are permanently denied, we cannot request permissions.';
   static const enableLocationError = 'Please enable the location';
   static const home = 'Home';
   static const sendMessageScreenText = 'It\'s a match, Jake!';
-  static const sendMessageScreenText1 = 'Start a conversation now  with each other';
+  static const sendMessageScreenText1 =
+      'Start a conversation now  with each other';
   static const sendMessage = 'Send a Message';
   static const keepSwiping = 'Keep Swiping';
   static const getText = 'Get';
   static const startedText = 'Started';
   static const startdatingText = 'Start Dating';
-  static const signInScreenDummyText = 'lorem ipsum dolor sit amet, consectetur';
-  static const signInScreenDummyText1 = 'adipiscing edit, sed do eiusmod tempor';
+  static const signInScreenDummyText =
+      'lorem ipsum dolor sit amet, consectetur';
+  static const signInScreenDummyText1 =
+      'adipiscing edit, sed do eiusmod tempor';
   static const signInScreenDummyText2 = 'incididunt ut labore';
   static const signInScreenTroubleSignInText = 'Trouble signing In ?';
   static const whatsyourNameText = " What's your Name?";
@@ -159,6 +170,12 @@ class StringConstants {
   static const friendsOnDating = "you're Friends on Dating ";
   static const liveIn = "Live in CA, USA ";
   static const yourMessage = "Your message";
-  
+  static const jessicaDescription ="My Name is Jessica Parker And I Enjoy meeting new people and finding way to help them have and uplifting experience. I enjoy reading...";
+  static const story = "Story";
+  static const imageurlInboxScreen = "https://images.pexels.com/photos/2248516/pexels-photo-2248516.jpeg?auto=compress&cs=tinysrgb&w=600";
+  static const lelani = "lelani";
+  static const age= "19";
+  static const message= "Messages";
+  static const hello= "Hello";
 
 }
