@@ -32,5 +32,6 @@ class ColorConstant {
   static const black = Color(0xff000000);
   static const textfieldgradientColor = Color(0xff8948EF);
   static const inboxScreenGradientColor = Color(0xffF65E7E);
+  static const searchUserScreenContainerColor = Color(0xffF3F3F3);
 }
 

@@ -334,32 +334,39 @@ class CommonWidgets {
         SizedBox(
           width: DimensionConstants.d15.w,
         ),
-        Column(
-          children: [
-            Text(username!).regularText(ColorConstant.black, TextAlign.center, DimensionConstants.d19.sp),
-              Text(userMessage!).regularText(ColorConstant.black.withOpacity(0.4), TextAlign.center, DimensionConstants.d19.sp),
-          ],
-        ),
-        SizedBox(
-          width: DimensionConstants.d240.w,
-        ),
-        Container(
-          height: DimensionConstants.d24.h,
-          width: DimensionConstants.d24.w,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-              ColorConstant.dashboardGradientColor1,
-              ColorConstant.inboxScreenGradientColor
-            ])
+       Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(username!).regularText(ColorConstant.black, TextAlign.center,
+                      DimensionConstants.d19.sp),
+                  Text(userMessage!).regularText(ColorConstant.black.withOpacity(0.4),
+                      TextAlign.center, DimensionConstants.d19.sp),
+                ],
+              ),
+        
+               Container(
+              height: DimensionConstants.d24.h,
+              width: DimensionConstants.d24.w,
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        ColorConstant.dashboardGradientColor1,
+                        ColorConstant.inboxScreenGradientColor
+                      ])),
+              child: Center(
+                child: const Text("1").regularText(ColorConstant.textcolor,
+                    TextAlign.center, DimensionConstants.d13.sp),
+              ))
+            ],
           ),
-          child: Center(
-            child: const Text("1").regularText(ColorConstant.textcolor, TextAlign.center, DimensionConstants.d13.sp),
-          )
-        )
+        ),
       ],
     );
   }

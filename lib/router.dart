@@ -2,6 +2,7 @@ import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
+import 'package:demoapp/modals/inbox_screen_user_details_list.dart';
 import 'package:demoapp/views/add_photo.dart';
 import 'package:demoapp/views/create_new_account.dart';
 import 'package:demoapp/views/bottom_navigationbar.dart';
@@ -15,6 +16,7 @@ import 'package:demoapp/views/matches.dart';
 import 'package:demoapp/views/message_screen.dart';
 import 'package:demoapp/views/profile_details.dart';
 import 'package:demoapp/views/reset_password.dart';
+import 'package:demoapp/views/searched_user_profile_screen.dart';
 import 'package:demoapp/views/send_message.dart';
 import 'package:demoapp/views/sign_in_option_screen.dart';
 import 'package:demoapp/views/sign_in_screen.dart';
@@ -71,6 +73,9 @@ class MyRoutes {
         return MaterialPageRoute(builder: (_) =>  const MessageScreen());
          case RouteConstants.inboxScreen:
         return MaterialPageRoute(builder: (_) =>  const InboxScreen());
+         case RouteConstants.serachedUserProfileScreen:
+         final  args   = settings.arguments as SearchedUserProfileScreen ;
+        return MaterialPageRoute(builder: (_) =>   SearchedUserProfileScreen(userName: args.userName,userImagePath: args.userImagePath,));
  }
     return MaterialPageRoute(
         builder: (_) => Scaffold(

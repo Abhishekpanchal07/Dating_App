@@ -20,4 +20,5 @@ static const userDetailScreen = 'UserDetailScreen';
 static const showBottomSheetScreen = 'BottomSheet';
 static const messageScreen = 'MessageScreen';
 static const inboxScreen = 'InboxScreen';
+static const serachedUserProfileScreen = 'serachedUserProfileScreen';
 }

@@ -24,47 +24,47 @@ class _InboxScreenState extends State<InboxScreen> {
         userMessage: StringConstants.hello),
     UserImageAndName(
         imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
-        name: StringConstants.lelani,
+        name: StringConstants.mona,
         userMessage: StringConstants.hello),
     UserImageAndName(
         imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
-        name: StringConstants.lelani,
+        name: StringConstants.lily,
         userMessage: StringConstants.hello),
     UserImageAndName(
         imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
-        name: StringConstants.lelani,
+        name: StringConstants.reshma,
         userMessage: StringConstants.hello),
     UserImageAndName(
         imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
-        name: StringConstants.lelani,
+        name: StringConstants.kiran,
         userMessage: StringConstants.hello),
     UserImageAndName(
         imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
-        name: StringConstants.lelani,
+        name: StringConstants.pooja,
         userMessage: StringConstants.hello),
     UserImageAndName(
         imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
-        name: StringConstants.lelani,
+        name: StringConstants.shreya,
         userMessage: StringConstants.hello),
     UserImageAndName(
         imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
-        name: StringConstants.lelani,
+        name: StringConstants.kajal,
         userMessage: StringConstants.hello),
     UserImageAndName(
         imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
-        name: StringConstants.lelani,
+        name: StringConstants.roma,
         userMessage: StringConstants.hello),
     UserImageAndName(
         imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
-        name: StringConstants.lelani,
+        name: StringConstants.lily,
         userMessage: StringConstants.hello),
     UserImageAndName(
         imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
-        name: StringConstants.lelani,
+        name: StringConstants.pooja,
         userMessage: StringConstants.hello),
     UserImageAndName(
         imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
-        name: StringConstants.lelani,
+        name: StringConstants.reshma,
         userMessage: StringConstants.hello),
   ];
   @override
@@ -231,33 +231,56 @@ class _InboxScreenState extends State<InboxScreen> {
         SizedBox(
           width: DimensionConstants.d15.w,
         ),
-        Column(
-          children: [
-            Text(username!).regularText(ColorConstant.black, TextAlign.center,
-                DimensionConstants.d19.sp),
-            Text(userMessage!).regularText(ColorConstant.black.withOpacity(0.4),
-                TextAlign.center, DimensionConstants.d19.sp),
-          ],
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(username!).regularText(ColorConstant.black, TextAlign.center,
+                      DimensionConstants.d19.sp),
+                  Text(userMessage!).regularText(ColorConstant.black.withOpacity(0.4),
+                      TextAlign.center, DimensionConstants.d19.sp),
+                ],
+              ),
+        
+               Container(
+              height: DimensionConstants.d24.h,
+              width: DimensionConstants.d24.w,
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        ColorConstant.dashboardGradientColor1,
+                        ColorConstant.inboxScreenGradientColor
+                      ])),
+              child: Center(
+                child: const Text("1").regularText(ColorConstant.textcolor,
+                    TextAlign.center, DimensionConstants.d13.sp),
+              ))
+            ],
+          ),
         ),
-        SizedBox(
-          width: DimensionConstants.d240.w,
-        ),
-        Container(
-            height: DimensionConstants.d24.h,
-            width: DimensionConstants.d24.w,
-            decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      ColorConstant.dashboardGradientColor1,
-                      ColorConstant.inboxScreenGradientColor
-                    ])),
-            child: Center(
-              child: const Text("1").regularText(ColorConstant.textcolor,
-                  TextAlign.center, DimensionConstants.d13.sp),
-            ))
+       
+        // Container(
+        //     height: DimensionConstants.d24.h,
+        //     width: DimensionConstants.d24.w,
+        //     decoration: const BoxDecoration(
+        //         shape: BoxShape.circle,
+        //         gradient: LinearGradient(
+        //             begin: Alignment.topCenter,
+        //             end: Alignment.bottomCenter,
+        //             colors: [
+        //               ColorConstant.dashboardGradientColor1,
+        //               ColorConstant.inboxScreenGradientColor
+        //             ])),
+        //     child: Center(
+        //       child: const Text("1").regularText(ColorConstant.textcolor,
+        //           TextAlign.center, DimensionConstants.d13.sp),
+        //     ))
       ],
     );
   }
