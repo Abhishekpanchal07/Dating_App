@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
@@ -99,7 +101,7 @@ class _AddPhotoState extends State<EnableLocation> {
                             await getCurrentLocation(); // Wait for getCurrentLocation to complete
                             await getAddress();
                           } catch (e) {
-                            print(e);
+                            log(e.toString());
                           }
                         }
                         //  if (value) {
@@ -193,7 +195,7 @@ class _AddPhotoState extends State<EnableLocation> {
       //       context, StringConstants.confirmPasswordError);
       // }
     } catch (e) {
-      print(e);
+      log(e.toString());
     }
   }
 }

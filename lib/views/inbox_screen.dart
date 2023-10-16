@@ -1,10 +1,12 @@
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/search_user.dart';
 import 'package:demoapp/modals/inbox_screen_user_details_list.dart';
+import 'package:demoapp/views/one_to_one_chatscreen.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -86,7 +88,8 @@ class _InboxScreenState extends State<InboxScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      showSearch(context: context, delegate: SearchUser(userDetail));
+                      showSearch(
+                          context: context, delegate: SearchUser(userDetail));
                     },
                     child: const ImageView(
                       path: ImageConstants.searchIcon,
@@ -147,10 +150,16 @@ class _InboxScreenState extends State<InboxScreen> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: DimensionConstants.d10),
-                      child: userchatCard(
-                          imagepath: userDetail[index].imagePathOfInboxScreen,
-                          username: userDetail[index].name,
-                          userMessage: userDetail[index].userMessage),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RouteConstants.oneToOneScreen,arguments: OneToOneChatScreen(userName: userDetail[index].name, userImagePath: userDetail[index].imagePathOfInboxScreen));
+                        },
+                        child: userchatCard(
+                            imagepath: userDetail[index].imagePathOfInboxScreen,
+                            username: userDetail[index].name,
+                            userMessage: userDetail[index].userMessage),
+                      ),
                     );
                   }),
             )
@@ -238,33 +247,34 @@ class _InboxScreenState extends State<InboxScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(username!).regularText(ColorConstant.black, TextAlign.center,
-                      DimensionConstants.d19.sp),
-                  Text(userMessage!).regularText(ColorConstant.black.withOpacity(0.4),
+                  Text(username!).regularText(ColorConstant.black,
                       TextAlign.center, DimensionConstants.d19.sp),
+                  Text(userMessage!).regularText(
+                      ColorConstant.black.withOpacity(0.4),
+                      TextAlign.center,
+                      DimensionConstants.d19.sp),
                 ],
               ),
-        
-               Container(
-              height: DimensionConstants.d24.h,
-              width: DimensionConstants.d24.w,
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        ColorConstant.dashboardGradientColor1,
-                        ColorConstant.inboxScreenGradientColor
-                      ])),
-              child: Center(
-                child: const Text("1").regularText(ColorConstant.textcolor,
-                    TextAlign.center, DimensionConstants.d13.sp),
-              ))
+              Container(
+                  height: DimensionConstants.d24.h,
+                  width: DimensionConstants.d24.w,
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            ColorConstant.dashboardGradientColor1,
+                            ColorConstant.inboxScreenGradientColor
+                          ])),
+                  child: Center(
+                    child: const Text("1").regularText(ColorConstant.textcolor,
+                        TextAlign.center, DimensionConstants.d13.sp),
+                  ))
             ],
           ),
         ),
-       
+
         // Container(
         //     height: DimensionConstants.d24.h,
         //     width: DimensionConstants.d24.w,

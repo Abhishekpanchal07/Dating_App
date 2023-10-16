@@ -170,7 +170,7 @@ class StringConstants {
   static const friendsOnDating = "you're Friends on Dating ";
   static const liveIn = "Live in CA, USA ";
   static const yourMessage = "Your message";
-  static const jessicaDescription ="My Name is Jessica Parker And I Enjoy meeting new people and finding way to help them have and uplifting experience. I enjoy reading...";
+  static const jessicaDescription ="My Name is Jessica Parker And I Enjoy meeting  new people and finding way to help them have  and uplifting experience. I enjoy reading...";
   static const story = "Story";
   static const imageurlInboxScreen = "https://images.pexels.com/photos/2248516/pexels-photo-2248516.jpeg?auto=compress&cs=tinysrgb&w=600";
   static const lelani = "lelani";
@@ -189,5 +189,10 @@ class StringConstants {
   static const replyofhiJakeText = "Haha truly! Nice to meet you Grace! What about a cup of coffee today evening? ☕️ ";
   static const messageSendTime= "2:55 PM";
   static const messageSeenTime= "3:02 PM";
+  static const zodiacSign = "Zodiac Sign";
+  static const birthday = "Birthday";
+  static const birthdayDate = "20-04-1998";
+  static const editProfile = "Edit profile";
+  static const done = "Done";
 
 }

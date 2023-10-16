@@ -2,10 +2,10 @@ import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
-import 'package:demoapp/modals/inbox_screen_user_details_list.dart';
 import 'package:demoapp/views/add_photo.dart';
 import 'package:demoapp/views/create_new_account.dart';
 import 'package:demoapp/views/bottom_navigationbar.dart';
+import 'package:demoapp/views/edit_profile_screen.dart';
 import 'package:demoapp/views/enable_location.dart';
 import 'package:demoapp/views/filter_option.dart';
 import 'package:demoapp/views/inbox_screen.dart';
@@ -16,12 +16,13 @@ import 'package:demoapp/views/matches.dart';
 import 'package:demoapp/views/message_screen.dart';
 import 'package:demoapp/views/profile_details.dart';
 import 'package:demoapp/views/reset_password.dart';
-import 'package:demoapp/views/searched_user_profile_screen.dart';
+import 'package:demoapp/views/one_to_one_chatscreen.dart';
 import 'package:demoapp/views/send_message.dart';
 import 'package:demoapp/views/sign_in_option_screen.dart';
 import 'package:demoapp/views/sign_in_screen.dart';
 import 'package:demoapp/views/signin_with_name_screen.dart';
 import 'package:demoapp/views/splash_screen.dart';
+import 'package:demoapp/views/user_account_screen.dart';
 import 'package:demoapp/views/user_details.dart';
 import 'package:demoapp/widgets/bottom_sheet.dart';
 import 'package:flutter/material.dart';
@@ -73,9 +74,13 @@ class MyRoutes {
         return MaterialPageRoute(builder: (_) =>  const MessageScreen());
          case RouteConstants.inboxScreen:
         return MaterialPageRoute(builder: (_) =>  const InboxScreen());
-         case RouteConstants.serachedUserProfileScreen:
-         final  args   = settings.arguments as SearchedUserProfileScreen ;
-        return MaterialPageRoute(builder: (_) =>   SearchedUserProfileScreen(userName: args.userName,userImagePath: args.userImagePath,));
+         case RouteConstants.oneToOneScreen:
+         final  args   = settings.arguments as  OneToOneChatScreen;
+        return MaterialPageRoute(builder: (_) =>   OneToOneChatScreen(userName: args.userName,userImagePath: args.userImagePath,));
+        case RouteConstants.userAccountScreen:
+        return MaterialPageRoute(builder: (_) =>  const UserAccountScreen(conatinerChildTextValue: [],));
+         case RouteConstants.editProfileScreen:
+        return MaterialPageRoute(builder: (_) =>  const EditProfileScreen());
  }
     return MaterialPageRoute(
         builder: (_) => Scaffold(

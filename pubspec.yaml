@@ -55,6 +55,8 @@ dependencies:
   geocoding: ^2.1.0
   # for toggle button 
   toggle_switch: ^2.1.0
+  # for 
+  smooth_page_indicator: ^1.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
