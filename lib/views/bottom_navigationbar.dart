@@ -2,9 +2,9 @@ import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/views/enable_location.dart';
-import 'package:demoapp/views/filter_option.dart';
+import 'package:demoapp/views/inbox_screen.dart';
 import 'package:demoapp/views/matches.dart';
-import 'package:demoapp/views/profile_details.dart';
+import 'package:demoapp/views/user_account_screen.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,8 +22,8 @@ class _DashboardScreenState extends State<BottomNavigationScreen> {
   List<Widget> screeens = [
     const EnableLocation(),
     const MatchScreen(),
-    const ProfileDetails(),
-    const FilterOption(),
+    const InboxScreen(),
+    const UserAccountScreen(conatinerChildTextValue: [],),
   ];
   @override
   Widget build(BuildContext context) {

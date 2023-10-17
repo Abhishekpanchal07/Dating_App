@@ -6,7 +6,6 @@ import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class UserAccountScreen extends StatefulWidget {
@@ -195,7 +194,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
       ),
     );
   }
-
+// user interests container
   Widget gradientcontainer({String? containerchildText}) {
     return Container(
       height: DimensionConstants.d32.h,

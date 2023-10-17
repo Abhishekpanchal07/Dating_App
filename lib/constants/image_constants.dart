@@ -52,4 +52,8 @@ static const notificationIconInboxScreen =  "assets/images/notification_icon_inb
 static const addIconInboxScreen =  "assets/images/add_icon_inbox_screen.svg";
 static const userAccountgirlImage =  "assets/images/user_account_girl_pic.png";
 static const editProfileIcon =  "assets/images/edit_icon.svg";
+static const editProfileScreenLocationIcon =  "assets/images/edit_profile_Screen_location_icon.svg";
+static const editProfileScreenDropdownIcon =  "assets/images/edit_profile_screen_dropdown_icon.svg";
+
+
 }

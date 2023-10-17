@@ -194,5 +194,22 @@ class StringConstants {
   static const birthdayDate = "20-04-1998";
   static const editProfile = "Edit profile";
   static const done = "Done";
+  static const myBirthdayIs = "My birthday is";
+  static const dateFormat = "DD-MM-YYYY";
+  static const yourAgeWillBePublic = "Your Age will be public";
+  static const wordLimit = "500 words";
+  static const manageprofile = "Manage your Profile";
+  static const hideAge = "Don't show my age";
+  static const hideDistance = "Don't show my Distance";
+  static const hidePhoneNumber = "Don't show my PhoneNumber";
+  static const logout = "logout";
+  static const delete = "Delete";
+  static const deleteAccount = "Delete Account";
+  static const deleteAccountDialogBoxText = "Delete Account?";
+  static const logoutDialogBoxText = "logout?";
+  static const wantToLogoutText = " Are you Sure you want to logout?";
+  static const wantToDeleteAccountText = " Are you Sure you want to Delete Account?";
+  static const cancel = "Cancel";
+
 
 }

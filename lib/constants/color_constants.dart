@@ -33,5 +33,10 @@ class ColorConstant {
   static const textfieldgradientColor = Color(0xff8948EF);
   static const inboxScreenGradientColor = Color(0xffF65E7E);
   static const searchUserScreenContainerColor = Color(0xffF3F3F3);
+  static const editScreenTextColor = Color(0xff9B9B9B);
+  static const editScreenButtonColor = Color(0xffF4F4F4);
+  static const editScreenSwitchButtonColor = Color(0xffDCDEDC);
+  static const color9B9B9B = Color(0xff9B9B9B);
+  static const colorF11010 = Color(0xffF11010);
 }
 

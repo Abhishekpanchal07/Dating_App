@@ -156,12 +156,19 @@ class CommonWidgets {
 
   //gradient container
   static Widget gradientContainer(
-      {String? text, String? imagePath, VoidCallback? ontap}) {
+      {String? text, String? imagePath,
+       VoidCallback? ontap,
+       double? height,
+       double? innerContainerHeight,
+       FontWeight? fontweight,
+       Color? textcolor,
+       double? paddingFromTop,
+       double? paddingFromBottom}) {
     return GestureDetector(
       onTap: ontap,
       child: Container(
           width: DimensionConstants.d374.w,
-          height: DimensionConstants.d60.h,
+          height: height ?? DimensionConstants.d60.h,
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(DimensionConstants.d10.w),
@@ -174,7 +181,7 @@ class CommonWidgets {
                   ])),
           child: Container(
               width: DimensionConstants.d370.w,
-              height: DimensionConstants.d55.h,
+              height:  innerContainerHeight ?? DimensionConstants.d55.h,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(DimensionConstants.d9.w),
@@ -182,9 +189,9 @@ class CommonWidgets {
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                    top: DimensionConstants.d20.h,
+                    top: paddingFromTop ?? DimensionConstants.d20.h,
                     left: DimensionConstants.d18.w,
-                    bottom: DimensionConstants.d13.h,
+                    bottom: paddingFromBottom ?? DimensionConstants.d13.h,
                     right: DimensionConstants.d14.w),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -192,9 +199,9 @@ class CommonWidgets {
                     Text(
                       text!,
                       style: TextStyle(
-                          color: ColorConstant.headingcolor,
+                          color: textcolor ?? ColorConstant.headingcolor,
                           fontSize: DimensionConstants.d16.h,
-                          fontWeight: FontWeight.w500,
+                          fontWeight:  fontweight ?? FontWeight.w500,
                           fontFamily: StringConstants.familyName),
                     ),
                     ImageView(
