@@ -1,10 +1,11 @@
+import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/image_constants.dart';
-import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
-import 'package:demoapp/extension/all_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 
 class FirstScreen extends StatelessWidget {
@@ -24,7 +25,7 @@ class FirstScreen extends StatelessWidget {
               begin: Alignment.topLeft,
               end: AlignmentDirectional.bottomEnd,
               colors: [
-                ColorConstant.bottongradientcolor1,
+                ColorConstant.bggradientcolor1,
                 ColorConstant.bggradientcolor2,
               ]),
         ),
@@ -32,7 +33,9 @@ class FirstScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Image.asset(ImageConstants.splashimage),
-            getStarted(),
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, RouteConstants.findYourMatchScreen),
+              child: getStarted()),
           ],
         ),
       ),
@@ -43,8 +46,17 @@ class FirstScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(StringConstants.getText).semiBold(ColorConstant.bottongradientcolor1,TextAlign.center,DimensionConstants.d20.sp),
-        const Text(StringConstants.startedText).semiBold(ColorConstant.bottongradientcolor2,TextAlign.center,DimensionConstants.d20.sp),
+        GradientText(
+                  StringConstants.getStarted,
+                  colors: const [
+                    ColorConstant.colorF53F77,
+                    ColorConstant.color8948EF
+                  ],
+                  style: TextStyle(
+                      fontFamily: StringConstants.familyName,
+                      fontWeight: FontWeight.w600,
+                      fontSize: DimensionConstants.d20.sp),
+                ),
        
         SizedBox(
           width: DimensionConstants.d4.w,

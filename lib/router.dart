@@ -2,18 +2,22 @@ import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
+import 'package:demoapp/views/account_recovery.dart';
 import 'package:demoapp/views/add_photo.dart';
 import 'package:demoapp/views/create_new_account.dart';
 import 'package:demoapp/views/bottom_navigationbar.dart';
 import 'package:demoapp/views/edit_profile_screen.dart';
 import 'package:demoapp/views/enable_location.dart';
 import 'package:demoapp/views/filter_option.dart';
+import 'package:demoapp/views/forward_password.dart';
 import 'package:demoapp/views/inbox_screen.dart';
 import 'package:demoapp/views/interest_screen.dart';
 import 'package:demoapp/views/find_your_best_match.dart';
 import 'package:demoapp/views/login_screen.dart';
 import 'package:demoapp/views/matches.dart';
 import 'package:demoapp/views/message_screen.dart';
+import 'package:demoapp/views/notification_screen.dart';
+import 'package:demoapp/views/otp_verification.dart';
 import 'package:demoapp/views/profile_details.dart';
 import 'package:demoapp/views/reset_password.dart';
 import 'package:demoapp/views/one_to_one_chatscreen.dart';
@@ -81,6 +85,14 @@ class MyRoutes {
         return MaterialPageRoute(builder: (_) =>  const UserAccountScreen(conatinerChildTextValue: [],));
          case RouteConstants.editProfileScreen:
         return MaterialPageRoute(builder: (_) =>  const EditProfileScreen());
+         case RouteConstants.notificationScreen:
+        return MaterialPageRoute(builder: (_) =>  const NotificationScreen());
+        case RouteConstants.recoverAccountScreen:
+        return MaterialPageRoute(builder: (_) =>  const AccountRecover());
+        case RouteConstants.otpVerificationScreen:
+        return MaterialPageRoute(builder: (_) =>  const OtpVerificationScreen());
+        case RouteConstants.forwardPasswordScreen:
+        return MaterialPageRoute(builder: (_) =>  const ForwardPassword ());
  }
     return MaterialPageRoute(
         builder: (_) => Scaffold(

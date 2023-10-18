@@ -23,4 +23,8 @@ static const inboxScreen = 'InboxScreen';
 static const oneToOneScreen = 'OneToOneScreen';
 static const userAccountScreen = 'userAccountScreen';
 static const editProfileScreen = 'editProfileScreen';
+static const notificationScreen = 'NotificationScreen';
+static const recoverAccountScreen = 'AccountRecoveryScreen';
+static const otpVerificationScreen = 'OtpVerificationScreen';
+static const forwardPasswordScreen = 'ForwardPasswordScreen';
 }

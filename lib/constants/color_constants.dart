@@ -38,5 +38,10 @@ class ColorConstant {
   static const editScreenSwitchButtonColor = Color(0xffDCDEDC);
   static const color9B9B9B = Color(0xff9B9B9B);
   static const colorF11010 = Color(0xffF11010);
+  static const color6B6B6B = Color(0xff6B6B6B);
+  static const colorF2EAE0 = Color(0xffF2EAE0);
+  static const colorF53F77 = Color(0xffF53F77);
+  static const color8948EF = Color(0xff8948EF);
+  static const colorEC356E = Color(0xffEC356E);
 }
 

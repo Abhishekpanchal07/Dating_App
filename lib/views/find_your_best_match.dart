@@ -1,5 +1,6 @@
 import 'package:demoapp/constants/Dimension_Constant.dart';
 import 'package:demoapp/constants/Image_Constants.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/constants/color_constants.dart';
@@ -28,7 +29,9 @@ class FindYourBestMatchScreen extends StatelessWidget {
         child: Column(
           children: [
             getStarted(),
-           CommonWidgets.commonButton(StringConstants.startdatingText),
+           GestureDetector(
+            onTap: () => Navigator.pushNamed(context, RouteConstants.signInScreen),
+            child: CommonWidgets.commonButton(StringConstants.startdatingText)),
           
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
@@ -65,16 +66,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 30,
                   ),
-                  const Text(StringConstants.loginScreenWelcomeText)
+                 Align(
+                  alignment: Alignment.topLeft,
+                  child:  const Text(StringConstants.loginScreenWelcomeText)
                       .regularText(ColorConstant.headingcolor, TextAlign.center,
                           DimensionConstants.d24.sp),
+                 ),
                   SizedBox(
                     height: DimensionConstants.d8.h,
                   ),
-                  const Text(StringConstants.loginScreenSignInText).regularText(
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: const Text(StringConstants.loginScreenSignInText).regularText(
                       ColorConstant.grey,
                       TextAlign.center,
                       DimensionConstants.d16.sp),
+                  ),
                   SizedBox(
                     height: DimensionConstants.d23.h,
                   ),
@@ -128,10 +135,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: DimensionConstants.d30.h,
                   ),
-                  const Text(StringConstants.forgetPasswordText).regularText(
+                  GestureDetector(
+                    onTap:() => Navigator.pushNamed(context,RouteConstants.resetPasswordScreen ),
+                    child: const Text(StringConstants.forgetPasswordText).regularText(
                       ColorConstant.pink,
                       TextAlign.center,
                       DimensionConstants.d14.sp),
+                  )
                      
                 ],
               ),

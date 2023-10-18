@@ -170,9 +170,11 @@ class StringConstants {
   static const friendsOnDating = "you're Friends on Dating ";
   static const liveIn = "Live in CA, USA ";
   static const yourMessage = "Your message";
-  static const jessicaDescription ="My Name is Jessica Parker And I Enjoy meeting  new people and finding way to help them have  and uplifting experience. I enjoy reading...";
+  static const jessicaDescription =
+      "My Name is Jessica Parker And I Enjoy meeting  new people and finding way to help them have  and uplifting experience. I enjoy reading...";
   static const story = "Story";
-  static const imageurlInboxScreen = "https://images.pexels.com/photos/2248516/pexels-photo-2248516.jpeg?auto=compress&cs=tinysrgb&w=600";
+  static const imageurlInboxScreen =
+      "https://images.pexels.com/photos/2248516/pexels-photo-2248516.jpeg?auto=compress&cs=tinysrgb&w=600";
   static const lelani = "lelani";
   static const shreya = "Shreya";
   static const lily = "lily";
@@ -182,13 +184,15 @@ class StringConstants {
   static const pooja = "Pooja";
   static const roma = "Roma";
   static const kiran = "kiran";
-  static const age= "19";
-  static const message= "Messages";
-  static const hello= "Hello";
-  static const hiJakeText = "Hi Jake, how are you? I saw on the app that we’ve crossed paths several times this week 😄";
-  static const replyofhiJakeText = "Haha truly! Nice to meet you Grace! What about a cup of coffee today evening? ☕️ ";
-  static const messageSendTime= "2:55 PM";
-  static const messageSeenTime= "3:02 PM";
+  static const age = "19";
+  static const message = "Messages";
+  static const hello = "Hello";
+  static const hiJakeText =
+      "Hi Jake, how are you? I saw on the app that we’ve crossed paths several times this week 😄";
+  static const replyofhiJakeText =
+      "Haha truly! Nice to meet you Grace! What about a cup of coffee today evening? ☕️ ";
+  static const messageSendTime = "2:55 PM";
+  static const messageSeenTime = "3:02 PM";
   static const zodiacSign = "Zodiac Sign";
   static const birthday = "Birthday";
   static const birthdayDate = "20-04-1998";
@@ -208,8 +212,18 @@ class StringConstants {
   static const deleteAccountDialogBoxText = "Delete Account?";
   static const logoutDialogBoxText = "logout?";
   static const wantToLogoutText = " Are you Sure you want to logout?";
-  static const wantToDeleteAccountText = " Are you Sure you want to Delete Account?";
+  static const wantToDeleteAccountText =  " Are you Sure you want to Delete Account?";
   static const cancel = "Cancel";
-
-
+  static const notification = "Notification";
+  static const notificationTime = "5d Ago";
+  static const notificationTitle = "Hey, don’t forget to verify your email";
+  static const notificationContent =  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do...";
+  static const getStarted = "Get Started";
+  static const accountRecoveryText  = "Account recovery";
+  static const recoverAccountText = "We’ll email you a code that will instantly recover your account.";
+  static const accountRecoveryEmailText  = "Your Email Address";
+  static const verify  = "Verify";
+  static const submit  = "Submit";
+  static const enterOtp  = "Please enter the 4-digit code Send to your Number";
+  static const resendOtp  = "Resend OTP";
 }

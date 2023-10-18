@@ -22,42 +22,42 @@ class _MatchScreenState extends State<MatchScreen> {
         name: StringConstants.lelani,
         imageUrl:
             StringConstants.imageurlInboxScreen,
-        age: StringConstants.age as int?),
+        age: StringConstants.age ),
     MatchScreenImages(
         name: StringConstants.lelani,
         imageUrl:
             StringConstants.imageurlInboxScreen,
-        age: StringConstants.age as int?),
+        age: StringConstants.age ),
     MatchScreenImages(
         name: StringConstants.lelani,
         imageUrl:
             StringConstants.imageurlInboxScreen,
-        age: StringConstants.age as int?),
+        age: StringConstants.age ),
     MatchScreenImages(
         name: StringConstants.lelani,
         imageUrl:
             StringConstants.imageurlInboxScreen,
-        age: StringConstants.age as int?),
+        age: StringConstants.age ),
     MatchScreenImages(
         name: StringConstants.lelani,
         imageUrl:
             StringConstants.imageurlInboxScreen,
-        age: StringConstants.age as int?),
+        age: StringConstants.age ),
     MatchScreenImages(
         name: StringConstants.lelani,
         imageUrl:
             StringConstants.imageurlInboxScreen,
-        age: StringConstants.age as int?),
+        age: StringConstants.age ),
     MatchScreenImages(
         name: StringConstants.lelani,
         imageUrl:
             StringConstants.imageurlInboxScreen,
-        age: StringConstants.age as int?),
+        age: StringConstants.age ),
     MatchScreenImages(
         name: StringConstants.lelani,
         imageUrl:
             StringConstants.imageurlInboxScreen,
-        age: StringConstants.age as int?),
+        age: StringConstants.age ),
   ];
 
   @override
@@ -159,7 +159,7 @@ class _MatchScreenState extends State<MatchScreen> {
     );
   }
 
-  Widget imageContainer({String? imageurl, String? name, int? age}) {
+  Widget imageContainer({String? imageurl, String? name, String? age}) {
     return Container(
       height: DimensionConstants.d174.h,
       width: DimensionConstants.d152.w,

@@ -1,6 +1,7 @@
 import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
@@ -31,14 +32,14 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                 height: DimensionConstants.d470.h,
                 width: DimensionConstants.d414.w,
                 child: PageView.builder(
-                  itemCount: 5,
-                  controller: controller,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                  return const ImageView(
-                    path: ImageConstants.userAccountgirlImage,
-                  );
-                }),
+                    itemCount: 5,
+                    controller: controller,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return const ImageView(
+                        path: ImageConstants.userAccountgirlImage,
+                      );
+                    }),
               ),
             ),
             Positioned(
@@ -54,8 +55,14 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
             Positioned(
                 top: DimensionConstants.d53.h,
                 right: DimensionConstants.d20.w,
-                child: const ImageView(
-                  path: ImageConstants.editProfileIcon,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, RouteConstants.editProfileScreen);
+                  },
+                  child: const ImageView(
+                    path: ImageConstants.editProfileIcon,
+                  ),
                 )),
             Positioned(
               top: DimensionConstants.d400.h,
@@ -194,6 +201,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
       ),
     );
   }
+
 // user interests container
   Widget gradientcontainer({String? containerchildText}) {
     return Container(

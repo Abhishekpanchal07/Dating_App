@@ -36,10 +36,13 @@ class SignInByName extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const Align(
+                 Align(
                   alignment: Alignment.topLeft,
-                  child: ImageView(
-                    path: ImageConstants.leftArrowIcon,
+                  child: GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: const ImageView(
+                      path: ImageConstants.leftArrowIcon,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -81,7 +84,7 @@ class SignInByName extends StatelessWidget {
                             StringConstants.lastNameErrortextProfileScreen);
                       } else {
                         Navigator.pushNamed(
-                            context, RouteConstants.sendMessageScreen);
+                            context, RouteConstants.profileDetaisScreen);
                       }
                     },
                     child:
@@ -89,10 +92,10 @@ class SignInByName extends StatelessWidget {
                 SizedBox(
                   height: DimensionConstants.d30.h,
                 ),
-                const Text(StringConstants.forgetPasswordText).regularText(
-                    ColorConstant.lightred,
-                    TextAlign.center,
-                    DimensionConstants.d16.sp),
+                // const Text(StringConstants.forgetPasswordText).regularText(
+                //     ColorConstant.lightred,
+                //     TextAlign.center,
+                //     DimensionConstants.d16.sp),
                 SizedBox(
                   height: DimensionConstants.d236.h,
                 ),

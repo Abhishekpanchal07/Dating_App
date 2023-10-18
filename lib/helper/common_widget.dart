@@ -130,7 +130,7 @@ class CommonWidgets {
   }
 
   static void emailAndPasswordVerification(BuildContext context,
-      {emailcontroller, passwordController, confirmPasswordcontroller}) {
+      {emailcontroller, passwordController, confirmPasswordcontroller, String? routerName}) {
     if (emailcontroller.text.isEmpty) {
       CommonWidgets.showflushbar(context, StringConstants.unFillEmailText);
     } else if (!RegExp(StringConstants.emailVerificationText)
@@ -150,7 +150,7 @@ class CommonWidgets {
     } else if (confirmPasswordcontroller.text != passwordController.text) {
       CommonWidgets.showflushbar(context, StringConstants.confirmPasswordError);
     } else {
-      Navigator.pushNamed(context, RouteConstants.signInOptionScreen);
+      Navigator.pushNamed(context,routerName! );
     }
   }
 

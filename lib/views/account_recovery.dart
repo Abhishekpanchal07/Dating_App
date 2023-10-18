@@ -1,4 +1,4 @@
-import 'package:demoapp/constants/Color_Constants.dart';
+import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
@@ -9,19 +9,12 @@ import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+class AccountRecover extends StatelessWidget {
+  const AccountRecover({super.key});
 
-  @override
-  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
-}
-
-class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-  
-   final   emailcontroller= TextEditingController();
- 
   @override
   Widget build(BuildContext context) {
+    final emailController = TextEditingController();
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -42,10 +35,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           ),
           child: Column(
             children: [
-              Align(
+               Align(
                 alignment: Alignment.topLeft,
                 child: GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, RouteConstants.loginScreen),
+                  onTap: () => Navigator.pushNamed(context, RouteConstants.signInScreen),
                   child: const ImageView(
                     path: ImageConstants.leftArrowIcon,
                    
@@ -67,45 +60,35 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               ),
              
              Align(
-                child : const Text(StringConstants.resetPassword).regularText(
+                child : const Text(StringConstants.accountRecoveryText).regularText(
                   ColorConstant.headingcolor,
                   TextAlign.start,
                   DimensionConstants.d24.sp),
                   alignment: Alignment.centerLeft,
              ),
-              SizedBox(
-                height: DimensionConstants.d11.h,
-              ),
-             Align(
-              alignment: Alignment.centerLeft,
-              child:  const Text(StringConstants.confirmEmailText).regularText(
-                  ColorConstant.grey, TextAlign.center, DimensionConstants.d16.sp),
-             ),
+             
               SizedBox(
                 height: DimensionConstants.d23.h,
               ),
               CommonWidgets.gradientTextField(
                 
-                context, textFieldHintText: StringConstants.emailText,
-                controllerName: emailcontroller,
+                context, textFieldHintText: StringConstants.accountRecoveryEmailText,
+                controllerName: emailController,
               ),
+               SizedBox(
+                height: DimensionConstants.d9.h,
+              ),
+              const Text(StringConstants.recoverAccountText).regularText(
+                  ColorConstant.black.withOpacity(0.4),
+                  TextAlign.center,
+                  DimensionConstants.d10.sp),
+
               SizedBox(
-                height: DimensionConstants.d47.h,
+                height: DimensionConstants.d30.h,
               ),
               GestureDetector(
                 onTap: (){
-                  
-                  if (emailcontroller.text.isEmpty) {
-      CommonWidgets.showflushbar(context, StringConstants.unFillEmailText);
-    } 
-    else if (!RegExp(StringConstants.emailVerificationText)
-        .hasMatch(emailcontroller.text)) {
-      CommonWidgets.showflushbar(context, StringConstants.emailErrorText);
-                }
-                else{
-                  Navigator.pushNamed(context,RouteConstants.otpVerificationScreen );
-
-                }
+                  CommonWidgets.emailAndPasswordVerification(context,emailcontroller: emailController);
                 },
                 child: CommonWidgets.commonButton(StringConstants.continueText)),
             ],

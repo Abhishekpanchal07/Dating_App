@@ -1,6 +1,7 @@
 import 'package:demoapp/constants/Image_Constants.dart';
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
@@ -36,15 +37,23 @@ class SignInScreen extends StatelessWidget {
              SizedBox(
             height: DimensionConstants.d20.h,
            ),
-           CommonWidgets.gradientBorderButton(StringConstants.createNewAccount),
+           GestureDetector(
+            onTap: () => Navigator.pushNamed(context, RouteConstants.signInWithNameScreen),
+            child: CommonWidgets.gradientBorderButton(StringConstants.createNewAccount)),
              SizedBox(
             height: DimensionConstants.d20.h,
            ),
-            CommonWidgets.gradientBorderButton(StringConstants.signInText),
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, RouteConstants.signInOptionScreen),
+              child: CommonWidgets.gradientBorderButton(StringConstants.signInText)),
              SizedBox(
             height: DimensionConstants.d20.h,
            ),
-           const Text(StringConstants.signInTroubleText).regularText(ColorConstant.headingcolor, TextAlign.center, DimensionConstants.d20.sp)
+           GestureDetector(
+             onTap: () => Navigator.pushNamed(context, RouteConstants.recoverAccountScreen),
+             child: const Text(StringConstants.signInTroubleText).regularText(ColorConstant.headingcolor, TextAlign.center, DimensionConstants.d20.sp) ,
+           )
+           
   
 
           ],
