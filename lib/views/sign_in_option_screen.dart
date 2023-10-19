@@ -5,6 +5,7 @@ import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
+import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 class SignInOptionScreen extends StatelessWidget {
@@ -14,7 +15,9 @@ class SignInOptionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.only(top: DimensionConstants.d214.h,left: DimensionConstants.d20.w,right: DimensionConstants.d20.w),
+        padding: EdgeInsets.only(top: DimensionConstants.d43.h,
+        left: DimensionConstants.d20.w,
+        right: DimensionConstants.d20.w),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -27,6 +30,18 @@ class SignInOptionScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Align(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pushNamed(context,RouteConstants.signInScreen),
+                      child: const ImageView(
+                        path: ImageConstants.leftArrowIcon,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: DimensionConstants.d88.h,
+                  ),
            Image.asset(ImageConstants.signInScreenImage,height: DimensionConstants.d87.h,width: DimensionConstants.d193.w,),
            SizedBox(
             height: DimensionConstants.d30.h,

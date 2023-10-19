@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
@@ -46,13 +47,23 @@ class _AddPhotoState extends State<EnableLocation> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ImageView(
-              path: ImageConstants.leftArrowIcon,
-              height: DimensionConstants.d24.h,
-              width: DimensionConstants.d24.w,
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: ImageView(
+                path: ImageConstants.leftArrowIcon,
+                height: DimensionConstants.d24.h,
+                width: DimensionConstants.d24.w,
+              ),
             ),
-            const Text(StringConstants.skipText).mediumText(
+           GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen);
+            },
+            child:  const Text(StringConstants.skipText).mediumText(
                 ColorConstant.pink, TextAlign.end, DimensionConstants.d16.sp),
+           )
           ],
         ),
         const Text(StringConstants.location).mediumText(
@@ -136,10 +147,11 @@ class _AddPhotoState extends State<EnableLocation> {
         ),
         GestureDetector(
             onTap: () {
-              if (currentLocation == null) {
-                CommonWidgets.showflushbar(
-                    context, StringConstants.enableLocationError);
-              }
+              // if (currentLocation == null) {
+              //   CommonWidgets.showflushbar(
+              //       context, StringConstants.enableLocationError);
+              // }
+              Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen);
             },
             child: CommonWidgets.commonButton(StringConstants.continueText)),
       ]),

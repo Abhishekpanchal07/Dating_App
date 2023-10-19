@@ -6,6 +6,7 @@ import 'package:demoapp/views/account_recovery.dart';
 import 'package:demoapp/views/add_photo.dart';
 import 'package:demoapp/views/create_new_account.dart';
 import 'package:demoapp/views/bottom_navigationbar.dart';
+import 'package:demoapp/views/create_new_password.dart';
 import 'package:demoapp/views/edit_profile_screen.dart';
 import 'package:demoapp/views/enable_location.dart';
 import 'package:demoapp/views/filter_option.dart';
@@ -93,6 +94,8 @@ class MyRoutes {
         return MaterialPageRoute(builder: (_) =>  const OtpVerificationScreen());
         case RouteConstants.forwardPasswordScreen:
         return MaterialPageRoute(builder: (_) =>  const ForwardPassword ());
+        case RouteConstants.createNewPasswordScreen:
+        return MaterialPageRoute(builder: (_) =>  const CreateNewPasswordScreen ());
  }
     return MaterialPageRoute(
         builder: (_) => Scaffold(

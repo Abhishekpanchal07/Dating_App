@@ -32,7 +32,7 @@ class _InterestState extends State<InterestScreen> {
     StringConstants.fitnessText,
   ];
   List<bool> selectInterest = [];
-  bool itemTapped = false;
+
   List<String>? passArguments = [];
 
   @override
@@ -65,15 +65,25 @@ class _InterestState extends State<InterestScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ImageView(
-                  path: ImageConstants.leftArrowIcon,
-                  height: DimensionConstants.d24.h,
-                  width: DimensionConstants.d24.w,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: ImageView(
+                    path: ImageConstants.leftArrowIcon,
+                    height: DimensionConstants.d24.h,
+                    width: DimensionConstants.d24.w,
+                  ),
                 ),
-                const Text(StringConstants.skipText).mediumText(
-                    ColorConstant.pink,
-                    TextAlign.end,
-                    DimensionConstants.d16.sp),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, RouteConstants.addPhotoScreen);
+                  },
+                  child: const Text(StringConstants.skipText).mediumText(
+                      ColorConstant.pink,
+                      TextAlign.end,
+                      DimensionConstants.d16.sp),
+                )
               ],
             ),
             const Text(StringConstants.likeAndInterest).mediumText(
@@ -140,15 +150,18 @@ class _InterestState extends State<InterestScreen> {
             GestureDetector(
                 onTap: () {
                   setState(() {
-                    if (passArguments!.isEmpty) {
-                      // CommonWidgets.showflushbar(
-                      //     context, StringConstants.unTapInterestError);
-                           Navigator.pushNamed(
-                          context, RouteConstants.userDetailScreen,arguments:[] );
-                    } else {
-                      Navigator.pushNamed(
-                          context, RouteConstants.userDetailScreen,arguments: passArguments);
-                    }
+                    // if (passArguments!.isEmpty) {
+                    //   // CommonWidgets.showflushbar(
+                    //   //     context, StringConstants.unTapInterestError);
+                    //   Navigator.pushNamed(
+                    //       context, RouteConstants.userDetailScreen,
+                    //       arguments: []);
+                    // } else {
+                    //   Navigator.pushNamed(
+                    //       context, RouteConstants.userDetailScreen,
+                    //       arguments: passArguments);
+                    // }
+                    Navigator.pushNamed(context, RouteConstants.addPhotoScreen);
                   });
                 },
                 child:

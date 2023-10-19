@@ -1,6 +1,7 @@
-import 'package:demoapp/constants/Color_Constants.dart';
+import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
@@ -8,22 +9,21 @@ import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
-class CreateNewAccount extends StatefulWidget {
-  const CreateNewAccount({super.key});
+class CreateNewPasswordScreen extends StatefulWidget {
+  const CreateNewPasswordScreen({super.key});
 
   @override
-  State<CreateNewAccount> createState() => _CreateNewAccountState();
+  State<CreateNewPasswordScreen> createState() =>
+      _CreateNewPasswordScreenState();
 }
 
-class _CreateNewAccountState extends State<CreateNewAccount> {
+class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  final emailControllerforcreateaccount = TextEditingController();
+ 
   bool isobsecure = false;
   bool ischeckbox = false;
-   bool isconfirmPassword = false;
-  
+  bool isconfirmPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,39 +48,33 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
             child: Column(
               children: [
                 Align(
-                    alignment: Alignment.topLeft,
-                    child: GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: const ImageView(
-                        path: ImageConstants.leftArrowIcon,
-                      ),
+                  alignment: Alignment.topLeft,
+                  child: GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: const ImageView(
+                      path: ImageConstants.leftArrowIcon,
                     ),
                   ),
-                  SizedBox(
-                    height: DimensionConstants.d64.h,
-                  ),
+                ),
+                SizedBox(
+                  height: DimensionConstants.d64.h,
+                ),
                 ImageView(
                   path: ImageConstants.datingLogo,
                   height: DimensionConstants.d87.h,
                   width: DimensionConstants.d193.w,
                 ),
                 SizedBox(
-                  height: DimensionConstants.d90.h,
+                  height: DimensionConstants.d60.h,
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: const Text(StringConstants.createNewAccount)
+                  child: const Text(StringConstants.createNewPassword)
                       .regularText(ColorConstant.headingcolor, TextAlign.center,
                           DimensionConstants.d24.sp),
                 ),
                 SizedBox(
-                  height: DimensionConstants.d13.h,
-                ),
-                CommonWidgets.gradientTextField(context,
-                    controllerName: emailControllerforcreateaccount,
-                    textFieldHintText: StringConstants.emailText),
-                SizedBox(
-                  height: DimensionConstants.d21.h,
+                  height: DimensionConstants.d44.h,
                 ),
                 aminatedTextField(
                     textfieldhinttext: StringConstants.passwordText,
@@ -88,10 +82,9 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                 SizedBox(
                   height: DimensionConstants.d20.h,
                 ),
-               confirmPasswordAnimatedTextField(
-                controllerName: confirmPasswordController,
-                textfieldhinttext: StringConstants.confirmPassword
-               ),
+                confirmPasswordAnimatedTextField(
+                    controllerName: confirmPasswordController,
+                    textfieldhinttext: StringConstants.confirmPassword),
                 SizedBox(
                   height: DimensionConstants.d20.h,
                 ),
@@ -124,9 +117,9 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    CommonWidgets.emailAndPasswordVerification(context,emailcontroller: emailControllerforcreateaccount,
-                    passwordController: passwordController,
-                    confirmPasswordcontroller: confirmPasswordController);
+                    confirmPasswordAndPasswordVerification(
+                        passwordcontroller: passwordController,
+                        confirmPasswordcontroller: confirmPasswordController);
                   },
                   child:
                       CommonWidgets.commonButton(StringConstants.continueText),
@@ -138,6 +131,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
       ),
     );
   }
+  // password Field
 
   Widget aminatedTextField(
       {String? textfieldhinttext, TextEditingController? controllerName}) {
@@ -187,16 +181,19 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                       ? const Padding(
                           padding: EdgeInsets.all(DimensionConstants.d5),
                           child: Padding(
-                            padding:
-                                EdgeInsets.all(DimensionConstants.d0),
-                            child: ImageView(path: ImageConstants.passwordHideIcon,)
-                          ),
+                              padding: EdgeInsets.all(DimensionConstants.d0),
+                              child: ImageView(
+                                path: ImageConstants.passwordHideIcon,
+                              )),
                         )
-                      : const ImageView(path: ImageConstants.showPasswordIcon,))),
+                      : const ImageView(
+                          path: ImageConstants.showPasswordIcon,
+                        ))),
         ),
       ),
     );
   }
+  // confirm Password field
 
   Widget confirmPasswordAnimatedTextField(
       {String? textfieldhinttext, TextEditingController? controllerName}) {
@@ -239,21 +236,46 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
               suffixIcon: IconButton(
                   onPressed: () {
                     setState(() {
-                      isconfirmPassword=!isconfirmPassword;
+                      isconfirmPassword = !isconfirmPassword;
                     });
                   },
                   icon: isconfirmPassword
                       ? const Padding(
                           padding: EdgeInsets.all(DimensionConstants.d5),
                           child: Padding(
-                            padding:
-                                EdgeInsets.all(DimensionConstants.d0),
-                            child: ImageView(path: ImageConstants.passwordHideIcon,)
-                          ),
+                              padding: EdgeInsets.all(DimensionConstants.d0),
+                              child: ImageView(
+                                path: ImageConstants.passwordHideIcon,
+                              )),
                         )
-                      : const ImageView(path: ImageConstants.showPasswordIcon,))),
+                      : const ImageView(
+                          path: ImageConstants.showPasswordIcon,
+                        ))),
         ),
       ),
     );
+  }
+
+  // verification function of password and confirmpassword
+  void confirmPasswordAndPasswordVerification({
+    TextEditingController? passwordcontroller,
+    TextEditingController? confirmPasswordcontroller,
+  }) {
+    if (passwordController.text.isEmpty) {
+      CommonWidgets.showflushbar(context, StringConstants.unFillPasswordText);
+    } else if (passwordcontroller!.text.length < 8) {
+      CommonWidgets.showflushbar(
+          context, StringConstants.passwordLengthErrorText);
+    } else if (!RegExp(StringConstants.passwordVerificationText)
+        .hasMatch(passwordController.text)) {
+      CommonWidgets.showflushbar(context, StringConstants.passwordErrorText);
+    } else if (confirmPasswordcontroller!.text.isEmpty) {
+      CommonWidgets.showflushbar(
+          context, StringConstants.unFillConfirmPassword);
+    } else if (confirmPasswordcontroller.text != passwordController.text) {
+      CommonWidgets.showflushbar(context, StringConstants.confirmPasswordError);
+    } else {
+      Navigator.pushNamed(context, RouteConstants.loginScreen);
+    }
   }
 }

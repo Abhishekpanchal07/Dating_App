@@ -1,6 +1,7 @@
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
@@ -74,15 +75,26 @@ class _AddPhotoState extends State<FilterOption> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ImageView(
-                      path: ImageConstants.leftArrowIcon,
-                      height: DimensionConstants.d24.h,
-                      width: DimensionConstants.d24.w,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: ImageView(
+                        path: ImageConstants.leftArrowIcon,
+                        height: DimensionConstants.d24.h,
+                        width: DimensionConstants.d24.w,
+                      ),
                     ),
-                    const Text(StringConstants.skipText).mediumText(
-                        ColorConstant.pink,
-                        TextAlign.end,
-                        DimensionConstants.d16.sp),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, RouteConstants.enableLocation);
+                      },
+                      child: const Text(StringConstants.skipText).mediumText(
+                          ColorConstant.pink,
+                          TextAlign.end,
+                          DimensionConstants.d16.sp),
+                    )
                   ],
                 ),
                 const Text(StringConstants.filterOption).mediumText(
@@ -291,12 +303,12 @@ class _AddPhotoState extends State<FilterOption> {
                 ),
                 GestureDetector(
                     onTap: () {
-                      CommonWidgets.filterScreenValidation(
-                          context,
+                      CommonWidgets.filterScreenValidation(context,
                           genderValue: genderValue,
                           selectedLanguage: selectedLanguage,
                           selectedAge: selectedAge,
-                          selectedFriendshipInterest:  selectedFriendshipInterest);
+                          selectedFriendshipInterest:
+                              selectedFriendshipInterest);
                     },
                     child: CommonWidgets.commonButton(
                         StringConstants.continueText)),

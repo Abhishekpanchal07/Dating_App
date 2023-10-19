@@ -1,6 +1,7 @@
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
@@ -42,15 +43,26 @@ class _AddPhotoState extends State<AddPhoto> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ImageView(
-                  path: ImageConstants.leftArrowIcon,
-                  height: DimensionConstants.d24.h,
-                  width: DimensionConstants.d24.w,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: ImageView(
+                    path: ImageConstants.leftArrowIcon,
+                    height: DimensionConstants.d24.h,
+                    width: DimensionConstants.d24.w,
+                  ),
                 ),
-                const Text(StringConstants.skipText).mediumText(
-                    ColorConstant.pink,
-                    TextAlign.end,
-                    DimensionConstants.d16.sp),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, RouteConstants.filterOptionScreen);
+                  },
+                  child: const Text(StringConstants.skipText).mediumText(
+                      ColorConstant.pink,
+                      TextAlign.end,
+                      DimensionConstants.d16.sp),
+                ),
               ],
             ),
             const Text(StringConstants.addPhotoText).mediumText(
@@ -80,18 +92,17 @@ class _AddPhotoState extends State<AddPhoto> {
                       return index == imagePaths.length
                           ? addImageButton()
                           : imageContainer(imagePaths[index], index);
-
                     })),
             SizedBox(
               height: DimensionConstants.d30.h,
             ),
             GestureDetector(
                 onTap: () {
-                  if (imagePaths.isEmpty) {
-                    CommonWidgets.showflushbar(
-                      context, StringConstants.uploadImageError
-                    );
-                  }
+                  Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen);
+                  // if (imagePaths.isEmpty) {
+                  //   CommonWidgets.showflushbar(
+                  //       context, StringConstants.uploadImageError);
+                  // }
                 },
                 child:
                     CommonWidgets.commonButton(StringConstants.continueText)),
@@ -167,7 +178,7 @@ class _AddPhotoState extends State<AddPhoto> {
 
   Widget imageContainer(String imagePath, int index) {
     return Container(
-      height: DimensionConstants.d130.h,
+      height: DimensionConstants.d130.w,
       width: DimensionConstants.d111.w,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(DimensionConstants.d50.r)),
@@ -175,10 +186,11 @@ class _AddPhotoState extends State<AddPhoto> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(DimensionConstants.d14.r),
-            child: ImageView(
-              path: imagePath,
-              fit: BoxFit.cover,
-            ),
+            child: Image.asset(imagePath,fit: BoxFit.cover,)
+            // ImageView(
+            //   path: imagePath,
+            //   fit: BoxFit.cover,
+            // ),
           ),
           Positioned(
             top: DimensionConstants.d15.h,

@@ -150,7 +150,7 @@ class CommonWidgets {
     } else if (confirmPasswordcontroller.text != passwordController.text) {
       CommonWidgets.showflushbar(context, StringConstants.confirmPasswordError);
     } else {
-      Navigator.pushNamed(context,routerName! );
+      Navigator.pushNamed(context,RouteConstants.loginScreen );
     }
   }
 
@@ -235,7 +235,7 @@ class CommonWidgets {
     } else if (genderValue == null) {
       showflushbar(context, StringConstants.genderErrortextProfileScreen);
     } else {
-      Navigator.pushNamed(context, RouteConstants.loginScreen);
+      Navigator.pushNamed(context, RouteConstants.interestScreen);
     }
   }
 
@@ -319,7 +319,7 @@ class CommonWidgets {
     }
 
      else {
-      Navigator.pushNamed(context, RouteConstants.findYourMatchScreen);
+      Navigator.pushNamed(context, RouteConstants.addPhotoScreen);
     }
   }
   // user chat card 

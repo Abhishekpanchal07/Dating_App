@@ -39,7 +39,7 @@ class SignInByName extends StatelessWidget {
                  Align(
                   alignment: Alignment.topLeft,
                   child: GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => Navigator.pushNamed(context,RouteConstants.signInOptionScreen),
                     child: const ImageView(
                       path: ImageConstants.leftArrowIcon,
                     ),

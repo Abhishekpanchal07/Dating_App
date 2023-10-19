@@ -27,7 +27,8 @@ class StringConstants {
   static const resetPassword = "Reset Password";
   static const confirmEmailText = "confirm Your Email Id";
   static const continueText = "Continue";
-  static const createNewAccount = 'create Account';
+  static const createNewAccount = 'Create Account';
+  static const createNewPassword = 'Create New Password';
   static const confirmPassword = 'confirm password';
   static const confirmPasswordError =
       'confirm password and Entered password does not match.';
@@ -226,4 +227,5 @@ class StringConstants {
   static const submit  = "Submit";
   static const enterOtp  = "Please enter the 4-digit code Send to your Number";
   static const resendOtp  = "Resend OTP";
+  static const unfillOTPErrorText  = "Please fill the OTP";
 }

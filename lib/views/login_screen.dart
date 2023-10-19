@@ -5,6 +5,7 @@ import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
+import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isobsecure = true;
   bool ischeckbox = true;
   final formkey = GlobalKey<FormState>();
-  final controller = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
@@ -43,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Container(
             height: MediaQuery.of(context).size.height,
             padding: EdgeInsets.only(
-                top: DimensionConstants.d183.h,
+                top: DimensionConstants.d43.h,
                 left: DimensionConstants.d20.w,
                 right: DimensionConstants.d20.w),
             decoration: const BoxDecoration(
@@ -58,6 +59,18 @@ class _LoginScreenState extends State<LoginScreen> {
               key: formkey,
               child: Column(
                 children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pushNamed(context,RouteConstants.signInOptionScreen),
+                      child: const ImageView(
+                        path: ImageConstants.leftArrowIcon,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: DimensionConstants.d88.h,
+                  ),
                   Image.asset(
                     ImageConstants.signInScreenImage,
                     width: DimensionConstants.d193.w,
@@ -66,28 +79,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 30,
                   ),
-                 Align(
-                  alignment: Alignment.topLeft,
-                  child:  const Text(StringConstants.loginScreenWelcomeText)
-                      .regularText(ColorConstant.headingcolor, TextAlign.center,
-                          DimensionConstants.d24.sp),
-                 ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: const Text(StringConstants.loginScreenWelcomeText)
+                        .regularText(ColorConstant.headingcolor,
+                            TextAlign.center, DimensionConstants.d24.sp),
+                  ),
                   SizedBox(
                     height: DimensionConstants.d8.h,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: const Text(StringConstants.loginScreenSignInText).regularText(
-                      ColorConstant.grey,
-                      TextAlign.center,
-                      DimensionConstants.d16.sp),
+                    child: const Text(StringConstants.loginScreenSignInText)
+                        .regularText(ColorConstant.grey, TextAlign.center,
+                            DimensionConstants.d16.sp),
                   ),
                   SizedBox(
                     height: DimensionConstants.d23.h,
                   ),
                   CommonWidgets.gradientTextField(
                     context,
-                    controllerName:controller,
+                    controllerName: emailController,
                     textFieldHintText: StringConstants.emailText,
                   ),
                   SizedBox(
@@ -126,9 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        CommonWidgets.emailAndPasswordVerification(context,
-                            emailcontroller: controller,
-                            passwordController: passwordController);
+                        loginScreenVerification(emailController: emailController,passwordController: passwordController);
                       },
                       child: CommonWidgets.commonButton(
                           StringConstants.signInText)),
@@ -136,13 +146,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: DimensionConstants.d30.h,
                   ),
                   GestureDetector(
-                    onTap:() => Navigator.pushNamed(context,RouteConstants.resetPasswordScreen ),
-                    child: const Text(StringConstants.forgetPasswordText).regularText(
-                      ColorConstant.pink,
-                      TextAlign.center,
-                      DimensionConstants.d14.sp),
+                    onTap: () => Navigator.pushNamed(
+                        context, RouteConstants.resetPasswordScreen),
+                    child: const Text(StringConstants.forgetPasswordText)
+                        .regularText(ColorConstant.pink, TextAlign.center,
+                            DimensionConstants.d14.sp),
                   )
-                     
                 ],
               ),
             ),
@@ -209,5 +218,26 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void loginScreenVerification(
+      {TextEditingController? emailController,
+      TextEditingController? passwordController}) {
+    if (emailController!.text.isEmpty) {
+      CommonWidgets.showflushbar(context, StringConstants.unFillEmailText);
+    } else if (!RegExp(StringConstants.emailVerificationText)
+        .hasMatch(emailController.text)) {
+      CommonWidgets.showflushbar(context, StringConstants.emailErrorText);
+    } else if (passwordController!.text.isEmpty) {
+      CommonWidgets.showflushbar(context, StringConstants.unFillPasswordText);
+    } else if (passwordController.text.length < 8) {
+      CommonWidgets.showflushbar(
+          context, StringConstants.passwordLengthErrorText);
+    } else if (!RegExp(StringConstants.passwordVerificationText)
+        .hasMatch(passwordController.text)) {
+      CommonWidgets.showflushbar(context, StringConstants.passwordErrorText);
+    } else {
+      Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen);
+    }
   }
 }
