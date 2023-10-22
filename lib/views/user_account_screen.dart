@@ -4,6 +4,7 @@ import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
+import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -78,121 +79,124 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(DimensionConstants.d30.r),
                         topRight: Radius.circular(DimensionConstants.d30.r))),
-                child: SingleChildScrollView(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(StringConstants.jesicaParker).bold(
-                            ColorConstant.black,
-                            TextAlign.center,
-                            DimensionConstants.d24.sp),
-                        SizedBox(
-                          height: DimensionConstants.d9.h,
-                        ),
-                        const Text(StringConstants.aries).regularText(
+                child: ScrollConfiguration(
+                  behavior: NoGlowScrollBehavior(),
+                  child: SingleChildScrollView(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(StringConstants.jesicaParker).bold(
+                              ColorConstant.black,
+                              TextAlign.center,
+                              DimensionConstants.d24.sp),
+                          SizedBox(
+                            height: DimensionConstants.d9.h,
+                          ),
+                          const Text(StringConstants.aries).regularText(
+                              ColorConstant.black,
+                              TextAlign.start,
+                              DimensionConstants.d14.sp),
+                          SizedBox(
+                            height: DimensionConstants.d30.h,
+                          ),
+                          // zodiac Sign
+                          const Text(StringConstants.zodiacSign).bold(
+                              ColorConstant.black,
+                              TextAlign.center,
+                              DimensionConstants.d16.sp),
+                          SizedBox(
+                            height: DimensionConstants.d9.h,
+                          ),
+                          const Text(StringConstants.aries).regularText(
+                              ColorConstant.black,
+                              TextAlign.start,
+                              DimensionConstants.d14.sp),
+                
+                          SizedBox(
+                            height: DimensionConstants.d30.h,
+                          ),
+                          // location
+                
+                          const Text(StringConstants.location).bold(
+                              ColorConstant.black,
+                              TextAlign.center,
+                              DimensionConstants.d16.sp),
+                          SizedBox(
+                            height: DimensionConstants.d9.h,
+                          ),
+                          const Text(StringConstants.jessicaLoaction).regularText(
+                              ColorConstant.black,
+                              TextAlign.center,
+                              DimensionConstants.d16.sp),
+                          SizedBox(
+                            height: DimensionConstants.d30.h,
+                          ),
+                          // birthday
+                          const Text(StringConstants.birthday).bold(
+                              ColorConstant.black,
+                              TextAlign.center,
+                              DimensionConstants.d16.sp),
+                          SizedBox(
+                            height: DimensionConstants.d9.h,
+                          ),
+                          const Text(StringConstants.birthdayDate).regularText(
+                              ColorConstant.black,
+                              TextAlign.center,
+                              DimensionConstants.d16.sp),
+                
+                          SizedBox(
+                            height: DimensionConstants.d30.h,
+                          ),
+                
+                          // About
+                          const Text(StringConstants.about).bold(
+                              ColorConstant.black,
+                              TextAlign.center,
+                              DimensionConstants.d16.sp),
+                          SizedBox(
+                            height: DimensionConstants.d9.h,
+                          ),
+                
+                          const Text(
+                            StringConstants.jessicaDescription,
+                          ).regularText(
                             ColorConstant.black,
                             TextAlign.start,
-                            DimensionConstants.d14.sp),
-                        SizedBox(
-                          height: DimensionConstants.d30.h,
-                        ),
-                        // zodiac Sign
-                        const Text(StringConstants.zodiacSign).bold(
-                            ColorConstant.black,
-                            TextAlign.center,
-                            DimensionConstants.d16.sp),
-                        SizedBox(
-                          height: DimensionConstants.d9.h,
-                        ),
-                        const Text(StringConstants.aries).regularText(
-                            ColorConstant.black,
-                            TextAlign.start,
-                            DimensionConstants.d14.sp),
-
-                        SizedBox(
-                          height: DimensionConstants.d30.h,
-                        ),
-                        // location
-
-                        const Text(StringConstants.location).bold(
-                            ColorConstant.black,
-                            TextAlign.center,
-                            DimensionConstants.d16.sp),
-                        SizedBox(
-                          height: DimensionConstants.d9.h,
-                        ),
-                        const Text(StringConstants.jessicaLoaction).regularText(
-                            ColorConstant.black,
-                            TextAlign.center,
-                            DimensionConstants.d16.sp),
-                        SizedBox(
-                          height: DimensionConstants.d30.h,
-                        ),
-                        // birthday
-                        const Text(StringConstants.birthday).bold(
-                            ColorConstant.black,
-                            TextAlign.center,
-                            DimensionConstants.d16.sp),
-                        SizedBox(
-                          height: DimensionConstants.d9.h,
-                        ),
-                        const Text(StringConstants.birthdayDate).regularText(
-                            ColorConstant.black,
-                            TextAlign.center,
-                            DimensionConstants.d16.sp),
-
-                        SizedBox(
-                          height: DimensionConstants.d30.h,
-                        ),
-
-                        // About
-                        const Text(StringConstants.about).bold(
-                            ColorConstant.black,
-                            TextAlign.center,
-                            DimensionConstants.d16.sp),
-                        SizedBox(
-                          height: DimensionConstants.d9.h,
-                        ),
-
-                        const Text(
-                          StringConstants.jessicaDescription,
-                        ).regularText(
-                          ColorConstant.black,
-                          TextAlign.start,
-                          DimensionConstants.d14.sp,
-                        ),
-
-                        SizedBox(
-                          height: DimensionConstants.d30.h,
-                        ),
-                        // Interests
-                        const Text(StringConstants.interests).bold(
-                            ColorConstant.black,
-                            TextAlign.center,
-                            DimensionConstants.d16.sp),
-
-                        SizedBox(
-                          height: DimensionConstants.d200.h,
-                          width: MediaQuery.of(context).size.width,
-                          child: GridView.builder(
-                              itemCount: widget.conatinerChildTextValue!.length,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                crossAxisSpacing: DimensionConstants.d7.w,
-                                mainAxisSpacing: DimensionConstants.d10.h,
-                                childAspectRatio: DimensionConstants.d4,
-                              ),
-                              itemBuilder: (context, index) {
-                                return widget
-                                        .conatinerChildTextValue!.isNotEmpty
-                                    ? gradientcontainer(
-                                        containerchildText: widget
-                                            .conatinerChildTextValue![index])
-                                    : const SizedBox();
-                              }),
-                        )
-                      ]),
+                            DimensionConstants.d14.sp,
+                          ),
+                
+                          SizedBox(
+                            height: DimensionConstants.d30.h,
+                          ),
+                          // Interests
+                          const Text(StringConstants.interests).bold(
+                              ColorConstant.black,
+                              TextAlign.center,
+                              DimensionConstants.d16.sp),
+                
+                          SizedBox(
+                            height: DimensionConstants.d200.h,
+                            width: MediaQuery.of(context).size.width,
+                            child: GridView.builder(
+                                itemCount: widget.conatinerChildTextValue!.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: DimensionConstants.d7.w,
+                                  mainAxisSpacing: DimensionConstants.d10.h,
+                                  childAspectRatio: DimensionConstants.d4,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return widget
+                                          .conatinerChildTextValue!.isNotEmpty
+                                      ? gradientcontainer(
+                                          containerchildText: widget
+                                              .conatinerChildTextValue![index])
+                                      : const SizedBox();
+                                }),
+                          )
+                        ]),
+                  ),
                 ),
               ),
             )

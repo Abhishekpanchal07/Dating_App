@@ -3,6 +3,7 @@ import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
+import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -134,24 +135,27 @@ class _UserAccountBottomSheetState extends State<UserAccountBottomSheet> {
                   SizedBox(
                     height: DimensionConstants.d200.h,
                     width: MediaQuery.of(context).size.width,
-                    child: GridView.builder(
-                        itemCount: widget.conatinerChildTextValue!.length,
-                        gridDelegate:
-                            SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: DimensionConstants.d7.w,
-                          mainAxisSpacing: DimensionConstants.d10.h,
-                          childAspectRatio: DimensionConstants.d4,
-                        ),
-                        itemBuilder: (context, index) {
-                          return widget
-                                  .conatinerChildTextValue!.isNotEmpty
-                              ? gradientcontainer(
-                                  containerchildText: widget
-                                      .conatinerChildTextValue![index])
-                              : gradientcontainer(
-                                  containerchildText: StringConstants.gallery);
-                        }),
+                    child: ScrollConfiguration(
+                      behavior: NoGlowScrollBehavior(),
+                      child: GridView.builder(
+                          itemCount: widget.conatinerChildTextValue!.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: DimensionConstants.d7.w,
+                            mainAxisSpacing: DimensionConstants.d10.h,
+                            childAspectRatio: DimensionConstants.d4,
+                          ),
+                          itemBuilder: (context, index) {
+                            return widget
+                                    .conatinerChildTextValue!.isNotEmpty
+                                ? gradientcontainer(
+                                    containerchildText: widget
+                                        .conatinerChildTextValue![index])
+                                : gradientcontainer(
+                                    containerchildText: StringConstants.gallery);
+                          }),
+                    ),
                   )
                 ],
               ),

@@ -1,6 +1,6 @@
 import 'package:demoapp/constants/Image_Constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
-import 'package:demoapp/constants/route_constants.dart';
+import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/widgets/bottom_sheet.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,7 @@ class _UserDetailState extends State<UserDetail> {
                 left: DimensionConstants.d20.w,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen);
+                    Navigator.pop(context);
                   },
                   child: const ImageView(
                     path: ImageConstants.backwardIcon,
@@ -44,8 +44,11 @@ class _UserDetailState extends State<UserDetail> {
               child: SizedBox(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                child: ShowBottomSheet(
-                  conatinerChildTextValue: widget.passedArguments,
+                child: ScrollConfiguration(
+                  behavior: NoGlowScrollBehavior(),
+                  child: ShowBottomSheet(
+                    conatinerChildTextValue: widget.passedArguments,
+                  ),
                 ),
               ),
             ),

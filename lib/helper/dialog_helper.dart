@@ -17,6 +17,7 @@ class DialogHelper extends StatelessWidget {
   final Color? titleColor;
   final VoidCallback? positiveTap;
   final VoidCallback? negativeTap;
+  final double? paddingFromTop;
   const DialogHelper({Key ? key,
   required this.titleValue,
   required this.titleColor,
@@ -28,7 +29,8 @@ class DialogHelper extends StatelessWidget {
   required this.positiveTapContentValue,
   required this.positiveTapcontentValueColor,
   this.negativeTap,
-  this.positiveTap}) : super(key: key);
+  this.positiveTap,
+  this.paddingFromTop}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class DialogHelper extends StatelessWidget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(DimensionConstants.d20.r)),
       child: SizedBox(
-        height: DimensionConstants.d181.h,
+        height: DimensionConstants.d190.h,
         width: DimensionConstants.d374.w,
         child: Padding(
           padding: EdgeInsets.only(top: DimensionConstants.d18.h),
@@ -50,7 +52,7 @@ class DialogHelper extends StatelessWidget {
                 fontWeight: titleValueFontWeight!,
               ),),
               SizedBox(
-                height: DimensionConstants.d10.h,
+                height: DimensionConstants.d15.h,
               ),
               Text(contentValue!).regularText(
                   ColorConstant.color9B9B9B,
@@ -68,7 +70,7 @@ class DialogHelper extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                        top: DimensionConstants.d10.h,
+                        top: paddingFromTop ?? DimensionConstants.d10.h,
                         left: DimensionConstants.d53.w),
                     child: GestureDetector(
                       onTap: negativeTap,
@@ -82,13 +84,13 @@ class DialogHelper extends StatelessWidget {
                     width: DimensionConstants.d55.w,
                   ),
                   Container(
-                    height: DimensionConstants.d80.h,
+                    height: DimensionConstants.d85.h,
                     width: DimensionConstants.d1.w,
                     color: ColorConstant.color9B9B9B,
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        top: DimensionConstants.d10.h,
+                        top: paddingFromTop ?? DimensionConstants.d10.h,
                         left: DimensionConstants.d53.w),
                     child: GestureDetector(
                       onTap: positiveTap,

@@ -5,6 +5,7 @@ import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
+import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/widgets/dropdownlist.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
@@ -70,252 +71,255 @@ class _AddPhotoState extends State<FilterOption> {
                   ColorConstant.bggradientcolor1,
                   ColorConstant.bggradientcolor2
                 ])),
-            child: SingleChildScrollView(
-              child: Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: ImageView(
-                        path: ImageConstants.leftArrowIcon,
-                        height: DimensionConstants.d24.h,
-                        width: DimensionConstants.d24.w,
+            child: ScrollConfiguration(
+              behavior: NoGlowScrollBehavior(),
+              child: SingleChildScrollView(
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: ImageView(
+                          path: ImageConstants.leftArrowIcon,
+                          height: DimensionConstants.d24.h,
+                          width: DimensionConstants.d24.w,
+                        ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, RouteConstants.enableLocation);
-                      },
-                      child: const Text(StringConstants.skipText).mediumText(
-                          ColorConstant.pink,
-                          TextAlign.end,
-                          DimensionConstants.d16.sp),
-                    )
-                  ],
-                ),
-                const Text(StringConstants.filterOption).mediumText(
-                    ColorConstant.headingcolor,
-                    TextAlign.center,
-                    DimensionConstants.d36.sp),
-                SizedBox(
-                  height: DimensionConstants.d5.h,
-                ),
-                const Text(StringConstants.filterOptionScreenText).regularText(
-                    ColorConstant.headingcolor,
-                    TextAlign.center,
-                    DimensionConstants.d16.sp),
-                const Text(StringConstants.filterOptionScreenText1).regularText(
-                    ColorConstant.headingcolor,
-                    TextAlign.center,
-                    DimensionConstants.d16.sp),
-                SizedBox(
-                  height: DimensionConstants.d34.h,
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: const Text(StringConstants.hereto).regularText(
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RouteConstants.enableLocation);
+                        },
+                        child: const Text(StringConstants.skipText).mediumText(
+                            ColorConstant.pink,
+                            TextAlign.end,
+                            DimensionConstants.d16.sp),
+                      )
+                    ],
+                  ),
+                  const Text(StringConstants.filterOption).mediumText(
+                      ColorConstant.headingcolor,
+                      TextAlign.center,
+                      DimensionConstants.d36.sp),
+                  SizedBox(
+                    height: DimensionConstants.d5.h,
+                  ),
+                  const Text(StringConstants.filterOptionScreenText).regularText(
                       ColorConstant.headingcolor,
                       TextAlign.center,
                       DimensionConstants.d16.sp),
-                ),
-                SizedBox(
-                  height: DimensionConstants.d10.h,
-                ),
-                CommonWidgets.gradientContainer(
-                    text: selectedFriendshipInterest ??
-                        StringConstants.makeNewFriends,
-                    imagePath: ImageConstants.dropDownIconFilterScreen,
-                    ontap: () {
-                      setState(() {
-                        newFriends = !newFriends;
-                      });
-                    }),
-                SizedBox(
-                  height: DimensionConstants.d8.h,
-                ),
-                newFriends
-                    ? ShowDropDownList(
-                        listname: showFriendshipCatagory,
-                        onTap: (String title) {
-                          setInterest(title);
-                          newFriends = !newFriends;
-                        },
-                      )
-                    : const SizedBox(),
-                SizedBox(
-                  height: DimensionConstants.d30.h,
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: const Text(StringConstants.wantToMeet).regularText(
+                  const Text(StringConstants.filterOptionScreenText1).regularText(
                       ColorConstant.headingcolor,
                       TextAlign.center,
                       DimensionConstants.d16.sp),
-                ),
-                SizedBox(
-                  height: DimensionConstants.d10.h,
-                ),
-                CommonWidgets.gradientContainer(
-                    text: genderValue ?? StringConstants.female,
-                    imagePath: ImageConstants.dropDownIconFilterScreen,
-                    ontap: () {
-                      setState(() {
-                        onClick = !onClick;
-                      });
-                    }),
-                SizedBox(
-                  height: DimensionConstants.d8.h,
-                ),
-                onClick
-                    ? ShowDropDownList(
-                        listname: genderCatagory,
-                        onTap: (String title) {
-                          setData(title);
-                          onClick = !onClick;
-                        },
-                      )
-                    : const SizedBox(),
-                SizedBox(
-                  height: DimensionConstants.d30.h,
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: const Text(StringConstants.ageRange).regularText(
-                      ColorConstant.headingcolor,
-                      TextAlign.center,
-                      DimensionConstants.d16.sp),
-                ),
-                SizedBox(
-                  height: DimensionConstants.d10.h,
-                ),
-                CommonWidgets.gradientContainer(
-                    text: selectedAge ?? StringConstants.rangeOfAge,
-                    imagePath: ImageConstants.dropDownIconFilterScreen,
-                    ontap: () {
-                      setState(() {
-                        ageRange = !ageRange;
-                      });
-                    }),
-                SizedBox(
-                  height: DimensionConstants.d8.h,
-                ),
-                ageRange
-                    ? ShowDropDownList(
-                        listname: ageRangeValue,
-                        onTap: (String title) {
-                          setAge(title);
-                          ageRange = !ageRange;
-                        },
-                      )
-                    : const SizedBox(),
-                SizedBox(
-                  height: DimensionConstants.d30.h,
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: const Text(StringConstants.preferrLanguage)
-                      .regularText(ColorConstant.headingcolor, TextAlign.center,
-                          DimensionConstants.d16.sp),
-                ),
-                SizedBox(
-                  height: DimensionConstants.d10.h,
-                ),
-                CommonWidgets.gradientContainer(
-                    text: selectedLanguage ?? StringConstants.english,
-                    imagePath: ImageConstants.dropDownIconFilterScreen,
-                    ontap: () {
-                      setState(() {
-                        language = !language;
-                      });
-                    }),
-                SizedBox(
-                  height: DimensionConstants.d8.h,
-                ),
-                language
-                    ? ShowDropDownList(
-                        listname: selectLanguage,
-                        onTap: (String title) {
-                          setLanguage(title);
-                          language = !language;
-                        },
-                      )
-                    : const SizedBox(),
-                SizedBox(
-                  height: DimensionConstants.d30.h,
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: const Text(StringConstants.location).regularText(
-                      ColorConstant.headingcolor,
-                      TextAlign.center,
-                      DimensionConstants.d16.sp),
-                ),
-                SizedBox(
-                  height: DimensionConstants.d10.h,
-                ),
-                CommonWidgets.gradientContainer(
-                    text: StringConstants.cityLocation,
-                    imagePath: ImageConstants.dropDownIconFilterScreen,
-                    ontap: () {
-                      setState(() {
-                        onClick = !onClick;
-                      });
-                    }),
-                SizedBox(
-                  height: DimensionConstants.d30.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(StringConstants.distanceRange).regularText(
+                  SizedBox(
+                    height: DimensionConstants.d34.h,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: const Text(StringConstants.hereto).regularText(
                         ColorConstant.headingcolor,
                         TextAlign.center,
                         DimensionConstants.d16.sp),
-                    const Text(StringConstants.distance).regularText(
-                        ColorConstant.darkpink,
+                  ),
+                  SizedBox(
+                    height: DimensionConstants.d10.h,
+                  ),
+                  CommonWidgets.gradientContainer(
+                      text: selectedFriendshipInterest ??
+                          StringConstants.makeNewFriends,
+                      imagePath: ImageConstants.dropDownIconFilterScreen,
+                      ontap: () {
+                        setState(() {
+                          newFriends = !newFriends;
+                        });
+                      }),
+                  SizedBox(
+                    height: DimensionConstants.d8.h,
+                  ),
+                  newFriends
+                      ? ShowDropDownList(
+                          listname: showFriendshipCatagory,
+                          onTap: (String title) {
+                            setInterest(title);
+                            newFriends = !newFriends;
+                          },
+                        )
+                      : const SizedBox(),
+                  SizedBox(
+                    height: DimensionConstants.d30.h,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: const Text(StringConstants.wantToMeet).regularText(
+                        ColorConstant.headingcolor,
                         TextAlign.center,
                         DimensionConstants.d16.sp),
-                  ],
-                ),
-                SizedBox(
-                  height: DimensionConstants.d30.h,
-                ),
-                SfSliderTheme(
-                    data: SfSliderThemeData(
-                        thumbStrokeColor: ColorConstant.lightred,
-                        thumbColor: ColorConstant.textcolor,
-                        thumbStrokeWidth: DimensionConstants.d2),
-                    child: SfSlider(
-                        inactiveColor: ColorConstant.headingcolor,
-                        activeColor: ColorConstant.lightred,
-                        value: currentValue,
-                        onChanged: (value) {
-                          setState(() {
-                            currentValue = value;
-                          });
-                        })),
-                SizedBox(
-                  height: DimensionConstants.d30.h,
-                ),
-                GestureDetector(
-                    onTap: () {
-                      CommonWidgets.filterScreenValidation(context,
-                          genderValue: genderValue,
-                          selectedLanguage: selectedLanguage,
-                          selectedAge: selectedAge,
-                          selectedFriendshipInterest:
-                              selectedFriendshipInterest);
-                    },
-                    child: CommonWidgets.commonButton(
-                        StringConstants.continueText)),
-                SizedBox(
-                  height: DimensionConstants.d52.h,
-                ),
-              ]),
+                  ),
+                  SizedBox(
+                    height: DimensionConstants.d10.h,
+                  ),
+                  CommonWidgets.gradientContainer(
+                      text: genderValue ?? StringConstants.female,
+                      imagePath: ImageConstants.dropDownIconFilterScreen,
+                      ontap: () {
+                        setState(() {
+                          onClick = !onClick;
+                        });
+                      }),
+                  SizedBox(
+                    height: DimensionConstants.d8.h,
+                  ),
+                  onClick
+                      ? ShowDropDownList(
+                          listname: genderCatagory,
+                          onTap: (String title) {
+                            setData(title);
+                            onClick = !onClick;
+                          },
+                        )
+                      : const SizedBox(),
+                  SizedBox(
+                    height: DimensionConstants.d30.h,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: const Text(StringConstants.ageRange).regularText(
+                        ColorConstant.headingcolor,
+                        TextAlign.center,
+                        DimensionConstants.d16.sp),
+                  ),
+                  SizedBox(
+                    height: DimensionConstants.d10.h,
+                  ),
+                  CommonWidgets.gradientContainer(
+                      text: selectedAge ?? StringConstants.rangeOfAge,
+                      imagePath: ImageConstants.dropDownIconFilterScreen,
+                      ontap: () {
+                        setState(() {
+                          ageRange = !ageRange;
+                        });
+                      }),
+                  SizedBox(
+                    height: DimensionConstants.d8.h,
+                  ),
+                  ageRange
+                      ? ShowDropDownList(
+                          listname: ageRangeValue,
+                          onTap: (String title) {
+                            setAge(title);
+                            ageRange = !ageRange;
+                          },
+                        )
+                      : const SizedBox(),
+                  SizedBox(
+                    height: DimensionConstants.d30.h,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: const Text(StringConstants.preferrLanguage)
+                        .regularText(ColorConstant.headingcolor, TextAlign.center,
+                            DimensionConstants.d16.sp),
+                  ),
+                  SizedBox(
+                    height: DimensionConstants.d10.h,
+                  ),
+                  CommonWidgets.gradientContainer(
+                      text: selectedLanguage ?? StringConstants.english,
+                      imagePath: ImageConstants.dropDownIconFilterScreen,
+                      ontap: () {
+                        setState(() {
+                          language = !language;
+                        });
+                      }),
+                  SizedBox(
+                    height: DimensionConstants.d8.h,
+                  ),
+                  language
+                      ? ShowDropDownList(
+                          listname: selectLanguage,
+                          onTap: (String title) {
+                            setLanguage(title);
+                            language = !language;
+                          },
+                        )
+                      : const SizedBox(),
+                  SizedBox(
+                    height: DimensionConstants.d30.h,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: const Text(StringConstants.location).regularText(
+                        ColorConstant.headingcolor,
+                        TextAlign.center,
+                        DimensionConstants.d16.sp),
+                  ),
+                  SizedBox(
+                    height: DimensionConstants.d10.h,
+                  ),
+                  CommonWidgets.gradientContainer(
+                      text: StringConstants.cityLocation,
+                      imagePath: ImageConstants.dropDownIconFilterScreen,
+                      ontap: () {
+                        setState(() {
+                          onClick = !onClick;
+                        });
+                      }),
+                  SizedBox(
+                    height: DimensionConstants.d30.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(StringConstants.distanceRange).regularText(
+                          ColorConstant.headingcolor,
+                          TextAlign.center,
+                          DimensionConstants.d16.sp),
+                      const Text(StringConstants.distance).regularText(
+                          ColorConstant.darkpink,
+                          TextAlign.center,
+                          DimensionConstants.d16.sp),
+                    ],
+                  ),
+                  SizedBox(
+                    height: DimensionConstants.d30.h,
+                  ),
+                  SfSliderTheme(
+                      data: SfSliderThemeData(
+                          thumbStrokeColor: ColorConstant.lightred,
+                          thumbColor: ColorConstant.textcolor,
+                          thumbStrokeWidth: DimensionConstants.d2),
+                      child: SfSlider(
+                          inactiveColor: ColorConstant.headingcolor,
+                          activeColor: ColorConstant.lightred,
+                          value: currentValue,
+                          onChanged: (value) {
+                            setState(() {
+                              currentValue = value;
+                            });
+                          })),
+                  SizedBox(
+                    height: DimensionConstants.d30.h,
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        CommonWidgets.filterScreenValidation(context,
+                            genderValue: genderValue,
+                            selectedLanguage: selectedLanguage,
+                            selectedAge: selectedAge,
+                            selectedFriendshipInterest:
+                                selectedFriendshipInterest);
+                      },
+                      child: CommonWidgets.commonButton(
+                          StringConstants.continueText)),
+                  SizedBox(
+                    height: DimensionConstants.d52.h,
+                  ),
+                ]),
+              ),
             )));
   }
 

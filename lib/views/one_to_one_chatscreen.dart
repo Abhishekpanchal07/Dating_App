@@ -58,16 +58,21 @@ class _SearchedUserProfileScreenState extends State<OneToOneChatScreen> {
               SizedBox(
                 width: DimensionConstants.d8.w,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(widget.userName).regularText(ColorConstant.black,
-                      TextAlign.center, DimensionConstants.d20.sp),
-                  const Text(StringConstants.online).regularText(
-                      ColorConstant.black.withOpacity(0.4),
-                      TextAlign.center,
-                      DimensionConstants.d12.sp)
-                ],
+              GestureDetector(
+                onTap: () {
+                 // Navigator.pushNamed(context, RouteConstants.userAccountScreen);
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(widget.userName).regularText(ColorConstant.black,
+                        TextAlign.center, DimensionConstants.d20.sp),
+                    const Text(StringConstants.online).regularText(
+                        ColorConstant.black.withOpacity(0.4),
+                        TextAlign.center,
+                        DimensionConstants.d12.sp)
+                  ],
+                ),
               )
             ],
           ),
@@ -258,31 +263,35 @@ class _SearchedUserProfileScreenState extends State<OneToOneChatScreen> {
                   SizedBox(
                     width: DimensionConstants.d5.w,
                   ),
-                  onTap? Expanded(
-                    child: SizedBox(
-                      width: DimensionConstants.d120.w,
-                      child: TextField(
-                        maxLines: 10,
-                        cursorColor: ColorConstant.grey,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: StringConstants.yourMessage,
-                            hintStyle: TextStyle(
-                                color: ColorConstant.black.withOpacity(0.5))),
-                      ),
-                    ),
-                  ) : SizedBox(
-                    width: DimensionConstants.d120.w,
-                    child: TextField(
-                      maxLines: 10,
-                      cursorColor: ColorConstant.grey,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: StringConstants.yourMessage,
-                          hintStyle: TextStyle(
-                              color: ColorConstant.black.withOpacity(0.5))),
-                    ),
-                  ),
+                  onTap
+                      ? Expanded(
+                          child: SizedBox(
+                            width: DimensionConstants.d120.w,
+                            child: TextField(
+                              maxLines: 10,
+                              cursorColor: ColorConstant.grey,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: StringConstants.yourMessage,
+                                  hintStyle: TextStyle(
+                                      color: ColorConstant.black
+                                          .withOpacity(0.5))),
+                            ),
+                          ),
+                        )
+                      : SizedBox(
+                          width: DimensionConstants.d120.w,
+                          child: TextField(
+                            maxLines: 10,
+                            cursorColor: ColorConstant.grey,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: StringConstants.yourMessage,
+                                hintStyle: TextStyle(
+                                    color:
+                                        ColorConstant.black.withOpacity(0.5))),
+                          ),
+                        ),
                 ],
               ),
             ),

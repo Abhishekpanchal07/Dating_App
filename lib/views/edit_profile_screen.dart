@@ -5,6 +5,7 @@ import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/helper/dialog_helper.dart';
+import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/widgets/custom_dialogbox.dart';
 import 'package:demoapp/widgets/dropdownlist.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
@@ -92,10 +93,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 SizedBox(
                   width: DimensionConstants.d78.w,
                 ),
-                const Text(StringConstants.done).regularText(
+               GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child:  const Text(StringConstants.done).regularText(
                     ColorConstant.inboxScreenGradientColor,
                     TextAlign.center,
-                    DimensionConstants.d18.sp)
+                    DimensionConstants.d18.sp),
+               )
               ],
             ),
 
@@ -104,186 +108,226 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             // user pictures
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: DimensionConstants.d230.h,
-                      width: DimensionConstants.d414.w,
-                      child: GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  mainAxisSpacing: DimensionConstants.d20.h,
-                                  mainAxisExtent: DimensionConstants.d145.h,
-                                  crossAxisSpacing: DimensionConstants.d11.w),
-                          itemCount: imagePaths.length + 1,
-                          itemBuilder: (context, index) {
-                            return index == imagePaths.length
-                                ? addImageButton()
-                                : imageContainer(imagePaths[index], index);
+              child: ScrollConfiguration(
+                behavior: NoGlowScrollBehavior(),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: DimensionConstants.d230.h,
+                        width: DimensionConstants.d414.w,
+                        child: ScrollConfiguration(
+                          behavior: NoGlowScrollBehavior(),
+                          child: GridView.builder(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      mainAxisSpacing: DimensionConstants.d20.h,
+                                      mainAxisExtent: DimensionConstants.d145.h,
+                                      crossAxisSpacing: DimensionConstants.d11.w),
+                              itemCount: imagePaths.length + 1,
+                              itemBuilder: (context, index) {
+                                return index == imagePaths.length
+                                    ? addImageButton()
+                                    : imageContainer(imagePaths[index], index);
+                              }),
+                        ),
+                      ),
+                      SizedBox(
+                        height: DimensionConstants.d30.h,
+                      ),
+                      // user location
+                      userLocation(),
+                      SizedBox(
+                        height: DimensionConstants.d30.h,
+                      ),
+                      // user birthday
+                      userBirthday(userdob ?? StringConstants.dateFormat),
+                      SizedBox(
+                        height: DimensionConstants.d7.h,
+                      ),
+                      Container(
+                        height: DimensionConstants.d1.h,
+                        width: DimensionConstants.d374.w,
+                        color: ColorConstant.editScreenTextColor,
+                      ),
+                      SizedBox(
+                        height: DimensionConstants.d6.h,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: const Text(StringConstants.yourAgeWillBePublic)
+                            .regularText(ColorConstant.editScreenTextColor,
+                                TextAlign.center, DimensionConstants.d16.sp),
+                      ),
+                      SizedBox(
+                        height: DimensionConstants.d30.h,
+                      ),
+                      // horoscope lists
+                      CommonWidgets.gradientContainer(
+                          text: horoscopeSelectedvalue ??
+                              StringConstants.zodiacSign,
+                          imagePath: ImageConstants.editProfileScreenDropdownIcon,
+                          height: DimensionConstants.d51.h,
+                          innerContainerHeight: DimensionConstants.d46.h,
+                          textcolor: ColorConstant.black,
+                          fontweight: FontWeight.w700,
+                          paddingFromTop: DimensionConstants.d5.h,
+                          paddingFromBottom: DimensionConstants.d0.h,
+                          ontap: () {
+                            setState(() {
+                              onClick = !onClick;
+                            });
                           }),
-                    ),
-                    SizedBox(
-                      height: DimensionConstants.d30.h,
-                    ),
-                    // user location
-                    userLocation(),
-                    SizedBox(
-                      height: DimensionConstants.d30.h,
-                    ),
-                    // user birthday
-                    userBirthday(userdob ?? StringConstants.dateFormat),
-                    SizedBox(
-                      height: DimensionConstants.d7.h,
-                    ),
-                    Container(
-                      height: DimensionConstants.d1.h,
-                      width: DimensionConstants.d374.w,
-                      color: ColorConstant.editScreenTextColor,
-                    ),
-                    SizedBox(
-                      height: DimensionConstants.d6.h,
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: const Text(StringConstants.yourAgeWillBePublic)
-                          .regularText(ColorConstant.editScreenTextColor,
-                              TextAlign.center, DimensionConstants.d16.sp),
-                    ),
-                    SizedBox(
-                      height: DimensionConstants.d30.h,
-                    ),
-                    // horoscope lists
-                    CommonWidgets.gradientContainer(
-                        text: horoscopeSelectedvalue ??
-                            StringConstants.zodiacSign,
-                        imagePath: ImageConstants.editProfileScreenDropdownIcon,
-                        height: DimensionConstants.d51.h,
-                        innerContainerHeight: DimensionConstants.d46.h,
-                        textcolor: ColorConstant.black,
-                        fontweight: FontWeight.w700,
-                        paddingFromTop: DimensionConstants.d5.h,
-                        paddingFromBottom: DimensionConstants.d0.h,
-                        ontap: () {
-                          setState(() {
-                            onClick = !onClick;
-                          });
-                        }),
-                    SizedBox(
-                      height: DimensionConstants.d10.h,
-                    ),
-                    // dropdown List
-                    onClick
-                        ? ShowDropDownList(
-                            listname: horoscopeList,
-                            onTap: (title) {
-                              setState(() {
-                                selectValue(title);
-                                onClick = !onClick;
-                              });
-                            },
-                          )
-                        : const SizedBox(),
-                    SizedBox(
-                      height: DimensionConstants.d30.h,
-                    ),
-                    // user about
-                    userAbout(),
-                    SizedBox(
-                      height: DimensionConstants.d31.h,
-                    ),
-                    // user interests
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: const Text(StringConstants.interests).bold(
-                          ColorConstant.black,
-                          TextAlign.center,
-                          DimensionConstants.d16.sp),
-                    ),
-
-                    SizedBox(
-                      height: DimensionConstants.d12.h,
-                    ),
-                    SizedBox(
-                      height: DimensionConstants.d100.h,
-                      width: DimensionConstants.d373.w,
-                      child: GridView.builder(
-                          padding: EdgeInsets.zero,
-                          itemCount: 4,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: DimensionConstants.d3,
-                                  mainAxisSpacing: DimensionConstants.d8,
-                                  crossAxisSpacing: DimensionConstants.d15,
-                                  crossAxisCount: 3),
-                          itemBuilder: ((context, index) {
-                            return userInterestsContainer(
-                                containerchildText:
-                                    StringConstants.cookingText);
-                          })),
-                    ),
-                    SizedBox(
-                      height: DimensionConstants.d30.h,
-                    ),
-                    CommonWidgets.gradientContainer(
-                        text:
-                            selectedGenderValue ?? StringConstants.selectGender,
-                        imagePath: ImageConstants.dropDownIcon,
-                        ontap: () {
-                          setState(() {
-                            onTap = !onTap;
-                          });
-                        }),
-                    SizedBox(
-                      height: DimensionConstants.d10.h,
-                    ),
-                    onTap
-                        ? ShowDropDownList(
-                            listname: genderCatagory,
-                            onTap: (title) {
-                              selectGender(title);
+                      SizedBox(
+                        height: DimensionConstants.d10.h,
+                      ),
+                      // dropdown List
+                      onClick
+                          ? ShowDropDownList(
+                              listname: horoscopeList,
+                              onTap: (title) {
+                                setState(() {
+                                  selectValue(title);
+                                  onClick = !onClick;
+                                });
+                              },
+                            )
+                          : const SizedBox(),
+                      SizedBox(
+                        height: DimensionConstants.d30.h,
+                      ),
+                      // user about
+                      userAbout(),
+                      SizedBox(
+                        height: DimensionConstants.d31.h,
+                      ),
+                      // user interests
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: const Text(StringConstants.interests).bold(
+                            ColorConstant.black,
+                            TextAlign.center,
+                            DimensionConstants.d16.sp),
+                      ),
+              
+                      SizedBox(
+                        height: DimensionConstants.d12.h,
+                      ),
+                      SizedBox(
+                        height: DimensionConstants.d100.h,
+                        width: DimensionConstants.d373.w,
+                        child: ScrollConfiguration(
+                          behavior: NoGlowScrollBehavior(),
+                          child: GridView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: 4,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      childAspectRatio: DimensionConstants.d3,
+                                      mainAxisSpacing: DimensionConstants.d8,
+                                      crossAxisSpacing: DimensionConstants.d15,
+                                      crossAxisCount: 3),
+                              itemBuilder: ((context, index) {
+                                return userInterestsContainer(
+                                    containerchildText:
+                                        StringConstants.cookingText);
+                              })),
+                        ),
+                      ),
+                      SizedBox(
+                        height: DimensionConstants.d30.h,
+                      ),
+                      CommonWidgets.gradientContainer(
+                          text:
+                              selectedGenderValue ?? StringConstants.selectGender,
+                          imagePath: ImageConstants.dropDownIcon,
+                          ontap: () {
+                            setState(() {
                               onTap = !onTap;
-                            },
-                          )
-                        : const SizedBox(),
-                    SizedBox(
-                      height: DimensionConstants.d30.h,
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: const Text(StringConstants.manageprofile).semiBold(
-                          ColorConstant.black,
-                          TextAlign.start,
-                          DimensionConstants.d20.sp),
-                    ),
-                    SizedBox(
-                      height: DimensionConstants.d30.h,
-                    ),
-                    // user privacy
-                    userPrivacy(),
-
-                    // logout and delete Account Button
-                    GestureDetector(
+                            });
+                          }),
+                      SizedBox(
+                        height: DimensionConstants.d10.h,
+                      ),
+                      onTap
+                          ? ShowDropDownList(
+                              listname: genderCatagory,
+                              onTap: (title) {
+                                selectGender(title);
+                                onTap = !onTap;
+                              },
+                            )
+                          : const SizedBox(),
+                      SizedBox(
+                        height: DimensionConstants.d30.h,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: const Text(StringConstants.manageprofile).semiBold(
+                            ColorConstant.black,
+                            TextAlign.start,
+                            DimensionConstants.d20.sp),
+                      ),
+                      SizedBox(
+                        height: DimensionConstants.d30.h,
+                      ),
+                      // user privacy
+                      userPrivacy(),
+              
+                      // logout and delete Account Button
+                      GestureDetector(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return DialogHelper(
+                                    titleValue:
+                                        StringConstants.logoutDialogBoxText,
+                                    titleColor: ColorConstant.black,
+                                    titleValueFontWeight: FontWeight.w600,
+                                    titleValueFontSize: DimensionConstants.d24.sp,
+                                    sizedboxheight: DimensionConstants.d18.h,
+                                    positiveTapContentValue:
+                                        StringConstants.logoutDialogBoxText,
+                                    positiveTapcontentValueColor:
+                                        ColorConstant.inboxScreenGradientColor,
+                                    contentValue:
+                                        StringConstants.wantToLogoutText,
+                                    contentValueFontSize:
+                                        DimensionConstants.d15.sp,
+                                    negativeTap: () {
+                                      setState(() {
+                                        Navigator.pop(context);
+                                      });
+                                    },
+                                  );
+                                });
+                          },
+                          child: button(
+                              StringConstants.logout, ColorConstant.black)),
+                      SizedBox(
+                        height: DimensionConstants.d20.h,
+                      ),
+                      GestureDetector(
                         onTap: () {
                           showDialog(
                               context: context,
                               builder: (context) {
                                 return DialogHelper(
                                   titleValue:
-                                      StringConstants.logoutDialogBoxText,
-                                  titleColor: ColorConstant.black,
-                                  titleValueFontWeight: FontWeight.w600,
+                                      StringConstants.deleteAccountDialogBoxText,
+                                  titleColor: ColorConstant.colorF11010,
+                                  titleValueFontWeight: FontWeight.w400,
                                   titleValueFontSize: DimensionConstants.d24.sp,
                                   sizedboxheight: DimensionConstants.d18.h,
-                                  positiveTapContentValue:
-                                      StringConstants.logoutDialogBoxText,
+                                  positiveTapContentValue: StringConstants.delete,
                                   positiveTapcontentValueColor:
-                                      ColorConstant.inboxScreenGradientColor,
+                                      ColorConstant.colorF11010,
                                   contentValue:
-                                      StringConstants.wantToLogoutText,
-                                  contentValueFontSize:
-                                      DimensionConstants.d18.sp,
+                                      StringConstants.wantToDeleteAccountText,
+                                  contentValueFontSize: DimensionConstants.d14.sp,
+                                  paddingFromTop: DimensionConstants.d8.h,
                                   negativeTap: () {
                                     setState(() {
                                       Navigator.pop(context);
@@ -292,45 +336,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 );
                               });
                         },
-                        child: button(
-                            StringConstants.logout, ColorConstant.black)),
-                    SizedBox(
-                      height: DimensionConstants.d20.h,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return DialogHelper(
-                                titleValue:
-                                    StringConstants.deleteAccountDialogBoxText,
-                                titleColor: ColorConstant.colorF11010,
-                                titleValueFontWeight: FontWeight.w400,
-                                titleValueFontSize: DimensionConstants.d24.sp,
-                                sizedboxheight: DimensionConstants.d19.h,
-                                positiveTapContentValue: StringConstants.delete,
-                                positiveTapcontentValueColor:
-                                    ColorConstant.colorF11010,
-                                contentValue:
-                                    StringConstants.wantToDeleteAccountText,
-                                contentValueFontSize: DimensionConstants.d16.sp,
-                                negativeTap: () {
-                                  setState(() {
-                                    Navigator.pop(context);
-                                  });
-                                },
-                              );
-                            });
-                      },
-                      child: button(StringConstants.deleteAccount,
-                          ColorConstant.inboxScreenGradientColor),
-                    ),
-
-                    SizedBox(
-                      height: DimensionConstants.d48.h,
-                    ),
-                  ],
+                        child: button(StringConstants.deleteAccount,
+                            ColorConstant.inboxScreenGradientColor),
+                      ),
+              
+                      SizedBox(
+                        height: DimensionConstants.d48.h,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )

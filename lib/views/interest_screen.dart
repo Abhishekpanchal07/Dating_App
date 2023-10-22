@@ -5,6 +5,7 @@ import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
+import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -101,30 +102,33 @@ class _InterestState extends State<InterestScreen> {
               height: DimensionConstants.d31.h,
             ),
             Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: DimensionConstants.d20.w,
-                    childAspectRatio: DimensionConstants.d3,
-                    crossAxisSpacing: DimensionConstants.d20.h),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectInterest[index] = !selectInterest[index];
-                          String selectedContainerText = containerText[index];
-                          selectInterest[index]
-                              ? passArguments!.add(selectedContainerText)
-                              : passArguments!.remove(selectedContainerText);
-                        });
-                      },
-                      child: selectInterest[index]
-                          ? CommonWidgets.gradientGridViewContainer(
-                              containerText[index])
-                          : CommonWidgets.gridViewContainer(
-                              containerText[index]));
-                },
-                itemCount: containerText.length,
+              child: ScrollConfiguration(
+                behavior: NoGlowScrollBehavior(),
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: DimensionConstants.d20.w,
+                      childAspectRatio: DimensionConstants.d3,
+                      crossAxisSpacing: DimensionConstants.d20.h),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectInterest[index] = !selectInterest[index];
+                            String selectedContainerText = containerText[index];
+                            selectInterest[index]
+                                ? passArguments!.add(selectedContainerText)
+                                : passArguments!.remove(selectedContainerText);
+                          });
+                        },
+                        child: selectInterest[index]
+                            ? CommonWidgets.gradientGridViewContainer(
+                                containerText[index])
+                            : CommonWidgets.gridViewContainer(
+                                containerText[index]));
+                  },
+                  itemCount: containerText.length,
+                ),
               ),
             ),
             SizedBox(

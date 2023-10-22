@@ -4,6 +4,7 @@ import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
+import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/modals/matchscreen_images.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
@@ -20,44 +21,36 @@ class _MatchScreenState extends State<MatchScreen> {
   List<MatchScreenImages> imageData = [
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl:
-            StringConstants.imageurlInboxScreen,
-        age: StringConstants.age ),
+        imageUrl: StringConstants.imageurlInboxScreen,
+        age: StringConstants.age),
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl:
-            StringConstants.imageurlInboxScreen,
-        age: StringConstants.age ),
+        imageUrl: StringConstants.imageurlInboxScreen,
+        age: StringConstants.age),
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl:
-            StringConstants.imageurlInboxScreen,
-        age: StringConstants.age ),
+        imageUrl: StringConstants.imageurlInboxScreen,
+        age: StringConstants.age),
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl:
-            StringConstants.imageurlInboxScreen,
-        age: StringConstants.age ),
+        imageUrl: StringConstants.imageurlInboxScreen,
+        age: StringConstants.age),
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl:
-            StringConstants.imageurlInboxScreen,
-        age: StringConstants.age ),
+        imageUrl: StringConstants.imageurlInboxScreen,
+        age: StringConstants.age),
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl:
-            StringConstants.imageurlInboxScreen,
-        age: StringConstants.age ),
+        imageUrl: StringConstants.imageurlInboxScreen,
+        age: StringConstants.age),
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl:
-            StringConstants.imageurlInboxScreen,
-        age: StringConstants.age ),
+        imageUrl: StringConstants.imageurlInboxScreen,
+        age: StringConstants.age),
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl:
-            StringConstants.imageurlInboxScreen,
-        age: StringConstants.age ),
+        imageUrl: StringConstants.imageurlInboxScreen,
+        age: StringConstants.age),
   ];
 
   @override
@@ -91,8 +84,14 @@ class _MatchScreenState extends State<MatchScreen> {
                 SizedBox(
                   width: DimensionConstants.d23.w,
                 ),
-                const ImageView(
-                  path: ImageConstants.notificationIcon,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, RouteConstants.notificationScreen);
+                  },
+                  child: const ImageView(
+                    path: ImageConstants.notificationIcon,
+                  ),
                 ),
               ],
             ),
@@ -131,27 +130,30 @@ class _MatchScreenState extends State<MatchScreen> {
               width: DimensionConstants.d13.h,
             ),
             Expanded(
-              child: GridView.builder(
-                  itemCount: imageData.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisExtent: DimensionConstants.d174.h,
-                    childAspectRatio: DimensionConstants.d1,
-                    mainAxisSpacing: DimensionConstants.d30.h,
-                    crossAxisSpacing: DimensionConstants.d30.w,
-                  ),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, RouteConstants.userDetailScreen);
-                      },
-                      child: imageContainer(
-                          imageurl: imageData[index].imageUrl,
-                          name: imageData[index].name,
-                          age: imageData[index].age),
-                    );
-                  }),
+              child: ScrollConfiguration(
+                behavior: NoGlowScrollBehavior(),
+                child: GridView.builder(
+                    itemCount: imageData.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisExtent: DimensionConstants.d174.h,
+                      childAspectRatio: DimensionConstants.d1,
+                      mainAxisSpacing: DimensionConstants.d30.h,
+                      crossAxisSpacing: DimensionConstants.d30.w,
+                    ),
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RouteConstants.userDetailScreen);
+                        },
+                        child: imageContainer(
+                            imageurl: imageData[index].imageUrl,
+                            name: imageData[index].name,
+                            age: imageData[index].age),
+                      );
+                    }),
+              ),
             ),
           ],
         ),

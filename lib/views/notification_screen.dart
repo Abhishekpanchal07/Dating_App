@@ -59,8 +59,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
             // App Bar
             Row(
               children: [
-                const ImageView(
-                  path: ImageConstants.leftArrowIcon,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const ImageView(
+                    path: ImageConstants.leftArrowIcon,
+                  ),
                 ),
                 SizedBox(
                   width: DimensionConstants.d87.w,
@@ -84,14 +89,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 child: ScrollConfiguration(
                   behavior: NoGlowScrollBehavior(),
                   child: ListView.builder(
-                   
-                    padding: EdgeInsets.zero,
-                    itemCount: notificationData!.length,
-                    itemBuilder: (context, index) {
-                    return notificationContent(notificationTime: notificationData![index].notificationTime,
-                    notificationTitle: notificationData![index].notificationTitle,
-                   notificationcontent: notificationData![index].notificationContent);
-                  }),
+                      padding: EdgeInsets.zero,
+                      itemCount: notificationData!.length,
+                      itemBuilder: (context, index) {
+                        return notificationContent(
+                            notificationTime:
+                                notificationData![index].notificationTime,
+                            notificationTitle:
+                                notificationData![index].notificationTitle,
+                            notificationcontent:
+                                notificationData![index].notificationContent);
+                      }),
                 ),
               ),
             )

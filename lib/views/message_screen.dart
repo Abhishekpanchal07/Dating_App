@@ -1,7 +1,6 @@
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
-import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
@@ -28,48 +27,44 @@ class _MessageScreenState extends State<MessageScreen> {
             right: DimensionConstants.d20.w),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(left: DimensionConstants.d20.w),
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(
-                          context, RouteConstants.userDetailScreen);
-                    },
-                    child: const ImageView(
-                      path: ImageConstants.leftArrowIcon,
-                    ),
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const ImageView(
+                    path: ImageConstants.leftArrowIcon,
                   ),
-                  SizedBox(
-                    width: DimensionConstants.d17.w,
-                  ),
-                  circularGradientConatiner(
-                      parentConatinerHeight: DimensionConstants.d44.h,
-                      parentConatinerWidth: DimensionConstants.d44.w,
-                      childConatinerHeight: DimensionConstants.d38.h,
-                      childConatinerwidth: DimensionConstants.d38.w,
-                      imageBorderRaius: DimensionConstants.d18,
-                      imageHeight: DimensionConstants.d38.h,
-                      imageWidth: DimensionConstants.d38.w),
-                  SizedBox(
-                    width: DimensionConstants.d8.w,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(StringConstants.grace).regularText(
-                          ColorConstant.black,
-                          TextAlign.center,
-                          DimensionConstants.d20.sp),
-                      const Text(StringConstants.online).regularText(
-                          ColorConstant.black.withOpacity(0.4),
-                          TextAlign.center,
-                          DimensionConstants.d12.sp),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  width: DimensionConstants.d17.w,
+                ),
+                circularGradientConatiner(
+                    parentConatinerHeight: DimensionConstants.d44.h,
+                    parentConatinerWidth: DimensionConstants.d44.w,
+                    childConatinerHeight: DimensionConstants.d38.h,
+                    childConatinerwidth: DimensionConstants.d38.w,
+                    imageBorderRaius: DimensionConstants.d18,
+                    imageHeight: DimensionConstants.d38.h,
+                    imageWidth: DimensionConstants.d38.w),
+                SizedBox(
+                  width: DimensionConstants.d8.w,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(StringConstants.grace).regularText(
+                        ColorConstant.black,
+                        TextAlign.center,
+                        DimensionConstants.d20.sp),
+                    const Text(StringConstants.online).regularText(
+                        ColorConstant.black.withOpacity(0.4),
+                        TextAlign.center,
+                        DimensionConstants.d12.sp),
+                  ],
+                ),
+              ],
             ),
             SizedBox(
               height: DimensionConstants.d50.h,

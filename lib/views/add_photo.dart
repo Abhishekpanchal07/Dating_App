@@ -5,6 +5,7 @@ import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
+import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/widgets/custom_dialogbox.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
@@ -81,18 +82,21 @@ class _AddPhotoState extends State<AddPhoto> {
                 TextAlign.center,
                 DimensionConstants.d16.sp),
             Expanded(
-                child: GridView.builder(
-                    itemCount: imagePaths.length + 1,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: DimensionConstants.d30.w,
-                        mainAxisExtent: DimensionConstants.d150.h,
-                        crossAxisSpacing: DimensionConstants.d20.h),
-                    itemBuilder: (context, index) {
-                      return index == imagePaths.length
-                          ? addImageButton()
-                          : imageContainer(imagePaths[index], index);
-                    })),
+                child: ScrollConfiguration(
+                  behavior: NoGlowScrollBehavior(),
+                  child: GridView.builder(
+                      itemCount: imagePaths.length + 1,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          mainAxisSpacing: DimensionConstants.d30.w,
+                          mainAxisExtent: DimensionConstants.d150.h,
+                          crossAxisSpacing: DimensionConstants.d20.h),
+                      itemBuilder: (context, index) {
+                        return index == imagePaths.length
+                            ? addImageButton()
+                            : imageContainer(imagePaths[index], index);
+                      }),
+                )),
             SizedBox(
               height: DimensionConstants.d30.h,
             ),
@@ -178,7 +182,7 @@ class _AddPhotoState extends State<AddPhoto> {
 
   Widget imageContainer(String imagePath, int index) {
     return Container(
-      height: DimensionConstants.d130.w,
+      height: DimensionConstants.d150.h,
       width: DimensionConstants.d111.w,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(DimensionConstants.d50.r)),
@@ -186,11 +190,13 @@ class _AddPhotoState extends State<AddPhoto> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(DimensionConstants.d14.r),
-            child: Image.asset(imagePath,fit: BoxFit.cover,)
-            // ImageView(
-            //   path: imagePath,
-            //   fit: BoxFit.cover,
-            // ),
+            child:
+            ImageView(
+              path: imagePath,
+               height: DimensionConstants.d150.h,
+               width: DimensionConstants.d111.w,
+               fit: BoxFit.cover,
+            ),
           ),
           Positioned(
             top: DimensionConstants.d15.h,
