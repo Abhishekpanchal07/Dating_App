@@ -1,7 +1,7 @@
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
-import 'package:demoapp/views/enable_location.dart';
+import 'package:demoapp/views/homepage_bottom_navigation.dart';
 import 'package:demoapp/views/inbox_screen.dart';
 import 'package:demoapp/views/matches.dart';
 import 'package:demoapp/views/user_account_screen.dart';
@@ -20,7 +20,7 @@ class _DashboardScreenState extends State<BottomNavigationScreen> {
   int currentIndex = 0;
   bool onClick = false;
   List<Widget> screeens = [
-    const EnableLocation(),
+    const HomePageBottomNavigationScreen(),
     const MatchScreen(),
     const InboxScreen(),
     const UserAccountScreen(conatinerChildTextValue: [],),

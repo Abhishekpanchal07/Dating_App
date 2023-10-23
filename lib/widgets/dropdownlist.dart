@@ -1,6 +1,7 @@
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/extension/all_extension.dart';
+import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -41,21 +42,24 @@ class ShowDropDownList extends StatelessWidget {
                 vertical: DimensionConstants.d13.h),
             child: Align(
               alignment: Alignment.topLeft,
-              child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemCount: listname!.length,
-                  itemExtent: DimensionConstants.d35,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        onTap!(listname![index]);
-                      },
-                      child: Text(listname![index]).regularText(
-                          ColorConstant.grey,
-                          TextAlign.start,
-                          DimensionConstants.d16.sp),
-                    );
-                  }),
+              child: ScrollConfiguration(
+                behavior: NoGlowScrollBehavior(),
+                child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    itemCount: listname!.length,
+                    itemExtent: DimensionConstants.d35,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          onTap!(listname![index]);
+                        },
+                        child: Text(listname![index]).regularText(
+                            ColorConstant.grey,
+                            TextAlign.start,
+                            DimensionConstants.d16.sp),
+                      );
+                    }),
+              ),
             ),
           ),
         ));

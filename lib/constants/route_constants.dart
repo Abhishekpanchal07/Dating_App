@@ -28,4 +28,5 @@ static const recoverAccountScreen = 'AccountRecoveryScreen';
 static const otpVerificationScreen = 'OtpVerificationScreen';
 static const forwardPasswordScreen = 'ForwardPasswordScreen';
 static const createNewPasswordScreen = 'CreateNewPasswordScreen';
+static const homepageScreenBottomNavigation = 'homepageScreenBottomNavigation';
 }

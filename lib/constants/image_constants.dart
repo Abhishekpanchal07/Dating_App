@@ -55,6 +55,20 @@ static const editProfileIcon =  "assets/images/edit_icon.svg";
 static const editProfileScreenLocationIcon =  "assets/images/edit_profile_Screen_location_icon.svg";
 static const editProfileScreenDropdownIcon =  "assets/images/edit_profile_screen_dropdown_icon.svg";
 static const notificationDotIcon =  "assets/images/notification_dot_icon.svg";
+static const likeIconHomePage =  "assets/images/Like_icon_homepage.svg";
+static const dislikeIconHomePage =  "assets/images/dislike_icon_homepage.svg";
+static const homepageGirlPic =  "assets/images/homepage_girlpic.png";
+static const crossMarkIcon =  "assets/images/cross_icon_homepage.svg";
+static const heartIcon =  "assets/images/heart_icon.svg";
+static const testingImage =  "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww";
+static const testingImage1 =  "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww";
+static const testingImage2 =  "https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww";
+
+static const testingImage3 =  "https://images.unsplash.com/photo-1530785602389-07594beb8b73?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHJhbmRvbSUyMHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D";
+static const testingImage4 =  "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHJhbmRvbSUyMHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D";
+static const testingImage5 =  "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHJhbmRvbSUyMHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D";
+
+
 
 
 }

@@ -11,6 +11,7 @@ import 'package:demoapp/views/edit_profile_screen.dart';
 import 'package:demoapp/views/enable_location.dart';
 import 'package:demoapp/views/filter_option.dart';
 import 'package:demoapp/views/forward_password.dart';
+import 'package:demoapp/views/homepage_bottom_navigation.dart';
 import 'package:demoapp/views/inbox_screen.dart';
 import 'package:demoapp/views/interest_screen.dart';
 import 'package:demoapp/views/find_your_best_match.dart';
@@ -39,8 +40,7 @@ class MyRoutes {
       case RouteConstants.splashPage:
         return MaterialPageRoute(builder: (_) => const FirstScreen());
       case RouteConstants.findYourMatchScreen:
-        return MaterialPageRoute(
-            builder: (_) => const FindYourBestMatchScreen());
+        return MaterialPageRoute( builder: (_) => const FindYourBestMatchScreen());
       case RouteConstants.signInScreen:
         return MaterialPageRoute(builder: (_) => const SignInScreen());
       case RouteConstants.signInOptionScreen:
@@ -62,8 +62,7 @@ class MyRoutes {
       case RouteConstants.enableLocation:
         return MaterialPageRoute(builder: (_) => const EnableLocation());
       case RouteConstants.bottonNavigationScreen:
-        return MaterialPageRoute(
-            builder: (_) => const BottomNavigationScreen());
+        return MaterialPageRoute( builder: (_) => const BottomNavigationScreen());
       case RouteConstants.sendMessageScreen:
         return MaterialPageRoute(builder: (_) => const SendMessageScreen());
       case RouteConstants.signInWithNameScreen:
@@ -71,7 +70,7 @@ class MyRoutes {
       case RouteConstants.matchScreen:
         return MaterialPageRoute(builder: (_) => const MatchScreen());
       case RouteConstants.userDetailScreen:
-      final  args   = settings.arguments as List? ;
+      final  args   = settings.arguments as List? ; 
         return MaterialPageRoute(builder: (_) =>  UserDetail(passedArguments: args ?? [],));
       case RouteConstants.showBottomSheetScreen:
         return MaterialPageRoute(builder: (_) =>  const ShowBottomSheet(conatinerChildTextValue: [],));
@@ -96,6 +95,8 @@ class MyRoutes {
         return MaterialPageRoute(builder: (_) =>  const ForwardPassword ());
         case RouteConstants.createNewPasswordScreen:
         return MaterialPageRoute(builder: (_) =>  const CreateNewPasswordScreen ());
+        case RouteConstants.homepageScreenBottomNavigation:
+        return MaterialPageRoute(builder: (_) =>  const HomePageBottomNavigationScreen ());
  }
     return MaterialPageRoute(
         builder: (_) => Scaffold(
