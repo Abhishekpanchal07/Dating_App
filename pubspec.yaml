@@ -57,6 +57,8 @@ dependencies:
   toggle_switch: ^2.1.0
   # for 
   smooth_page_indicator: ^1.1.0
+  # for swipe the cards left , Right
+  swipe_cards: ^2.0.0+1
 
 
   # The following adds the Cupertino Icons font to your application.

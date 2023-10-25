@@ -3,6 +3,7 @@ import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
+import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -82,78 +83,81 @@ class _SearchedUserProfileScreenState extends State<OneToOneChatScreen> {
           // user chat
 
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        height: DimensionConstants.d1.h,
-                        width: DimensionConstants.d157.w,
-                        color: ColorConstant.offwhite,
-                      ),
-                      SizedBox(
-                        width: DimensionConstants.d5.w,
-                      ),
-                      const Text(StringConstants.todayText).regularText(
-                          ColorConstant.black,
-                          TextAlign.center,
-                          DimensionConstants.d12.sp),
-                      SizedBox(
-                        width: DimensionConstants.d5.w,
-                      ),
-                      Container(
-                        height: DimensionConstants.d1.h,
-                        width: DimensionConstants.d159.w,
-                        color: ColorConstant.offwhite,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: DimensionConstants.d10.h,
-                  ),
-                  messageContainer(
-                      containerBgColor: ColorConstant.dashboardGradientColor1
-                          .withOpacity(0.2),
-                      containerChildText: StringConstants.hiJakeText,
-                      aligmentValue: Alignment.topLeft),
-                  SizedBox(
-                    height: DimensionConstants.d4.h,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: const Text(StringConstants.messageSendTime)
-                        .regularText(ColorConstant.black.withOpacity(0.4),
-                            TextAlign.center, DimensionConstants.d12.sp),
-                  ),
-                  SizedBox(
-                    height: DimensionConstants.d10.h,
-                  ),
-                  messageContainer(
-                      containerBgColor:
-                          ColorConstant.searchUserScreenContainerColor,
-                      containerChildText: StringConstants.replyofhiJakeText,
-                      aligmentValue: Alignment.topRight),
-                  SizedBox(
-                    height: DimensionConstants.d15.h,
-                  ),
-                  messageSeen(StringConstants.messageSeenTime),
-                  SizedBox(
-                    height: DimensionConstants.d10.h,
-                  ),
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: ImageView(
-                        path: ImageConstants.userDetailScreenGirlImage,
-                        height: DimensionConstants.d248.h,
-                        width: DimensionConstants.d199.w,
-                        radius: DimensionConstants.d5.r,
-                      )),
-                  SizedBox(
-                    height: DimensionConstants.d15.h,
-                  ),
-                  messageSeen(StringConstants.messageSeenTime),
-                ],
+            child: ScrollConfiguration(
+              behavior: NoGlowScrollBehavior(),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          height: DimensionConstants.d1.h,
+                          width: DimensionConstants.d157.w,
+                          color: ColorConstant.offwhite,
+                        ),
+                        SizedBox(
+                          width: DimensionConstants.d5.w,
+                        ),
+                        const Text(StringConstants.todayText).regularText(
+                            ColorConstant.black,
+                            TextAlign.center,
+                            DimensionConstants.d12.sp),
+                        SizedBox(
+                          width: DimensionConstants.d5.w,
+                        ),
+                        Container(
+                          height: DimensionConstants.d1.h,
+                          width: DimensionConstants.d159.w,
+                          color: ColorConstant.offwhite,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: DimensionConstants.d10.h,
+                    ),
+                    messageContainer(
+                        containerBgColor: ColorConstant.dashboardGradientColor1
+                            .withOpacity(0.2),
+                        containerChildText: StringConstants.hiJakeText,
+                        aligmentValue: Alignment.topLeft),
+                    SizedBox(
+                      height: DimensionConstants.d4.h,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: const Text(StringConstants.messageSendTime)
+                          .regularText(ColorConstant.black.withOpacity(0.4),
+                              TextAlign.center, DimensionConstants.d12.sp),
+                    ),
+                    SizedBox(
+                      height: DimensionConstants.d10.h,
+                    ),
+                    messageContainer(
+                        containerBgColor:
+                            ColorConstant.searchUserScreenContainerColor,
+                        containerChildText: StringConstants.replyofhiJakeText,
+                        aligmentValue: Alignment.topRight),
+                    SizedBox(
+                      height: DimensionConstants.d15.h,
+                    ),
+                    messageSeen(StringConstants.messageSeenTime),
+                    SizedBox(
+                      height: DimensionConstants.d10.h,
+                    ),
+                    Align(
+                        alignment: Alignment.topRight,
+                        child: ImageView(
+                          path: ImageConstants.userDetailScreenGirlImage,
+                          height: DimensionConstants.d248.h,
+                          width: DimensionConstants.d199.w,
+                          radius: DimensionConstants.d5.r,
+                        )),
+                    SizedBox(
+                      height: DimensionConstants.d15.h,
+                    ),
+                    messageSeen(StringConstants.messageSeenTime),
+                  ],
+                ),
               ),
             ),
           ),

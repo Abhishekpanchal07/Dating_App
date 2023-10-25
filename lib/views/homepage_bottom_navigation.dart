@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:swipe_cards/swipe_cards.dart';
 
 class HomePageBottomNavigationScreen extends StatefulWidget {
   const HomePageBottomNavigationScreen({super.key});
@@ -22,36 +23,73 @@ class HomePageBottomNavigationScreen extends StatefulWidget {
 class _HomePageBottomNavigationScreenState
     extends State<HomePageBottomNavigationScreen> {
   final pagecontroller = PageController();
+  final List<SwipeItem> _swipeItems = <SwipeItem>[];
+  late MatchEngine _matchEngine;
+  bool showLikeContainer = false;
+  bool showRejectCard = false;
+
   List<HomepageDetailsOfUser> userDetails = [
     HomepageDetailsOfUser(
         name: StringConstants.jesicaParker,
         horoscopeValue: StringConstants.aries,
         userImage: StringConstants.imageurlInboxScreen),
-         HomepageDetailsOfUser(
+    HomepageDetailsOfUser(
         name: StringConstants.jesicaParker,
         horoscopeValue: StringConstants.aries,
         userImage: ImageConstants.testingImage),
-         HomepageDetailsOfUser(
+    HomepageDetailsOfUser(
         name: StringConstants.jesicaParker,
         horoscopeValue: StringConstants.aries,
-        userImage:ImageConstants.testingImage1 ),
-         HomepageDetailsOfUser(
+        userImage: ImageConstants.testingImage1),
+    HomepageDetailsOfUser(
         name: StringConstants.jesicaParker,
         horoscopeValue: StringConstants.aries,
         userImage: ImageConstants.testingImage2),
-         HomepageDetailsOfUser(
+    HomepageDetailsOfUser(
         name: StringConstants.jesicaParker,
         horoscopeValue: StringConstants.aries,
         userImage: ImageConstants.testingImage3),
-         HomepageDetailsOfUser(
+    HomepageDetailsOfUser(
         name: StringConstants.jesicaParker,
         horoscopeValue: StringConstants.aries,
         userImage: ImageConstants.testingImage4),
-         HomepageDetailsOfUser(
+    HomepageDetailsOfUser(
         name: StringConstants.jesicaParker,
         horoscopeValue: StringConstants.aries,
         userImage: ImageConstants.testingImage5),
   ];
+  @override
+  void initState() {
+    for (var i = 0; i < userDetails.length; i++) {
+      _swipeItems.add(SwipeItem(
+          likeAction: () {
+          
+          },
+          nopeAction: () {
+            Card(
+              shape: const CircleBorder(),
+              elevation: DimensionConstants.d5,
+              child: Container(
+                decoration: const BoxDecoration(
+                    color: ColorConstant.textcolor, shape: BoxShape.circle),
+                height: DimensionConstants.d80.h,
+                width: DimensionConstants.d80.w,
+                child: const Padding(
+                  padding: EdgeInsets.all(DimensionConstants.d15),
+                  child: ImageView(
+                    fit: BoxFit.cover,
+                    path: ImageConstants.crossMarkIcon,
+                  ),
+                ),
+              ),
+            );
+          },
+          superlikeAction: () {}));
+    }
+    _matchEngine = MatchEngine(swipeItems: _swipeItems);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,24 +133,33 @@ class _HomePageBottomNavigationScreenState
                 behavior: NoGlowScrollBehavior(),
                 child: GestureDetector(
                   onTapUp: (details) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    if (details.localPosition.dx > screenWidth / 2) {
-      // Tap on right side, show next image
-      pagecontroller.nextPage(
-          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-    } else {
-      // Tap on left side, show previous image
-      pagecontroller.previousPage(
-          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-    }
-  },
+                    double screenWidth = MediaQuery.of(context).size.width;
+                    if (details.localPosition.dx > screenWidth / 2) {
+                      // Tap on right side, show next image
+
+                      pagecontroller.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut);
+                    } else {
+                      // Tap on left side, show previous image
+                      pagecontroller.previousPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut);
+                    }
+                  },
                   child: PageView.builder(
-                    itemCount: userDetails.length,
-                    controller: pagecontroller,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                    return imageContainer(pageControllerValue: userDetails.length,imagePath: userDetails[index].userImage);
-                  }),
+                      itemCount: userDetails.length,
+                      controller: pagecontroller,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return SwipeCards(
+                          matchEngine: _matchEngine,
+                          itemBuilder: (context, index) => imageContainer(
+                              pageControllerValue: userDetails.length,
+                              imagePath: userDetails[index].userImage),
+                          onStackFinished: () {},
+                        );
+                      }),
                 ),
               ),
             ),
@@ -125,21 +172,25 @@ class _HomePageBottomNavigationScreenState
                 height: DimensionConstants.d80.h,
                 child: Row(
                   children: [
-                    Card(
-                      shape: const CircleBorder(),
-                      elevation: DimensionConstants.d5,
-                      
-                      child: Container(
-                        decoration: const BoxDecoration(
-                            color: ColorConstant.textcolor,
-                            shape: BoxShape.circle),
-                        height: DimensionConstants.d80.h,
-                        width: DimensionConstants.d80.w,
-                        child: const Padding(
-                          padding: EdgeInsets.all(DimensionConstants.d15),
-                          child: ImageView(
-                            fit: BoxFit.cover,
-                            path: ImageConstants.crossMarkIcon,
+                    GestureDetector(
+                      onTap: () {
+                       // swipeLeft();
+                      },
+                      child: Card(
+                        shape: const CircleBorder(),
+                        elevation: DimensionConstants.d5,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              color: ColorConstant.textcolor,
+                              shape: BoxShape.circle),
+                          height: DimensionConstants.d80.h,
+                          width: DimensionConstants.d80.w,
+                          child: const Padding(
+                            padding: EdgeInsets.all(DimensionConstants.d15),
+                            child: ImageView(
+                              fit: BoxFit.cover,
+                              path: ImageConstants.crossMarkIcon,
+                            ),
                           ),
                         ),
                       ),
@@ -147,16 +198,25 @@ class _HomePageBottomNavigationScreenState
                     SizedBox(
                       width: DimensionConstants.d30.w,
                     ),
-                    Container(
-                      decoration: const BoxDecoration(
-                          color: ColorConstant.red, shape: BoxShape.circle),
-                      height: DimensionConstants.d80.h,
-                      width: DimensionConstants.d80.w,
-                      child: const Padding(
-                        padding: EdgeInsets.all(DimensionConstants.d15),
-                        child: ImageView(
-                          fit: BoxFit.cover,
-                          path: ImageConstants.heartIcon,
+                    GestureDetector(
+                      onTap: () {
+                       // swipeRight();
+                        // Simulate swipe right (like action)
+    int currentIndex = pagecontroller.page?.toInt() ?? 0;
+    pagecontroller.animateToPage(currentIndex + 1,
+        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                      },
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            color: ColorConstant.red, shape: BoxShape.circle),
+                        height: DimensionConstants.d80.h,
+                        width: DimensionConstants.d80.w,
+                        child: const Padding(
+                          padding: EdgeInsets.all(DimensionConstants.d15),
+                          child: ImageView(
+                            fit: BoxFit.cover,
+                            path: ImageConstants.heartIcon,
+                          ),
                         ),
                       ),
                     ),
@@ -195,19 +255,15 @@ class _HomePageBottomNavigationScreenState
                 padding: EdgeInsets.only(
                   top: DimensionConstants.d15.h,
                   left: DimensionConstants.d20.w,
-                  
                 ),
                 decoration: BoxDecoration(
-                   color: ColorConstant.black.withOpacity(0.4),
-    
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(DimensionConstants.d15.r),
-                    bottomRight: Radius.circular(DimensionConstants.d15.r),
-                  )
-                ),
+                    color: ColorConstant.black.withOpacity(0.4),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(DimensionConstants.d15.r),
+                      bottomRight: Radius.circular(DimensionConstants.d15.r),
+                    )),
                 height: DimensionConstants.d100.h,
                 width: DimensionConstants.d375.w,
-               
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -228,15 +284,44 @@ class _HomePageBottomNavigationScreenState
               child: SmoothPageIndicator(
                 controller: pagecontroller,
                 count: pageControllerValue!,
-                effect:   JumpingDotEffect(
-                      activeDotColor: ColorConstant.textcolor,
-                      dotColor: ColorConstant.black.withOpacity(0.4),
-                      dotWidth: DimensionConstants.d20.w,
-                      dotHeight:DimensionConstants.d5.h  ),
-              ))
+                effect: JumpingDotEffect(
+                    activeDotColor: ColorConstant.textcolor,
+                    dotColor: ColorConstant.black.withOpacity(0.4),
+                    dotWidth: DimensionConstants.d20.w,
+                    dotHeight: DimensionConstants.d5.h),
+              )),
+          showLikeContainer
+              ? Positioned(
+                  top: DimensionConstants.d190.h,
+                  left: DimensionConstants.d150.w,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        color: ColorConstant.red, shape: BoxShape.circle),
+                    height: DimensionConstants.d80.h,
+                    width: DimensionConstants.d80.w,
+                    child: const Padding(
+                      padding: EdgeInsets.all(DimensionConstants.d15),
+                      child: ImageView(
+                        fit: BoxFit.cover,
+                        path: ImageConstants.heartIcon,
+                      ),
+                    ),
+                  ))
+              : const SizedBox()
         ],
       ),
     );
   }
- 
+
+  // void swipeRight() {
+  //   int currentIndex = pagecontroller.page?.toInt() ?? 0;
+  //   pagecontroller.animateToPage(currentIndex + 1,
+  //       duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+  // }
+
+  // void swipeLeft() {
+  //   int currentIndex = pagecontroller.page?.toInt() ?? 0;
+  //   pagecontroller.animateToPage(currentIndex - 1,
+  //       duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+  // }
 }
