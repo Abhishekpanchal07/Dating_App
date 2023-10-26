@@ -2,15 +2,13 @@ import 'package:demoapp/constants/Dimension_Constant.dart';
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
-import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
-import 'package:demoapp/modals/homePage_data.dart';
+import 'package:demoapp/modals/drag_widget.dart';
+import 'package:demoapp/modals/homepage_data.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:swipe_cards/swipe_cards.dart';
 
 class HomePageBottomNavigationScreen extends StatefulWidget {
   const HomePageBottomNavigationScreen({super.key});
@@ -21,12 +19,9 @@ class HomePageBottomNavigationScreen extends StatefulWidget {
 }
 
 class _HomePageBottomNavigationScreenState
-    extends State<HomePageBottomNavigationScreen> {
-  final pagecontroller = PageController();
-  final List<SwipeItem> _swipeItems = <SwipeItem>[];
-  late MatchEngine _matchEngine;
-  bool showLikeContainer = false;
-  bool showRejectCard = false;
+    extends State<HomePageBottomNavigationScreen>  with SingleTickerProviderStateMixin {
+  
+  ValueNotifier<Swipe> swipeNotifier = ValueNotifier(Swipe.none);
 
   List<HomepageDetailsOfUser> userDetails = [
     HomepageDetailsOfUser(
@@ -58,37 +53,24 @@ class _HomePageBottomNavigationScreenState
         horoscopeValue: StringConstants.aries,
         userImage: ImageConstants.testingImage5),
   ];
+  late final AnimationController _animationController;
+
   @override
   void initState() {
-    for (var i = 0; i < userDetails.length; i++) {
-      _swipeItems.add(SwipeItem(
-          likeAction: () {
-          
-          },
-          nopeAction: () {
-            Card(
-              shape: const CircleBorder(),
-              elevation: DimensionConstants.d5,
-              child: Container(
-                decoration: const BoxDecoration(
-                    color: ColorConstant.textcolor, shape: BoxShape.circle),
-                height: DimensionConstants.d80.h,
-                width: DimensionConstants.d80.w,
-                child: const Padding(
-                  padding: EdgeInsets.all(DimensionConstants.d15),
-                  child: ImageView(
-                    fit: BoxFit.cover,
-                    path: ImageConstants.crossMarkIcon,
-                  ),
-                ),
-              ),
-            );
-          },
-          superlikeAction: () {}));
-    }
-    _matchEngine = MatchEngine(swipeItems: _swipeItems);
     super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        userDetails.removeLast();
+        _animationController.reset();
+        swipeNotifier.value = Swipe.none;
+      }
+    });
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -131,36 +113,123 @@ class _HomePageBottomNavigationScreenState
               width: DimensionConstants.d375.w,
               child: ScrollConfiguration(
                 behavior: NoGlowScrollBehavior(),
-                child: GestureDetector(
-                  onTapUp: (details) {
-                    double screenWidth = MediaQuery.of(context).size.width;
-                    if (details.localPosition.dx > screenWidth / 2) {
-                      // Tap on right side, show next image
-
-                      pagecontroller.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut);
-                    } else {
-                      // Tap on left side, show previous image
-                      pagecontroller.previousPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut);
-                    }
-                  },
-                  child: PageView.builder(
-                      itemCount: userDetails.length,
-                      controller: pagecontroller,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return SwipeCards(
-                          matchEngine: _matchEngine,
-                          itemBuilder: (context, index) => imageContainer(
-                              pageControllerValue: userDetails.length,
-                              imagePath: userDetails[index].userImage),
-                          onStackFinished: () {},
-                        );
-                      }),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: ValueListenableBuilder(
+                        valueListenable: swipeNotifier,
+                        builder: (context, swipe, _) => Stack(
+                          clipBehavior: Clip.none,
+                          alignment: Alignment.center,
+                          children: List.generate(userDetails.length, (index) {
+                            if (index == userDetails.length - 1) {
+                              return PositionedTransition(
+                                  rect: RelativeRectTween(
+                                    begin: RelativeRect.fromSize(
+                                        const Rect.fromLTWH(0, 0, 580, 340),
+                                        const Size(580, 340)),
+                                    end: RelativeRect.fromSize(
+                                        Rect.fromLTWH(
+                                            swipe != Swipe.none
+                                                ? swipe == Swipe.left
+                                                    ? -300
+                                                    : 300
+                                                : 0,
+                                            0,
+                                            580,
+                                            340),
+                                        const Size(580, 340)),
+                                  ).animate(CurvedAnimation(
+                                    parent: _animationController,
+                                    curve: Curves.easeInOut,
+                                  )),
+                                  child: RotationTransition(
+                                      turns: Tween<double>(
+                                              begin: 0,
+                                              end: swipe != Swipe.none
+                                                  ? swipe == Swipe.left
+                                                      ? -0.1 * 0.3
+                                                      : 0.1 * 0.3
+                                                  : 0.0)
+                                          .animate(
+                                        CurvedAnimation(
+                                          parent: _animationController,
+                                          curve: const Interval(0, 0.4,
+                                              curve: Curves.easeInOut),
+                                        ),
+                                      ),
+                                      child: DragWidget(
+                                        homepageDetailsOfUser:
+                                            userDetails[index],
+                                        index: index,
+                                        swipeNotifier: swipeNotifier,
+                                        isLastCard: true,
+                                      )));
+                            }
+                            else {
+                  return DragWidget(
+                    homepageDetailsOfUser: userDetails[index],
+                    index: index,
+                    swipeNotifier: swipeNotifier, 
+                    
+                  );
+                }
+                          }),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 0,
+                      child: DragTarget<int>(
+                        builder: (
+                          BuildContext context,
+                          List<dynamic> accepted,
+                          List<dynamic> rejected,
+                        ) {
+                          return IgnorePointer(
+                            child: Container(
+                              height: 700.0,
+                              width: 80.0,
+                              color: Colors.transparent,
+                            ),
+                          );
+                        },
+                        onAccept: (int index) {
+                          setState(() {
+                            userDetails.removeAt(index);
+                          });
+                        },
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      child: DragTarget<int>(
+                        builder: (
+                          BuildContext context,
+                          List<dynamic> accepted,
+                          List<dynamic> rejected,
+                        ) {
+                          return IgnorePointer(
+                            child: Container(
+                              height: 700.0,
+                              width: 80.0,
+                              color: Colors.transparent,
+                            ),
+                          );
+                        },
+                        onAccept: (int index) {
+                          setState(() {
+                            userDetails.removeAt(index);
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
+
+                
               ),
             ),
             SizedBox(
@@ -174,7 +243,9 @@ class _HomePageBottomNavigationScreenState
                   children: [
                     GestureDetector(
                       onTap: () {
-                       // swipeLeft();
+                         swipeNotifier.value = Swipe.left;
+                    _animationController.forward();
+                        
                       },
                       child: Card(
                         shape: const CircleBorder(),
@@ -200,11 +271,9 @@ class _HomePageBottomNavigationScreenState
                     ),
                     GestureDetector(
                       onTap: () {
-                       // swipeRight();
-                        // Simulate swipe right (like action)
-    int currentIndex = pagecontroller.page?.toInt() ?? 0;
-    pagecontroller.animateToPage(currentIndex + 1,
-        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                         swipeNotifier.value = Swipe.right;
+                    _animationController.forward();
+                        
                       },
                       child: Container(
                         decoration: const BoxDecoration(
@@ -230,98 +299,5 @@ class _HomePageBottomNavigationScreenState
     );
   }
 
-  Widget imageContainer({String? imagePath, int? pageControllerValue}) {
-    return Container(
-      height: DimensionConstants.d500.h,
-      width: DimensionConstants.d375.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(DimensionConstants.d20.r),
-      ),
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(DimensionConstants.d20.r),
-            child: ImageView(
-              fit: BoxFit.cover,
-              path: imagePath,
-              height: DimensionConstants.d500.h,
-              width: DimensionConstants.d375.w,
-            ),
-          ),
-          Positioned(
-              bottom: DimensionConstants.d0.h,
-              //left: DimensionConstants.d20.w,
-              child: Container(
-                padding: EdgeInsets.only(
-                  top: DimensionConstants.d15.h,
-                  left: DimensionConstants.d20.w,
-                ),
-                decoration: BoxDecoration(
-                    color: ColorConstant.black.withOpacity(0.4),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(DimensionConstants.d15.r),
-                      bottomRight: Radius.circular(DimensionConstants.d15.r),
-                    )),
-                height: DimensionConstants.d100.h,
-                width: DimensionConstants.d375.w,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(StringConstants.jesicaParker).mediumText(
-                        ColorConstant.textcolor,
-                        TextAlign.center,
-                        DimensionConstants.d24.sp),
-                    const Text(StringConstants.aries).regularText(
-                        ColorConstant.textcolor,
-                        TextAlign.center,
-                        DimensionConstants.d14.sp),
-                  ],
-                ),
-              )),
-          Positioned(
-              top: DimensionConstants.d10.h,
-              left: DimensionConstants.d120.w,
-              child: SmoothPageIndicator(
-                controller: pagecontroller,
-                count: pageControllerValue!,
-                effect: JumpingDotEffect(
-                    activeDotColor: ColorConstant.textcolor,
-                    dotColor: ColorConstant.black.withOpacity(0.4),
-                    dotWidth: DimensionConstants.d20.w,
-                    dotHeight: DimensionConstants.d5.h),
-              )),
-          showLikeContainer
-              ? Positioned(
-                  top: DimensionConstants.d190.h,
-                  left: DimensionConstants.d150.w,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                        color: ColorConstant.red, shape: BoxShape.circle),
-                    height: DimensionConstants.d80.h,
-                    width: DimensionConstants.d80.w,
-                    child: const Padding(
-                      padding: EdgeInsets.all(DimensionConstants.d15),
-                      child: ImageView(
-                        fit: BoxFit.cover,
-                        path: ImageConstants.heartIcon,
-                      ),
-                    ),
-                  ))
-              : const SizedBox()
-        ],
-      ),
-    );
-  }
-
-  // void swipeRight() {
-  //   int currentIndex = pagecontroller.page?.toInt() ?? 0;
-  //   pagecontroller.animateToPage(currentIndex + 1,
-  //       duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-  // }
-
-  // void swipeLeft() {
-  //   int currentIndex = pagecontroller.page?.toInt() ?? 0;
-  //   pagecontroller.animateToPage(currentIndex - 1,
-  //       duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-  // }
+ 
 }
