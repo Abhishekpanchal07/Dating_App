@@ -4,6 +4,7 @@ import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
+import 'package:demoapp/helper/search_user_match_screen.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/modals/matchscreen_images.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
@@ -21,35 +22,63 @@ class _MatchScreenState extends State<MatchScreen> {
   List<MatchScreenImages> imageData = [
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl: StringConstants.imageurlInboxScreen,
+        imageUrl: ImageConstants.testingImage3,
+        age: StringConstants.age),
+         MatchScreenImages(
+        name: StringConstants.pooja,
+        imageUrl: ImageConstants.testingImage3,
+        age: StringConstants.age),
+         MatchScreenImages(
+        name: StringConstants.mona,
+        imageUrl: ImageConstants.testingImage3,
+        age: StringConstants.age),
+         MatchScreenImages(
+        name: StringConstants.lily,
+        imageUrl: ImageConstants.testingImage3,
+        age: StringConstants.age),
+         MatchScreenImages(
+        name: StringConstants.lelani,
+        imageUrl: ImageConstants.testingImage3,
+        age: StringConstants.age),
+         MatchScreenImages(
+        name: StringConstants.lelani,
+        imageUrl: ImageConstants.testingImage3,
+        age: StringConstants.age),
+         MatchScreenImages(
+        name: StringConstants.lelani,
+        imageUrl: ImageConstants.testingImage3,
+        age: StringConstants.age),
+         MatchScreenImages(
+        name: StringConstants.lelani,
+        imageUrl: ImageConstants.testingImage3,
         age: StringConstants.age),
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl: StringConstants.imageurlInboxScreen,
+        imageUrl: ImageConstants.testingImage3,
         age: StringConstants.age),
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl: StringConstants.imageurlInboxScreen,
+        imageUrl: ImageConstants.testingImage3,
         age: StringConstants.age),
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl: StringConstants.imageurlInboxScreen,
+        imageUrl: ImageConstants.testingImage3,
         age: StringConstants.age),
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl: StringConstants.imageurlInboxScreen,
+        imageUrl: ImageConstants.testingImage3,
         age: StringConstants.age),
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl: StringConstants.imageurlInboxScreen,
+        imageUrl: ImageConstants.testingImage3,
         age: StringConstants.age),
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl: StringConstants.imageurlInboxScreen,
+        imageUrl: ImageConstants.testingImage3,
         age: StringConstants.age),
     MatchScreenImages(
         name: StringConstants.lelani,
-        imageUrl: StringConstants.imageurlInboxScreen,
+        imageUrl: ImageConstants.testingImage3,
         age: StringConstants.age),
   ];
 
@@ -78,8 +107,15 @@ class _MatchScreenState extends State<MatchScreen> {
                 SizedBox(
                   width: DimensionConstants.d160.w,
                 ),
-                const ImageView(
-                  path: ImageConstants.searchIcon,
+                // Search Icon
+                GestureDetector(
+                  onTap: () {
+                    showSearch(
+                        context: context, delegate: SearchUserMatchScreeen(imageData));
+                  },
+                  child: const ImageView(
+                    path: ImageConstants.searchIcon,
+                  ),
                 ),
                 SizedBox(
                   width: DimensionConstants.d23.w,

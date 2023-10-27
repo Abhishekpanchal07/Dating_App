@@ -80,24 +80,7 @@ class _ProfileCardState extends State<ProfileCard> {
                     dotWidth: DimensionConstants.d20.w,
                     dotHeight: DimensionConstants.d5.h),
               )),
-          // showLikeContainer
-          //     ? Positioned(
-          //         top: DimensionConstants.d190.h,
-          //         left: DimensionConstants.d150.w,
-          //         child: Container(
-          //           decoration: const BoxDecoration(
-          //               color: ColorConstant.red, shape: BoxShape.circle),
-          //           height: DimensionConstants.d80.h,
-          //           width: DimensionConstants.d80.w,
-          //           child: const Padding(
-          //             padding: EdgeInsets.all(DimensionConstants.d15),
-          //             child: ImageView(
-          //               fit: BoxFit.cover,
-          //               path: ImageConstants.heartIcon,
-          //             ),
-          //           ),
-          //         ))
-          //     : const SizedBox()
+         
         ],
       ),
     );

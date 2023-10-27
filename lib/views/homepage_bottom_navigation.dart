@@ -1,6 +1,7 @@
 import 'package:demoapp/constants/Dimension_Constant.dart';
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/image_constants.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/modals/drag_widget.dart';
@@ -19,8 +20,8 @@ class HomePageBottomNavigationScreen extends StatefulWidget {
 }
 
 class _HomePageBottomNavigationScreenState
-    extends State<HomePageBottomNavigationScreen>  with SingleTickerProviderStateMixin {
-  
+    extends State<HomePageBottomNavigationScreen>
+    with SingleTickerProviderStateMixin {
   ValueNotifier<Swipe> swipeNotifier = ValueNotifier(Swipe.none);
 
   List<HomepageDetailsOfUser> userDetails = [
@@ -70,7 +71,6 @@ class _HomePageBottomNavigationScreenState
       }
     });
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -100,8 +100,15 @@ class _HomePageBottomNavigationScreenState
                   ),
                 ),
                 // Notification Icon
-                const ImageView(
-                  path: ImageConstants.notificationIconInboxScreen,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context, RouteConstants.notificationScreen
+                    );
+                  },
+                  child: const ImageView(
+                    path: ImageConstants.notificationIconInboxScreen,
+                  ),
                 )
               ],
             ),
@@ -167,15 +174,13 @@ class _HomePageBottomNavigationScreenState
                                         swipeNotifier: swipeNotifier,
                                         isLastCard: true,
                                       )));
+                            } else {
+                              return DragWidget(
+                                homepageDetailsOfUser: userDetails[index],
+                                index: index,
+                                swipeNotifier: swipeNotifier,
+                              );
                             }
-                            else {
-                  return DragWidget(
-                    homepageDetailsOfUser: userDetails[index],
-                    index: index,
-                    swipeNotifier: swipeNotifier, 
-                    
-                  );
-                }
                           }),
                         ),
                       ),
@@ -228,8 +233,6 @@ class _HomePageBottomNavigationScreenState
                     ),
                   ],
                 ),
-
-                
               ),
             ),
             SizedBox(
@@ -243,9 +246,8 @@ class _HomePageBottomNavigationScreenState
                   children: [
                     GestureDetector(
                       onTap: () {
-                         swipeNotifier.value = Swipe.left;
-                    _animationController.forward();
-                        
+                        swipeNotifier.value = Swipe.left;
+                        _animationController.forward();
                       },
                       child: Card(
                         shape: const CircleBorder(),
@@ -271,9 +273,8 @@ class _HomePageBottomNavigationScreenState
                     ),
                     GestureDetector(
                       onTap: () {
-                         swipeNotifier.value = Swipe.right;
-                    _animationController.forward();
-                        
+                        swipeNotifier.value = Swipe.right;
+                        _animationController.forward();
                       },
                       child: Container(
                         decoration: const BoxDecoration(
@@ -298,6 +299,4 @@ class _HomePageBottomNavigationScreenState
       ),
     );
   }
-
- 
 }

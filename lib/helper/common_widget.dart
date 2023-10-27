@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:demoapp/constants/Dimension_Constant.dart';
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/decoration_constants.dart';
+import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
@@ -375,6 +376,46 @@ class CommonWidgets {
           ),
         ),
       ],
+    );
+  }
+  // Match Screen Image Container 
+  static imageContainer({String? imageurl, String? name, String? age}) {
+    return Container(
+      height: DimensionConstants.d174.h,
+      width: DimensionConstants.d152.w,
+      decoration: BoxDecoration(
+        color: ColorConstant.lightpink,
+        borderRadius: BorderRadius.circular(DimensionConstants.d15),
+      ),
+      child: Stack(
+        children: [
+          ClipRRect(
+              borderRadius: BorderRadius.circular(DimensionConstants.d15),
+              child: ImageView(
+                height: DimensionConstants.d174.h,
+                width: DimensionConstants.d152.w,
+                path: imageurl,
+                fit: BoxFit.cover,
+              )),
+          Positioned(
+              top: DimensionConstants.d11.h,
+              right: DimensionConstants.d7.w,
+              child: const ImageView(
+                path: ImageConstants.matchScreenCrossIcon,
+              )),
+          Positioned(
+              bottom: DimensionConstants.d10.h,
+              left: DimensionConstants.d18.w,
+              child: Row(
+                children: [
+                  Text(name!,).regularText(ColorConstant.textcolor,
+                      TextAlign.center, DimensionConstants.d16.sp),
+                  Text(age!.toString()).regularText(ColorConstant.textcolor,
+                      TextAlign.center, DimensionConstants.d16.sp),
+                ],
+              )),
+        ],
+      ),
     );
   }
 }
