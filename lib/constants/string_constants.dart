@@ -228,4 +228,11 @@ class StringConstants {
   static const enterOtp  = "Please enter the 4-digit code Send to your Number";
   static const resendOtp  = "Resend OTP";
   static const unfillOTPErrorText  = "Please fill the OTP";
+  static const horoscope  = "Horoscope";
+  static const gender  = "Gender";
+  static const profilePicErorrMessage  = "Profile pic is required";
+  static const dobErorrMessage  = "DOB should be 18+";
+  static const seeMore  = "See more";
+  static const hide  = "Hide";
+  static const unchooseInterestErrorMessage  = "Interest is required";
 }

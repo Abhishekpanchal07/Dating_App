@@ -1,17 +1,17 @@
+import 'dart:developer';
+
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
-import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/widgets/dropdownlist.dart';
-import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 class FilterOption extends StatefulWidget {
   const FilterOption({super.key});
@@ -21,6 +21,8 @@ class FilterOption extends StatefulWidget {
 }
 
 class _AddPhotoState extends State<FilterOption> {
+  Position? exactLoaction;
+  String? currentLocation;
   double currentValue = 0;
   bool onClick = false;
   bool newFriends = false;
@@ -59,7 +61,7 @@ class _AddPhotoState extends State<FilterOption> {
     return Scaffold(
         body: Container(
             padding: EdgeInsets.only(
-                top: DimensionConstants.d43.h,
+                top: DimensionConstants.d73.h,
                 left: DimensionConstants.d20.w,
                 right: DimensionConstants.d20.w),
             height: MediaQuery.of(context).size.height,
@@ -75,31 +77,31 @@ class _AddPhotoState extends State<FilterOption> {
               behavior: NoGlowScrollBehavior(),
               child: SingleChildScrollView(
                 child: Column(children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: ImageView(
-                          path: ImageConstants.leftArrowIcon,
-                          height: DimensionConstants.d24.h,
-                          width: DimensionConstants.d24.w,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, RouteConstants.enableLocation);
-                        },
-                        child: const Text(StringConstants.skipText).mediumText(
-                            ColorConstant.pink,
-                            TextAlign.end,
-                            DimensionConstants.d16.sp),
-                      )
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         Navigator.pop(context);
+                  //       },
+                  //       child: ImageView(
+                  //         path: ImageConstants.leftArrowIcon,
+                  //         height: DimensionConstants.d24.h,
+                  //         width: DimensionConstants.d24.w,
+                  //       ),
+                  //     ),
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         Navigator.pushNamed(
+                  //             context, RouteConstants.enableLocation);
+                  //       },
+                  //       child: const Text(StringConstants.skipText).mediumText(
+                  //           ColorConstant.pink,
+                  //           TextAlign.end,
+                  //           DimensionConstants.d16.sp),
+                  //     )
+                  //   ],
+                  // ),
                   const Text(StringConstants.filterOption).mediumText(
                       ColorConstant.headingcolor,
                       TextAlign.center,
@@ -107,14 +109,12 @@ class _AddPhotoState extends State<FilterOption> {
                   SizedBox(
                     height: DimensionConstants.d5.h,
                   ),
-                  const Text(StringConstants.filterOptionScreenText).regularText(
-                      ColorConstant.headingcolor,
-                      TextAlign.center,
-                      DimensionConstants.d16.sp),
-                  const Text(StringConstants.filterOptionScreenText1).regularText(
-                      ColorConstant.headingcolor,
-                      TextAlign.center,
-                      DimensionConstants.d16.sp),
+                  const Text(StringConstants.filterOptionScreenText)
+                      .regularText(ColorConstant.headingcolor, TextAlign.center,
+                          DimensionConstants.d16.sp),
+                  const Text(StringConstants.filterOptionScreenText1)
+                      .regularText(ColorConstant.headingcolor, TextAlign.center,
+                          DimensionConstants.d16.sp),
                   SizedBox(
                     height: DimensionConstants.d34.h,
                   ),
@@ -129,8 +129,8 @@ class _AddPhotoState extends State<FilterOption> {
                     height: DimensionConstants.d10.h,
                   ),
                   CommonWidgets.gradientContainer(
-                      text: selectedFriendshipInterest ??
-                          StringConstants.makeNewFriends,
+                      text:
+                          selectedFriendshipInterest ?? StringConstants.hereto,
                       imagePath: ImageConstants.dropDownIconFilterScreen,
                       ontap: () {
                         setState(() {
@@ -163,7 +163,7 @@ class _AddPhotoState extends State<FilterOption> {
                     height: DimensionConstants.d10.h,
                   ),
                   CommonWidgets.gradientContainer(
-                      text: genderValue ?? StringConstants.female,
+                      text: genderValue ?? StringConstants.wantToMeet,
                       imagePath: ImageConstants.dropDownIconFilterScreen,
                       ontap: () {
                         setState(() {
@@ -196,7 +196,7 @@ class _AddPhotoState extends State<FilterOption> {
                     height: DimensionConstants.d10.h,
                   ),
                   CommonWidgets.gradientContainer(
-                      text: selectedAge ?? StringConstants.rangeOfAge,
+                      text: selectedAge ?? StringConstants.ageRange,
                       imagePath: ImageConstants.dropDownIconFilterScreen,
                       ontap: () {
                         setState(() {
@@ -221,14 +221,14 @@ class _AddPhotoState extends State<FilterOption> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: const Text(StringConstants.preferrLanguage)
-                        .regularText(ColorConstant.headingcolor, TextAlign.center,
-                            DimensionConstants.d16.sp),
+                        .regularText(ColorConstant.headingcolor,
+                            TextAlign.center, DimensionConstants.d16.sp),
                   ),
                   SizedBox(
                     height: DimensionConstants.d10.h,
                   ),
                   CommonWidgets.gradientContainer(
-                      text: selectedLanguage ?? StringConstants.english,
+                      text: selectedLanguage ?? StringConstants.preferrLanguage,
                       imagePath: ImageConstants.dropDownIconFilterScreen,
                       ontap: () {
                         setState(() {
@@ -250,68 +250,77 @@ class _AddPhotoState extends State<FilterOption> {
                   SizedBox(
                     height: DimensionConstants.d30.h,
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: const Text(StringConstants.location).regularText(
-                        ColorConstant.headingcolor,
-                        TextAlign.center,
-                        DimensionConstants.d16.sp),
-                  ),
-                  SizedBox(
-                    height: DimensionConstants.d10.h,
-                  ),
-                  CommonWidgets.gradientContainer(
-                      text: StringConstants.cityLocation,
-                      imagePath: ImageConstants.dropDownIconFilterScreen,
-                      ontap: () {
-                        setState(() {
-                          onClick = !onClick;
-                        });
-                      }),
-                  SizedBox(
-                    height: DimensionConstants.d30.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(StringConstants.distanceRange).regularText(
-                          ColorConstant.headingcolor,
-                          TextAlign.center,
-                          DimensionConstants.d16.sp),
-                      const Text(StringConstants.distance).regularText(
-                          ColorConstant.darkpink,
-                          TextAlign.center,
-                          DimensionConstants.d16.sp),
-                    ],
-                  ),
-                  SizedBox(
-                    height: DimensionConstants.d30.h,
-                  ),
-                  SfSliderTheme(
-                      data: SfSliderThemeData(
-                          thumbStrokeColor: ColorConstant.lightred,
-                          thumbColor: ColorConstant.textcolor,
-                          thumbStrokeWidth: DimensionConstants.d2),
-                      child: SfSlider(
-                          inactiveColor: ColorConstant.headingcolor,
-                          activeColor: ColorConstant.lightred,
-                          value: currentValue,
-                          onChanged: (value) {
-                            setState(() {
-                              currentValue = value;
-                            });
-                          })),
-                  SizedBox(
-                    height: DimensionConstants.d30.h,
-                  ),
+                  // Align(
+                  //   alignment: Alignment.topLeft,
+                  //   child: const Text(StringConstants.location).regularText(
+                  //       ColorConstant.headingcolor,
+                  //       TextAlign.center,
+                  //       DimensionConstants.d16.sp),
+                  // ),
+                  // SizedBox(
+                  //   height: DimensionConstants.d10.h,
+                  // ),
+                  // CommonWidgets.gradientContainer(
+                  //     text: StringConstants.cityLocation,
+                  //     imagePath: ImageConstants.dropDownIconFilterScreen,
+                  //     ontap: () {
+                  //       setState(() {
+                  //         onClick = !onClick;
+                  //       });
+                  //     }),
+                  // SizedBox(
+                  //   height: DimensionConstants.d30.h,
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     const Text(StringConstants.distanceRange).regularText(
+                  //         ColorConstant.headingcolor,
+                  //         TextAlign.center,
+                  //         DimensionConstants.d16.sp),
+                  //     const Text(StringConstants.distance).regularText(
+                  //         ColorConstant.darkpink,
+                  //         TextAlign.center,
+                  //         DimensionConstants.d16.sp),
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   height: DimensionConstants.d30.h,
+                  // ),
+                  // SfSliderTheme(
+                  //     data: SfSliderThemeData(
+                  //         thumbStrokeColor: ColorConstant.lightred,
+                  //         thumbColor: ColorConstant.textcolor,
+                  //         thumbStrokeWidth: DimensionConstants.d2),
+                  //     child: SfSlider(
+                  //         inactiveColor: ColorConstant.headingcolor,
+                  //         activeColor: ColorConstant.lightred,
+                  //         value: currentValue,
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             currentValue = value;
+                  //           });
+                  //         })),
+                  // SizedBox(
+                  //   height: DimensionConstants.d30.h,
+                  // ),
                   GestureDetector(
-                      onTap: () {
-                        CommonWidgets.filterScreenValidation(context,
-                            genderValue: genderValue,
-                            selectedLanguage: selectedLanguage,
-                            selectedAge: selectedAge,
-                            selectedFriendshipInterest:
-                                selectedFriendshipInterest);
+                      onTap: () async {
+                         try {
+                          await getCurrentLocation();
+                          await getAddress();
+                        } catch (e) {
+                          log(e.toString());
+                        }
+                        if (mounted) {
+                          CommonWidgets.filterScreenValidation(context,
+                              genderValue: genderValue,
+                              selectedLanguage: selectedLanguage,
+                              selectedAge: selectedAge,
+                              selectedFriendshipInterest:
+                                  selectedFriendshipInterest);
+                        }
+                       
                       },
                       child: CommonWidgets.commonButton(
                           StringConstants.continueText)),
@@ -349,5 +358,59 @@ class _AddPhotoState extends State<FilterOption> {
     setState(() {
       selectedFriendshipInterest = interestValue;
     });
+  }
+
+  // Ask user permission to enable location
+  getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      if (mounted) {
+        CommonWidgets.showflushbar(context, StringConstants.disableLocation);
+      }
+    }
+
+    permission = (await Geolocator.checkPermission());
+    if (permission == LocationPermission.denied) {
+      permission = (await Geolocator.requestPermission());
+      if (permission == LocationPermission.denied) {
+        if (mounted) {
+          CommonWidgets.showflushbar(context, StringConstants.deniedLocation);
+        }
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      if (mounted) {
+        CommonWidgets.showflushbar(
+            context, StringConstants.permanentlyDeniedLocation);
+      }
+    }
+
+    exactLoaction = await Geolocator.getCurrentPosition();
+    setState(() {});
+  }
+
+  Future<void> getAddress() async {
+    try {
+      if (exactLoaction != null) {
+        List<Placemark> placeMarks = await placemarkFromCoordinates(
+            exactLoaction!.latitude.toDouble(),
+            exactLoaction!.longitude.toDouble());
+        Placemark place = placeMarks[0];
+        setState(() {
+          currentLocation = "${place.locality},${place.country}";
+        });
+        setState(() {});
+      }
+      //  else {
+      //   CommonWidgets.showflushbar(
+      //       context, StringConstants.confirmPasswordError);
+      // }
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }

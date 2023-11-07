@@ -84,7 +84,7 @@ class SignInByName extends StatelessWidget {
                             StringConstants.lastNameErrortextProfileScreen);
                       } else {
                         Navigator.pushNamed(
-                            context, RouteConstants.profileDetaisScreen);
+                            context, RouteConstants.profileDetaisScreen,);
                       }
                     },
                     child:

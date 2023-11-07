@@ -74,7 +74,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 alignment: Alignment.topLeft,
                 child: GestureDetector(
                   onTap: () =>
-                      Navigator.pushNamed(context, RouteConstants.loginScreen),
+                      Navigator.pop(context),
                   child: const ImageView(
                     path: ImageConstants.leftArrowIcon,
                   ),
@@ -100,89 +100,37 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          onClick = !onClick;
-                        });
-                      },
-                      child: onClick
-                          ? verifyOTpGradientContainer(
-                              controllerName: otpController,
-                              focusnodeValue: otpValue1,
-                              focusRequestValue: otpValue2)
-                          : verifyOTpContainer()),
+                  verifyOTpContainer(
+                      otpValue: otpController,
+                      controllerName: otpController,
+                      focusnodeValue: otpValue1,
+                      focusRequestValue: otpValue2),
                   SizedBox(
                     width: DimensionConstants.d20.w,
                   ),
-                  GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          onClick = !onClick;
-                        });
-                      },
-                      child: onClick
-                          ? verifyOTpGradientContainer(
-                              controllerName: otpController1,
-                              focusnodeValue: otpValue2,
-                              focusRequestValue: otpValue3)
-                          : verifyOTpContainer()),
+                  verifyOTpContainer(
+                      otpValue: otpController1,
+                      controllerName: otpController1,
+                      focusnodeValue: otpValue2,
+                      focusRequestValue: otpValue3),
                   SizedBox(
                     width: DimensionConstants.d20.w,
                   ),
-                  GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          onClick = !onClick;
-                        });
-                      },
-                      child: onClick
-                          ? verifyOTpGradientContainer(
-                              controllerName: otpController2,
-                              focusnodeValue: otpValue3,
-                              focusRequestValue: otpValue4)
-                          : verifyOTpContainer()),
+                  verifyOTpContainer(
+                      otpValue: otpController2,
+                      controllerName: otpController2,
+                      focusnodeValue: otpValue3,
+                      focusRequestValue: otpValue4),
                   SizedBox(
                     width: DimensionConstants.d20.w,
                   ),
-                  GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          onClick = !onClick;
-                        });
-                      },
-                      child: onClick
-                          ? verifyOTpGradientContainer(
-                              controllerName: otpController3,
-                              focusnodeValue: otpValue4,
-                              focusRequestValue: otpValue4)
-                          : verifyOTpContainer()),
+                  verifyOTpContainer(
+                      otpValue: otpController3,
+                      controllerName: otpController3,
+                      focusnodeValue: otpValue4,
+                      focusRequestValue: otpValue4),
 
-                  // verifyOTpGradientContainer(
-                  //     controllerName: otpController,
-                  //     focusnodeValue: otpValue1,
-                  //     focusRequestValue: otpValue2),
-                  // SizedBox(
-                  //   width: DimensionConstants.d20.w,
-                  // ),
-                  // verifyOTpGradientContainer(
-                  //     controllerName: otpController1,
-                  //     focusnodeValue: otpValue2,
-                  //     focusRequestValue: otpValue3),
-                  // SizedBox(
-                  //   width: DimensionConstants.d20.w,
-                  // ),
-                  // verifyOTpGradientContainer(
-                  //     controllerName: otpController2,
-                  //     focusnodeValue: otpValue3,
-                  //     focusRequestValue: otpValue4),
-                  // SizedBox(
-                  //   width: DimensionConstants.d20.w,
-                  // ),
-                  // verifyOTpGradientContainer(
-                  //     controllerName: otpController3,
-                  //     focusnodeValue: otpValue4,
-                  //     focusRequestValue: otpValue4),
+                 
                 ],
               ),
               SizedBox(
@@ -218,21 +166,28 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     );
   }
 
-  Widget verifyOTpGradientContainer(
+  
+  // OTP Container
+
+  Widget verifyOTpContainer(
       {TextEditingController? controllerName,
+      TextEditingController? otpValue,
       FocusNode? focusnodeValue,
       FocusNode? focusRequestValue}) {
     return Container(
         height: DimensionConstants.d67.h,
         width: DimensionConstants.d67.w,
         alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: LinearGradient(colors: [
-            ColorConstant.colorEC356E,
-            ColorConstant.dashboardGradientColor1
-          ]),
-        ),
+        decoration: otpValue!.text.isEmpty
+            ? const BoxDecoration(
+                shape: BoxShape.circle, color: ColorConstant.color979797)
+            : const BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(colors: [
+                  ColorConstant.colorEC356E,
+                  ColorConstant.dashboardGradientColor1
+                ]),
+              ),
         child: Container(
           height: DimensionConstants.d63.h,
           width: DimensionConstants.d63.w,
@@ -243,7 +198,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             child: TextFormField(
               focusNode: focusnodeValue,
               onChanged: (value) {
-                if (value.length == 1) {
+                setState(() {
+                  otpValue.text = value;
+                });
+                if (value.isEmpty && focusnodeValue == otpValue1) {
+                  
+                  FocusScope.of(context).requestFocus(otpValue1);
+                }
+              else  if (value.length == 1) {
                   focusnodeValue!.unfocus();
                   FocusScope.of(context).requestFocus(focusRequestValue);
                 } else if (value.isEmpty) {
@@ -273,26 +235,24 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           ),
         ));
   }
-
-  // OTP Container
-  Widget verifyOTpContainer() {
-    return Container(
-        height: DimensionConstants.d67.h,
-        width: DimensionConstants.d67.w,
-        alignment: Alignment.center,
-        decoration: const BoxDecoration(
-            shape: BoxShape.circle, color: ColorConstant.color979797),
-        child: Container(
-          height: DimensionConstants.d63.h,
-          width: DimensionConstants.d63.w,
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-              shape: BoxShape.circle, color: ColorConstant.textcolor),
-          child: const Center(
-            child: Text(""),
-          ),
-        ));
-  }
+  // Widget verifyOTpContainer() {
+  //   return Container(
+  //       height: DimensionConstants.d67.h,
+  //       width: DimensionConstants.d67.w,
+  //       alignment: Alignment.center,
+  //       decoration: const BoxDecoration(
+  //           shape: BoxShape.circle, color: ColorConstant.color979797),
+  //       child: Container(
+  //         height: DimensionConstants.d63.h,
+  //         width: DimensionConstants.d63.w,
+  //         alignment: Alignment.center,
+  //         decoration: const BoxDecoration(
+  //             shape: BoxShape.circle, color: ColorConstant.textcolor),
+  //         child: const Center(
+  //           child: Text(""),
+  //         ),
+  //       ));
+  // }
 
   // OTP Verification Function
   void verifyOTP({

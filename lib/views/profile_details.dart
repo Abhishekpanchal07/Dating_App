@@ -1,7 +1,6 @@
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
-import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
@@ -29,7 +28,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
   String _image = "";
   bool onclick = false;
   bool ontap = false;
-  String selectedValue = StringConstants.zodiac;
+  String selectedValue = StringConstants.horoscope;
   String selectGender = StringConstants.selectGender;
   List<String> gendersName = [
     StringConstants.female,
@@ -53,7 +52,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     StringConstants.pisces
   ];
 
- 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -61,7 +59,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
       child: Scaffold(
         body: Container(
           padding: EdgeInsets.only(
-            top: DimensionConstants.d20.h,
+            top: DimensionConstants.d90.h,
             left: DimensionConstants.d20.w,
             right: DimensionConstants.d20.w,
           ),
@@ -79,30 +77,32 @@ class _ProfileDetailsState extends State<ProfileDetails> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, RouteConstants.createNewPasswordScreen);
-                        },
-                        child: ImageView(
-                          path: ImageConstants.leftArrowIcon,
-                          height: DimensionConstants.d24.h,
-                          width: DimensionConstants.d24.w,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, RouteConstants.interestScreen);
-                        },
-                        child: const Text(StringConstants.skipText).mediumText(
-                          ColorConstant.pink,
-                          TextAlign.end,
-                          DimensionConstants.d16.sp),
-                      )
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         Navigator.pushNamed(
+                  //             context, RouteConstants.createNewPasswordScreen);
+                  //       },
+                  //       child: ImageView(
+                  //         path: ImageConstants.leftArrowIcon,
+                  //         height: DimensionConstants.d24.h,
+                  //         width: DimensionConstants.d24.w,
+                  //       ),
+                  //     ),
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         Navigator.pushNamed(
+                  //             context, RouteConstants.interestScreen);
+                  //       },
+                  //       child: const Text(StringConstants.skipText).mediumText(
+                  //           ColorConstant.pink,
+                  //           TextAlign.end,
+                  //           DimensionConstants.d16.sp),
+                  //     )
+                  //   ],
+                  // ),
                   const Text(StringConstants.profileDetails).mediumText(
                       ColorConstant.headingcolor,
                       TextAlign.center,
@@ -194,51 +194,69 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                   SizedBox(
                     height: DimensionConstants.d30.h,
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: const Text(StringConstants.firstNamw).regularText(
-                        ColorConstant.headingcolor,
-                        TextAlign.center,
-                        DimensionConstants.d14.sp),
-                  ),
+                  textFieldTitle(StringConstants.firstNamw),
                   SizedBox(
                     height: DimensionConstants.d10.h,
                   ),
                   CommonWidgets.gradientTextField(context,
-                  controllerName: firstNameController,
+                      controllerName: firstNameController,
                       textFieldHintText: StringConstants.mathew),
                   SizedBox(
                     height: DimensionConstants.d30.h,
                   ),
+                  textFieldTitle(StringConstants.lastName),
+                  SizedBox(
+                    height: DimensionConstants.d10.h,
+                  ),
                   CommonWidgets.gradientTextField(context,
-                  controllerName: lastNameController,
+                      controllerName: lastNameController,
                       textFieldHintText: StringConstants.lastName),
                   SizedBox(
                     height: DimensionConstants.d30.h,
                   ),
+                  textFieldTitle(StringConstants.about),
+                  SizedBox(
+                    height: DimensionConstants.d10.h,
+                  ),
                   CommonWidgets.gradientTextField(context,
-                  controllerName: aboutController,
+                      controllerName: aboutController,
                       textFieldHintText: StringConstants.about),
                   SizedBox(
                     height: DimensionConstants.d30.h,
                   ),
+                  textFieldTitle(StringConstants.birthday),
+                  SizedBox(
+                    height: DimensionConstants.d10.h,
+                  ),
                   CommonWidgets.gradientTextField(
                     context,
                     controllerName: dobController,
-                    textFieldHintText: StringConstants.dob,
+                    textFieldHintText: StringConstants.birthday,
                     value: true,
                     onTap: () async {
                       DateTime? datepicker = await showDatePicker(
                           context: context,
+                          builder: (context, child) {
+                            return Theme(
+                                data: Theme.of(context).copyWith(
+                                    colorScheme: const ColorScheme.light(
+                                  primary: ColorConstant.lightred,
+                                )),
+                                child: child!);
+                          },
                           initialDate: DateTime.now(),
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2050));
+                          firstDate: DateTime(1980),
+                          lastDate: DateTime(2100));
+
                       if (datepicker != null) {
                         setState(() {
-                          dobController.text =
-                              DateFormat('dd-MM-yyyy').format(datepicker);
+                          checkUserIs18(datepicker,dobController);
+                          // dobController.text =
+                          //     DateFormat('dd-MM-yyyy').format(datepicker);
+                              
                         });
                       }
+                      
                     },
                     suffixicon: const Padding(
                         padding: EdgeInsets.all(DimensionConstants.d13),
@@ -249,8 +267,12 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                   SizedBox(
                     height: DimensionConstants.d30.h,
                   ),
+                  textFieldTitle(StringConstants.horoscope),
+                  SizedBox(
+                    height: DimensionConstants.d10.h,
+                  ),
                   CommonWidgets.gradientContainer(
-                      text: horoscope ?? selectedValue,
+                      text: horoscope ?? StringConstants.horoscope,
                       imagePath: ImageConstants.dropDownIcon,
                       ontap: () {
                         setState(() {
@@ -271,8 +293,12 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                   SizedBox(
                     height: DimensionConstants.d30.h,
                   ),
+                  textFieldTitle(StringConstants.selectGender),
+                  SizedBox(
+                    height: DimensionConstants.d10.h,
+                  ),
                   CommonWidgets.gradientContainer(
-                      text: genderName ?? StringConstants.selectGender,
+                      text: genderName ?? StringConstants.gender,
                       imagePath: ImageConstants.dropDownIcon,
                       ontap: () {
                         setState(() {
@@ -297,12 +323,13 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                   GestureDetector(
                       onTap: () {
                         CommonWidgets.profileScreenValidation(context,
-                        firstNameController: firstNameController,
-                        lastNameController: lastNameController,
-                        aboutNameController: aboutController,
-                        dobNameController: dobController,
-                        horoscopeValue: horoscope,
-                        genderValue: genderName);
+                            imagePath: _image,
+                            firstNameController: firstNameController,
+                            lastNameController: lastNameController,
+                            aboutNameController: aboutController,
+                            dobNameController: dobController,
+                            horoscopeValue: horoscope,
+                            genderValue: genderName);
                       },
                       child: CommonWidgets.commonButton(
                           StringConstants.continueText)),
@@ -332,5 +359,24 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     setState(() {
       genderName = name;
     });
+  }
+
+  Widget textFieldTitle(String? titlevalue) {
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Text(titlevalue!).regularText(ColorConstant.headingcolor,
+          TextAlign.center, DimensionConstants.d14.sp),
+    );
+  }
+
+  void checkUserIs18(DateTime? dobvalue,TextEditingController? dob) {
+    DateTime todaydate = DateTime.now();
+    int age = todaydate.year - dobvalue!.year;
+    if (age < 18) {
+      CommonWidgets.showflushbar(context, StringConstants.dobErorrMessage);
+    }
+    else{
+      dob!.text= DateFormat('dd-MM-yyyy').format(dobvalue);
+    }
   }
 }

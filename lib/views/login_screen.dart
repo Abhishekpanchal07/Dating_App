@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: GestureDetector(
-                      onTap: () => Navigator.pushNamed(context,RouteConstants.signInOptionScreen),
+                      onTap: () => Navigator.pop(context),
                       child: const ImageView(
                         path: ImageConstants.leftArrowIcon,
                       ),
@@ -129,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: DimensionConstants.d5.w,
                       ),
                       const Text(StringConstants.loginScreenRememberMe)
-                          .regularText(ColorConstant.darkgrey, TextAlign.center,
+                          .regularText(ColorConstant.pink, TextAlign.center,
                               DimensionConstants.d16.sp)
                     ],
                   ),

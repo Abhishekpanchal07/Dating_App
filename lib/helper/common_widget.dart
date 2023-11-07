@@ -6,12 +6,15 @@ import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
+import 'package:demoapp/views/enable_location.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+
 class CommonWidgets {
+  
   static Widget commonButton(String text) {
     return Container(
       height: DimensionConstants.d60.h,
@@ -100,6 +103,7 @@ class CommonWidgets {
           color: ColorConstant.buttonbgcolor,
         ),
         child: TextFormField(
+          style: const TextStyle(color: ColorConstant.headingcolor,fontFamily: StringConstants.familyName),
           controller: controllerName,
           readOnly: value ?? false,
           onTap: onTap,
@@ -216,6 +220,7 @@ class CommonWidgets {
 
   static void profileScreenValidation(
     BuildContext context, {
+      String? imagePath,
     TextEditingController? firstNameController,
     TextEditingController? lastNameController,
     TextEditingController? aboutNameController,
@@ -223,7 +228,10 @@ class CommonWidgets {
     String? genderValue,
     String? horoscopeValue,
   }) {
-    if (firstNameController!.text.isEmpty) {
+    if (imagePath!.isEmpty) {
+      showflushbar(context, StringConstants.profilePicErorrMessage);
+    }
+     else if (firstNameController!.text.isEmpty) {
       showflushbar(context, StringConstants.firstNameErrortextProfileScreen);
     } else if (lastNameController!.text.isEmpty) {
       showflushbar(context, StringConstants.lastNameErrortextProfileScreen);
@@ -241,13 +249,14 @@ class CommonWidgets {
   }
 
   static Widget gridViewContainer(String containerText) {
-    return Container(
-        height: DimensionConstants.d60.h,
-        width: DimensionConstants.d178.w,
-        decoration: BoxDecoration(
-          color: ColorConstant.buttonbgcolor,
-          borderRadius: BorderRadius.circular(DimensionConstants.d10.r),
-        ),
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(DimensionConstants.d10.r)
+      ),
+      elevation: DimensionConstants.d3,
+      shadowColor: ColorConstant.color979797,
+        
+        
         child: Center(
           child: Text(containerText).regularText(ColorConstant.headingcolor,
               TextAlign.center, DimensionConstants.d14.sp),
@@ -267,15 +276,15 @@ class CommonWidgets {
               ColorConstant.bottongradientcolor1,
               ColorConstant.bottongradientcolor2
             ]),
-        borderRadius: BorderRadius.circular(DimensionConstants.d12.r),
+        borderRadius: BorderRadius.circular(DimensionConstants.d13.r),
       ),
       child: Container(
-        height: DimensionConstants.d58.h,
+        height: DimensionConstants.d57.h,
         width: DimensionConstants.d173.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: ColorConstant.buttonbgcolor,
-          borderRadius: BorderRadius.circular(DimensionConstants.d12.r),
+          borderRadius: BorderRadius.circular(DimensionConstants.d11.r),
         ),
         child: Text(containerText).regularText(ColorConstant.headingcolor,
             TextAlign.center, DimensionConstants.d14.sp),
@@ -320,7 +329,7 @@ class CommonWidgets {
     }
 
      else {
-      Navigator.pushNamed(context, RouteConstants.addPhotoScreen);
+      Navigator.pushNamed(context, RouteConstants.enableLocation,);
     }
   }
   // user chat card 
@@ -418,4 +427,6 @@ class CommonWidgets {
       ),
     );
   }
+
+ 
 }

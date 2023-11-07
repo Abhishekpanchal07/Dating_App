@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
@@ -7,15 +6,17 @@ import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
-import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class EnableLocation extends StatefulWidget {
-  const EnableLocation({super.key});
+  
+   const EnableLocation({super.key});
 
   @override
   State<EnableLocation> createState() => _AddPhotoState();
@@ -25,13 +26,14 @@ class _AddPhotoState extends State<EnableLocation> {
   bool onTap = false;
   Position? exactLoaction;
   String? currentLocation;
+  double currentValue = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
       padding: EdgeInsets.only(
-          top: DimensionConstants.d43.h,
+          top: DimensionConstants.d73.h,
           left: DimensionConstants.d20.w,
           right: DimensionConstants.d20.w),
       height: MediaQuery.of(context).size.height,
@@ -44,28 +46,28 @@ class _AddPhotoState extends State<EnableLocation> {
             ColorConstant.bggradientcolor2
           ])),
       child: Column(children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: ImageView(
-                path: ImageConstants.leftArrowIcon,
-                height: DimensionConstants.d24.h,
-                width: DimensionConstants.d24.w,
-              ),
-            ),
-           GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen);
-            },
-            child:  const Text(StringConstants.skipText).mediumText(
-                ColorConstant.pink, TextAlign.end, DimensionConstants.d16.sp),
-           )
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     GestureDetector(
+        //       onTap: () {
+        //         Navigator.pop(context);
+        //       },
+        //       child: ImageView(
+        //         path: ImageConstants.leftArrowIcon,
+        //         height: DimensionConstants.d24.h,
+        //         width: DimensionConstants.d24.w,
+        //       ),
+        //     ),
+        //    GestureDetector(
+        //     onTap: () {
+        //       Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen);
+        //     },
+        //     child:  const Text(StringConstants.skipText).mediumText(
+        //         ColorConstant.pink, TextAlign.end, DimensionConstants.d16.sp),
+        //    )
+        //   ],
+        // ),
         const Text(StringConstants.location).mediumText(
             ColorConstant.headingcolor,
             TextAlign.center,
@@ -115,10 +117,6 @@ class _AddPhotoState extends State<EnableLocation> {
                             log(e.toString());
                           }
                         }
-                        //  if (value) {
-
-                        //    await getAddress();
-                        //   }
                       }),
                 ),
               ),
@@ -135,6 +133,7 @@ class _AddPhotoState extends State<EnableLocation> {
               TextAlign.center,
               DimensionConstants.d16.sp),
         ),
+       
         SizedBox(
           height: DimensionConstants.d30.h,
         ),
@@ -142,16 +141,50 @@ class _AddPhotoState extends State<EnableLocation> {
           text: currentLocation ?? StringConstants.locationValue,
           imagePath: ImageConstants.locationIcon,
         ),
+         SizedBox(
+                    height: DimensionConstants.d30.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(StringConstants.distanceRange).regularText(
+                          ColorConstant.headingcolor,
+                          TextAlign.center,
+                          DimensionConstants.d16.sp),
+                      const Text(StringConstants.distance).regularText(
+                          ColorConstant.darkpink,
+                          TextAlign.center,
+                          DimensionConstants.d16.sp),
+                    ],
+                  ),
+                  SizedBox(
+                    height: DimensionConstants.d20.h,
+                  ),
+                  SfSliderTheme(
+                      data: SfSliderThemeData(
+                          thumbStrokeColor: ColorConstant.lightred,
+                          thumbColor: ColorConstant.textcolor,
+                          thumbStrokeWidth: DimensionConstants.d2),
+                      child: SfSlider(
+                          inactiveColor: ColorConstant.headingcolor,
+                          activeColor: ColorConstant.lightred,
+                          value: currentValue,
+                          onChanged: (value) {
+                            setState(() {
+                              currentValue = value;
+                            });
+                          })),
         SizedBox(
           height: DimensionConstants.d40.h,
         ),
         GestureDetector(
             onTap: () {
-              // if (currentLocation == null) {
-              //   CommonWidgets.showflushbar(
-              //       context, StringConstants.enableLocationError);
-              // }
-              Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen);
+              if (currentLocation == null) {
+                CommonWidgets.showflushbar(
+                    context, StringConstants.enableLocationError);
+              }
+              Navigator.pushNamed(
+                  context, RouteConstants.bottonNavigationScreen);
             },
             child: CommonWidgets.commonButton(StringConstants.continueText)),
       ]),

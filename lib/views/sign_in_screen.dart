@@ -38,13 +38,13 @@ class SignInScreen extends StatelessWidget {
             height: DimensionConstants.d20.h,
            ),
            GestureDetector(
-            onTap: () => Navigator.pushNamed(context, RouteConstants.signInWithNameScreen),
+            onTap: () => Navigator.pushNamed(context, RouteConstants.createNewAccountScreen),
             child: CommonWidgets.gradientBorderButton(StringConstants.createNewAccount)),
              SizedBox(
             height: DimensionConstants.d20.h,
            ),
             GestureDetector(
-              onTap: () => Navigator.pushNamed(context, RouteConstants.signInOptionScreen),
+              onTap: () => Navigator.pushNamed(context, RouteConstants.loginScreen),
               child: CommonWidgets.gradientBorderButton(StringConstants.signInText)),
              SizedBox(
             height: DimensionConstants.d20.h,

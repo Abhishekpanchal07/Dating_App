@@ -27,7 +27,7 @@ class _AddPhotoState extends State<AddPhoto> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(
-            top: DimensionConstants.d43.h,
+            top: DimensionConstants.d73.h,
             left: DimensionConstants.d20.w,
             right: DimensionConstants.d20.w),
         height: MediaQuery.of(context).size.height,
@@ -41,31 +41,31 @@ class _AddPhotoState extends State<AddPhoto> {
             ])),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: ImageView(
-                    path: ImageConstants.leftArrowIcon,
-                    height: DimensionConstants.d24.h,
-                    width: DimensionConstants.d24.w,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(
-                        context, RouteConstants.filterOptionScreen);
-                  },
-                  child: const Text(StringConstants.skipText).mediumText(
-                      ColorConstant.pink,
-                      TextAlign.end,
-                      DimensionConstants.d16.sp),
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     GestureDetector(
+            //       onTap: () {
+            //         Navigator.pop(context);
+            //       },
+            //       child: ImageView(
+            //         path: ImageConstants.leftArrowIcon,
+            //         height: DimensionConstants.d24.h,
+            //         width: DimensionConstants.d24.w,
+            //       ),
+            //     ),
+            //     GestureDetector(
+            //       onTap: () {
+            //         Navigator.pushNamed(
+            //             context, RouteConstants.filterOptionScreen);
+            //       },
+            //       child: const Text(StringConstants.skipText).mediumText(
+            //           ColorConstant.pink,
+            //           TextAlign.end,
+            //           DimensionConstants.d16.sp),
+            //     ),
+            //   ],
+            // ),
             const Text(StringConstants.addPhotoText).mediumText(
                 ColorConstant.headingcolor,
                 TextAlign.center,
@@ -81,32 +81,39 @@ class _AddPhotoState extends State<AddPhoto> {
                 ColorConstant.headingcolor,
                 TextAlign.center,
                 DimensionConstants.d16.sp),
-            Expanded(
-                child: ScrollConfiguration(
-                  behavior: NoGlowScrollBehavior(),
-                  child: GridView.builder(
-                      itemCount: imagePaths.length + 1,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          mainAxisSpacing: DimensionConstants.d30.w,
-                          mainAxisExtent: DimensionConstants.d150.h,
-                          crossAxisSpacing: DimensionConstants.d20.h),
-                      itemBuilder: (context, index) {
-                        return index == imagePaths.length
-                            ? addImageButton()
-                            : imageContainer(imagePaths[index], index);
-                      }),
-                )),
+            SizedBox(
+              height: DimensionConstants.d30.h,
+            ),
+            ScrollConfiguration(
+              behavior: NoGlowScrollBehavior(),
+              child: GridView.builder(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  itemCount: imagePaths.length + 1,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: DimensionConstants.d3.toInt(),
+                      mainAxisSpacing: DimensionConstants.d30.w,
+                      childAspectRatio: DimensionConstants.d1,
+                      mainAxisExtent: DimensionConstants.d140.h,
+                      crossAxisSpacing: DimensionConstants.d20.h),
+                  itemBuilder: (context, index) {
+                    return index == imagePaths.length
+                        ? addImageButton()
+                        : imageContainer(imagePaths[index], index);
+                  }),
+            ),
             SizedBox(
               height: DimensionConstants.d30.h,
             ),
             GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen);
-                  // if (imagePaths.isEmpty) {
-                  //   CommonWidgets.showflushbar(
-                  //       context, StringConstants.uploadImageError);
-                  // }
+                  if (imagePaths.isEmpty) {
+                    CommonWidgets.showflushbar(
+                        context, StringConstants.uploadImageError);
+                  } else {
+                    Navigator.pushNamed(
+                        context, RouteConstants.filterOptionScreen);
+                  }
                 },
                 child:
                     CommonWidgets.commonButton(StringConstants.continueText)),
@@ -129,10 +136,7 @@ class _AddPhotoState extends State<AddPhoto> {
           gradient: const LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [
-                ColorConstant.dialogboxgradientcolor4,
-                ColorConstant.dialogboxgradientcolor3,
-              ])),
+              colors: [ColorConstant.lightred, ColorConstant.color8948EF])),
       child: Container(
         height: DimensionConstants.d42.h,
         width: DimensionConstants.d42.w,
@@ -190,22 +194,21 @@ class _AddPhotoState extends State<AddPhoto> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(DimensionConstants.d14.r),
-            child:
-            ImageView(
+            child: ImageView(
               path: imagePath,
-               height: DimensionConstants.d150.h,
-               width: DimensionConstants.d111.w,
-               fit: BoxFit.cover,
+              height: DimensionConstants.d150.h,
+              width: DimensionConstants.d111.w,
+              fit: BoxFit.cover,
             ),
           ),
           Positioned(
-            top: DimensionConstants.d15.h,
-            right: DimensionConstants.d18.w,
+            top: DimensionConstants.d7.h,
+            right: DimensionConstants.d12.w,
             child: Container(
-              height: DimensionConstants.d20.h,
-              width: DimensionConstants.d23.w,
+              height: DimensionConstants.d30.h,
+              width: DimensionConstants.d25.w,
               decoration: const BoxDecoration(
-                  color: ColorConstant.lightpink, shape: BoxShape.circle),
+                  color: ColorConstant.lightred, shape: BoxShape.circle),
               child: Center(
                   child: GestureDetector(
                       onTap: () {
@@ -214,8 +217,9 @@ class _AddPhotoState extends State<AddPhoto> {
                           imagePaths.removeAt(index); // userImages.removeAt();
                         });
                       },
-                      child: const ImageView(
+                      child: ImageView(
                         path: ImageConstants.crossIcon,
+                        height: DimensionConstants.d16.h,
                       ))),
             ),
           ),

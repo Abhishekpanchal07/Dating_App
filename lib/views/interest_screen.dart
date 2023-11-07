@@ -1,14 +1,13 @@
 import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/Dimension_Constant.dart';
-import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
-import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class InterestScreen extends StatefulWidget {
   const InterestScreen({super.key});
@@ -18,6 +17,8 @@ class InterestScreen extends StatefulWidget {
 }
 
 class _InterestState extends State<InterestScreen> {
+  bool isSeeMore = false;
+  bool interest = false;
   List<String> containerText = [
     StringConstants.photographyText,
     StringConstants.cookingText,
@@ -49,7 +50,7 @@ class _InterestState extends State<InterestScreen> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(
-            top: DimensionConstants.d43.h,
+            top: DimensionConstants.d73.h,
             left: DimensionConstants.d20.w,
             right: DimensionConstants.d20.w),
         height: MediaQuery.of(context).size.height,
@@ -63,30 +64,30 @@ class _InterestState extends State<InterestScreen> {
             ])),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: ImageView(
-                    path: ImageConstants.leftArrowIcon,
-                    height: DimensionConstants.d24.h,
-                    width: DimensionConstants.d24.w,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, RouteConstants.addPhotoScreen);
-                  },
-                  child: const Text(StringConstants.skipText).mediumText(
-                      ColorConstant.pink,
-                      TextAlign.end,
-                      DimensionConstants.d16.sp),
-                )
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     GestureDetector(
+            //       onTap: () {
+            //         Navigator.pop(context);
+            //       },
+            //       child: ImageView(
+            //         path: ImageConstants.leftArrowIcon,
+            //         height: DimensionConstants.d24.h,
+            //         width: DimensionConstants.d24.w,
+            //       ),
+            //     ),
+            //     GestureDetector(
+            //       onTap: () {
+            //         Navigator.pushNamed(context, RouteConstants.addPhotoScreen);
+            //       },
+            //       child: const Text(StringConstants.skipText).mediumText(
+            //           ColorConstant.pink,
+            //           TextAlign.end,
+            //           DimensionConstants.d16.sp),
+            //     )
+            //   ],
+            // ),
             const Text(StringConstants.likeAndInterest).mediumText(
                 ColorConstant.headingcolor,
                 TextAlign.center,
@@ -101,10 +102,14 @@ class _InterestState extends State<InterestScreen> {
             SizedBox(
               height: DimensionConstants.d31.h,
             ),
-            Expanded(
+            SizedBox(
+              height: isSeeMore
+                  ? DimensionConstants.d470.h
+                  : DimensionConstants.d150.h,
               child: ScrollConfiguration(
                 behavior: NoGlowScrollBehavior(),
                 child: GridView.builder(
+                  padding: EdgeInsets.zero,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisSpacing: DimensionConstants.d20.w,
@@ -119,6 +124,7 @@ class _InterestState extends State<InterestScreen> {
                             selectInterest[index]
                                 ? passArguments!.add(selectedContainerText)
                                 : passArguments!.remove(selectedContainerText);
+                            
                           });
                         },
                         child: selectInterest[index]
@@ -134,19 +140,23 @@ class _InterestState extends State<InterestScreen> {
             SizedBox(
               height: DimensionConstants.d27.h,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(StringConstants.see).mediumText(ColorConstant.pink,
-                    TextAlign.center, DimensionConstants.d16.sp),
-                SizedBox(
-                  width: DimensionConstants.d4.w,
-                ),
-                const Text(StringConstants.more).mediumText(
-                    ColorConstant.buttongradientcolor2,
-                    TextAlign.center,
-                    DimensionConstants.d16.sp)
-              ],
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  isSeeMore = !isSeeMore;
+                });
+              },
+              child: GradientText(
+                isSeeMore ? StringConstants.hide : StringConstants.seeMore,
+                colors: const [
+                  ColorConstant.colorF53F77,
+                  ColorConstant.color8948EF
+                ],
+                style: TextStyle(
+                    fontFamily: StringConstants.familyName,
+                    fontWeight: FontWeight.w500,
+                    fontSize: DimensionConstants.d16.sp),
+              ),
             ),
             SizedBox(
               height: DimensionConstants.d24.h,
@@ -165,7 +175,13 @@ class _InterestState extends State<InterestScreen> {
                     //       context, RouteConstants.userDetailScreen,
                     //       arguments: passArguments);
                     // }
-                    Navigator.pushNamed(context, RouteConstants.addPhotoScreen);
+                    if (passArguments!.isEmpty) {
+                      CommonWidgets.showflushbar(context,
+                          StringConstants.unchooseInterestErrorMessage);
+                    } else {
+                      Navigator.pushNamed(
+                          context, RouteConstants.addPhotoScreen);
+                    }
                   });
                 },
                 child:

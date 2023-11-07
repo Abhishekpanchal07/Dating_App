@@ -35,12 +35,12 @@ import 'package:flutter/material.dart';
 
 class MyRoutes {
   static Route<dynamic> ongenerateroute(RouteSettings settings) {
-    
     switch (settings.name) {
       case RouteConstants.splashPage:
         return MaterialPageRoute(builder: (_) => const FirstScreen());
       case RouteConstants.findYourMatchScreen:
-        return MaterialPageRoute( builder: (_) => const FindYourBestMatchScreen());
+        return MaterialPageRoute(
+            builder: (_) => const FindYourBestMatchScreen());
       case RouteConstants.signInScreen:
         return MaterialPageRoute(builder: (_) => const SignInScreen());
       case RouteConstants.signInOptionScreen:
@@ -52,6 +52,7 @@ class MyRoutes {
       case RouteConstants.createNewAccountScreen:
         return MaterialPageRoute(builder: (_) => const CreateNewAccount());
       case RouteConstants.profileDetaisScreen:
+       
         return MaterialPageRoute(builder: (_) => const ProfileDetails());
       case RouteConstants.interestScreen:
         return MaterialPageRoute(builder: (_) => const InterestScreen());
@@ -62,7 +63,8 @@ class MyRoutes {
       case RouteConstants.enableLocation:
         return MaterialPageRoute(builder: (_) => const EnableLocation());
       case RouteConstants.bottonNavigationScreen:
-        return MaterialPageRoute( builder: (_) => const BottomNavigationScreen());
+        return MaterialPageRoute(
+            builder: (_) => const BottomNavigationScreen());
       case RouteConstants.sendMessageScreen:
         return MaterialPageRoute(builder: (_) => const SendMessageScreen());
       case RouteConstants.signInWithNameScreen:
@@ -70,34 +72,49 @@ class MyRoutes {
       case RouteConstants.matchScreen:
         return MaterialPageRoute(builder: (_) => const MatchScreen());
       case RouteConstants.userDetailScreen:
-      final  args   = settings.arguments as List? ; 
-        return MaterialPageRoute(builder: (_) =>  UserDetail(passedArguments: args ?? [],));
+        final args = settings.arguments as List?;
+        return MaterialPageRoute(
+            builder: (_) => UserDetail(
+                  passedArguments: args ?? [],
+                ));
       case RouteConstants.showBottomSheetScreen:
-        return MaterialPageRoute(builder: (_) =>  const ShowBottomSheet(conatinerChildTextValue: [],));
-          case RouteConstants.messageScreen:
-        return MaterialPageRoute(builder: (_) =>  const MessageScreen());
-         case RouteConstants.inboxScreen:
-        return MaterialPageRoute(builder: (_) =>  const InboxScreen());
-         case RouteConstants.oneToOneScreen:
-         final  args   = settings.arguments as  OneToOneChatScreen;
-        return MaterialPageRoute(builder: (_) =>   OneToOneChatScreen(userName: args.userName,userImagePath: args.userImagePath,));
-        case RouteConstants.userAccountScreen:
-        return MaterialPageRoute(builder: (_) =>  const UserAccountScreen(conatinerChildTextValue: [],));
-         case RouteConstants.editProfileScreen:
-        return MaterialPageRoute(builder: (_) =>  const EditProfileScreen());
-         case RouteConstants.notificationScreen:
-        return MaterialPageRoute(builder: (_) =>  const NotificationScreen());
-        case RouteConstants.recoverAccountScreen:
-        return MaterialPageRoute(builder: (_) =>  const AccountRecover());
-        case RouteConstants.otpVerificationScreen:
-        return MaterialPageRoute(builder: (_) =>  const OtpVerificationScreen());
-        case RouteConstants.forwardPasswordScreen:
-        return MaterialPageRoute(builder: (_) =>  const ForwardPassword ());
-        case RouteConstants.createNewPasswordScreen:
-        return MaterialPageRoute(builder: (_) =>  const CreateNewPasswordScreen ());
-        case RouteConstants.homepageScreenBottomNavigation:
-        return MaterialPageRoute(builder: (_) =>  const HomePageBottomNavigationScreen ());
- }
+        return MaterialPageRoute(
+            builder: (_) => const ShowBottomSheet(
+                  conatinerChildTextValue: [],
+                ));
+      case RouteConstants.messageScreen:
+        return MaterialPageRoute(builder: (_) => const MessageScreen());
+      case RouteConstants.inboxScreen:
+        return MaterialPageRoute(builder: (_) => const InboxScreen());
+      case RouteConstants.oneToOneScreen:
+        final args = settings.arguments as OneToOneChatScreen;
+        return MaterialPageRoute(
+            builder: (_) => OneToOneChatScreen(
+                  userName: args.userName,
+                  userImagePath: args.userImagePath,
+                ));
+      case RouteConstants.userAccountScreen:
+        return MaterialPageRoute(
+            builder: (_) => const UserAccountScreen(
+                  conatinerChildTextValue: [],
+                ));
+      case RouteConstants.editProfileScreen:
+        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
+      case RouteConstants.notificationScreen:
+        return MaterialPageRoute(builder: (_) => const NotificationScreen());
+      case RouteConstants.recoverAccountScreen:
+        return MaterialPageRoute(builder: (_) => const AccountRecover());
+      case RouteConstants.otpVerificationScreen:
+        return MaterialPageRoute(builder: (_) => const OtpVerificationScreen());
+      case RouteConstants.forwardPasswordScreen:
+        return MaterialPageRoute(builder: (_) => const ForwardPassword());
+      case RouteConstants.createNewPasswordScreen:
+        return MaterialPageRoute(
+            builder: (_) => const CreateNewPasswordScreen());
+      case RouteConstants.homepageScreenBottomNavigation:
+        return MaterialPageRoute(
+            builder: (_) => const HomePageBottomNavigationScreen());
+    }
     return MaterialPageRoute(
         builder: (_) => Scaffold(
               body: const Text("no page found").semiBold(
