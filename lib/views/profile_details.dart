@@ -1,10 +1,14 @@
+import 'dart:io';
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
+import 'package:demoapp/constants/route_constants.dart';
+import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
+import 'package:demoapp/services/api.dart';
 import 'package:demoapp/widgets/dropdownlist.dart';
 import 'package:demoapp/widgets/custom_dialogbox.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
@@ -12,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileDetails extends StatefulWidget {
   const ProfileDetails({super.key});
@@ -250,13 +255,11 @@ class _ProfileDetailsState extends State<ProfileDetails> {
 
                       if (datepicker != null) {
                         setState(() {
-                          checkUserIs18(datepicker,dobController);
+                          checkUserIs18(datepicker, dobController);
                           // dobController.text =
                           //     DateFormat('dd-MM-yyyy').format(datepicker);
-                              
                         });
                       }
-                      
                     },
                     suffixicon: const Padding(
                         padding: EdgeInsets.all(DimensionConstants.d13),
@@ -322,7 +325,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        CommonWidgets.profileScreenValidation(context,
+                        profileScreenValidation(context,
                             imagePath: _image,
                             firstNameController: firstNameController,
                             lastNameController: lastNameController,
@@ -369,14 +372,90 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     );
   }
 
-  void checkUserIs18(DateTime? dobvalue,TextEditingController? dob) {
+  void checkUserIs18(DateTime? dobvalue, TextEditingController? dob) {
     DateTime todaydate = DateTime.now();
     int age = todaydate.year - dobvalue!.year;
     if (age < 18) {
-      CommonWidgets.showflushbar(context, StringConstants.dobErorrMessage);
+      CommonWidgets.showflushbar(
+          context, StringConstants.dobErorrMessage);
+    } else {
+      dob!.text = DateFormat('dd-MM-yyyy').format(dobvalue);
     }
-    else{
-      dob!.text= DateFormat('dd-MM-yyyy').format(dobvalue);
+  }
+  // profile Screen Validation Function
+
+  void profileScreenValidation(
+    BuildContext context, {
+    String? imagePath,
+    TextEditingController? firstNameController,
+    TextEditingController? lastNameController,
+    TextEditingController? aboutNameController,
+    TextEditingController? dobNameController,
+    String? genderValue,
+    String? horoscopeValue,
+  }) {
+    if (imagePath!.isEmpty) {
+      CommonWidgets.showflushbar(
+          context, StringConstants.profilePicErorrMessage);
+    } else if (firstNameController!.text.isEmpty) {
+      CommonWidgets.showflushbar(
+          context, StringConstants.firstNameErrortextProfileScreen);
+    } else if (lastNameController!.text.isEmpty) {
+      CommonWidgets.showflushbar(
+          context, StringConstants.lastNameErrortextProfileScreen);
+    } else if (aboutNameController!.text.isEmpty) {
+      CommonWidgets.showflushbar(
+          context, StringConstants.aboutNameErrortextProfileScreen);
+    } else if (dobNameController!.text.isEmpty) {
+      CommonWidgets.showflushbar(
+          context, StringConstants.dobNameErrortextProfileScreen);
+    } else if (horoscopeValue == null) {
+      CommonWidgets.showflushbar(
+          context, StringConstants.horoscopeErrortextProfileScreen);
+    } else if (genderValue == null) {
+      CommonWidgets.showflushbar(
+          context, StringConstants.genderErrortextProfileScreen);
+    } else {
+      putUserDetails(
+          firstName: firstNameController.text,
+          lastName: lastNameController.text,
+          userAbout: aboutController.text,
+          userDOB: dobNameController.text,
+          zodiacValue: horoscopeValue,
+          userImagepath: imagePath);
+    }
+  }
+
+  // hit userdetails Api
+  Future<void> putUserDetails(
+      {String? firstName,
+      String? lastName,
+      String? zodiacValue,
+      String? userImagepath,
+      String? userAbout,
+      String? userDOB}) async {
+    SharedPreferences getToken = await SharedPreferences.getInstance();
+    try {
+      final modal = await Api.uploadUserDetails(
+          userAbout: userAbout,
+          userDOB: userDOB,
+          firstName: firstName,
+          lastName: lastName,
+          zodiacValue: zodiacValue,
+          userImagepath: userImagepath,
+          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken));
+
+      if (modal.success == true) {
+        if (mounted) {
+          CommonWidgets.showflushbar(
+              context, modal.message.toString());
+          Navigator.pushNamed(context, RouteConstants.interestScreen);
+        }
+      }
+    } on SocketException catch (e) {
+      if (mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
+      }
     }
   }
 }

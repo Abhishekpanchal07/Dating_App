@@ -1,17 +1,19 @@
-import 'dart:developer';
+import 'dart:io';
 
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
+import 'package:demoapp/constants/route_constants.dart';
+import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
+import 'package:demoapp/services/api.dart';
 import 'package:demoapp/widgets/dropdownlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FilterOption extends StatefulWidget {
   const FilterOption({super.key});
@@ -21,8 +23,6 @@ class FilterOption extends StatefulWidget {
 }
 
 class _AddPhotoState extends State<FilterOption> {
-  Position? exactLoaction;
-  String? currentLocation;
   double currentValue = 0;
   bool onClick = false;
   bool newFriends = false;
@@ -305,22 +305,17 @@ class _AddPhotoState extends State<FilterOption> {
                   //   height: DimensionConstants.d30.h,
                   // ),
                   GestureDetector(
-                      onTap: () async {
-                         try {
-                          await getCurrentLocation();
-                          await getAddress();
-                        } catch (e) {
-                          log(e.toString());
-                        }
+                      onTap: () {
                         if (mounted) {
-                          CommonWidgets.filterScreenValidation(context,
-                              genderValue: genderValue,
-                              selectedLanguage: selectedLanguage,
-                              selectedAge: selectedAge,
-                              selectedFriendshipInterest:
-                                  selectedFriendshipInterest);
+                          filterScreenValidation(
+                            context,
+                            genderValue: genderValue,
+                            selectedLanguage: selectedLanguage,
+                            selectedAge: selectedAge,
+                            selectedFriendshipInterest:
+                                selectedFriendshipInterest,
+                          );
                         }
-                       
                       },
                       child: CommonWidgets.commonButton(
                           StringConstants.continueText)),
@@ -360,57 +355,64 @@ class _AddPhotoState extends State<FilterOption> {
     });
   }
 
-  // Ask user permission to enable location
-  getCurrentLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      if (mounted) {
-        CommonWidgets.showflushbar(context, StringConstants.disableLocation);
-      }
-    }
-
-    permission = (await Geolocator.checkPermission());
-    if (permission == LocationPermission.denied) {
-      permission = (await Geolocator.requestPermission());
-      if (permission == LocationPermission.denied) {
+// hit Add filter Api
+  Future<void> hitAddUserFilters(
+      {String? wantToMeet,
+      String? hereTo,
+      String? ageRange,
+      String? language}) async {
+    SharedPreferences getSavedValues = await SharedPreferences.getInstance();
+    try {
+      final modal = await Api.addUserFilters(
+        hereTo: hereTo,
+        wantToMeet: wantToMeet,
+        ageRange: ageRange,
+        language: language,
+        tokenValue: getSavedValues.getString(SharedpreferenceKeys.jwtToken),
+      );
+      if (modal.success == true) {
         if (mounted) {
-          CommonWidgets.showflushbar(context, StringConstants.deniedLocation);
+          CommonWidgets.showflushbar(context, modal.message.toString());
+          Navigator.pushNamed(context, RouteConstants.enableLocation);
+        }
+      } else {
+        if (mounted) {
+          CommonWidgets.showflushbar(context, modal.message.toString());
         }
       }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
+    } on SocketException catch (e) {
       if (mounted) {
-        CommonWidgets.showflushbar(
-            context, StringConstants.permanentlyDeniedLocation);
+        CommonWidgets.showflushbar(context, e.toString());
       }
     }
-
-    exactLoaction = await Geolocator.getCurrentPosition();
-    setState(() {});
   }
 
-  Future<void> getAddress() async {
-    try {
-      if (exactLoaction != null) {
-        List<Placemark> placeMarks = await placemarkFromCoordinates(
-            exactLoaction!.latitude.toDouble(),
-            exactLoaction!.longitude.toDouble());
-        Placemark place = placeMarks[0];
-        setState(() {
-          currentLocation = "${place.locality},${place.country}";
-        });
-        setState(() {});
-      }
-      //  else {
-      //   CommonWidgets.showflushbar(
-      //       context, StringConstants.confirmPasswordError);
-      // }
-    } catch (e) {
-      log(e.toString());
+  // validation function
+  void filterScreenValidation(
+    BuildContext context, {
+    String? genderValue,
+    String? selectedLanguage,
+    String? selectedAge,
+    String? selectedFriendshipInterest,
+  }) {
+    if (selectedFriendshipInterest == null) {
+      CommonWidgets.showflushbar(
+          context, StringConstants.filterScreenErrorMessage);
+    } else if (genderValue == null) {
+      CommonWidgets.showflushbar(
+          context, StringConstants.filterScreenErrorMessage1);
+    } else if (selectedAge == null) {
+      CommonWidgets.showflushbar(
+          context, StringConstants.filterScreenErrorMessage2);
+    } else if (selectedLanguage == null) {
+      CommonWidgets.showflushbar(
+          context, StringConstants.filterScreenErrorMessage3);
+    } else {
+      hitAddUserFilters(
+          hereTo: selectedFriendshipInterest,
+          wantToMeet: genderValue,
+          ageRange: selectedAge,
+          language: selectedLanguage);
     }
   }
 }

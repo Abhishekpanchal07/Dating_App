@@ -1,14 +1,19 @@
+import 'dart:io';
+
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
+import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
+import 'package:demoapp/services/api.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -138,7 +143,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        loginScreenVerification(emailController: emailController,passwordController: passwordController);
+                        loginScreenVerification(
+                            emailController: emailController,
+                            passwordController: passwordController);
                       },
                       child: CommonWidgets.commonButton(
                           StringConstants.signInText)),
@@ -184,6 +191,9 @@ class _LoginScreenState extends State<LoginScreen> {
           color: ColorConstant.buttonbgcolor,
         ),
         child: TextFormField(
+          style: const TextStyle(
+              color: ColorConstant.headingcolor,
+              fontFamily: StringConstants.familyName),
           controller: passwordController,
           obscureText: isobsecure,
           decoration: InputDecoration(
@@ -237,7 +247,44 @@ class _LoginScreenState extends State<LoginScreen> {
         .hasMatch(passwordController.text)) {
       CommonWidgets.showflushbar(context, StringConstants.passwordErrorText);
     } else {
-      Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen);
+      hitLoginApi(emailController.text, passwordController.text);
+    }
+  }
+
+  // hit login Api
+  Future<void> hitLoginApi(String? email, String? password) async {
+    try {
+      final model = await Api.login(email: email, password: password);
+      SharedPreferences getToken = await SharedPreferences.getInstance();
+      getToken.setString(
+          SharedpreferenceKeys.jwtToken, model.jwtToken.toString());
+      getToken.setString(SharedpreferenceKeys.userId, model.data!.id);
+      if (model.success == true) {
+        if (mounted) {
+          CommonWidgets.showflushbar(context, model.message.toString());
+          if (model.data!.status == 0) {
+            Navigator.pushNamed(context, RouteConstants.profileDetaisScreen);
+          } else if (model.data!.status == 1) {
+            Navigator.pushNamed(context, RouteConstants.interestScreen);
+          } else if (model.data!.status == 2) {
+            Navigator.pushNamed(context, RouteConstants.addPhotoScreen);
+          } else if (model.data!.status == 3) {
+            Navigator.pushNamed(context, RouteConstants.filterOptionScreen);
+          } else if (model.data!.status == 4) {
+            Navigator.pushNamed(context, RouteConstants.enableLocation);
+          } else if (model.data!.status == 5) {
+            Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen);
+          }
+        }
+      } else {
+        if (mounted) {
+          CommonWidgets.showflushbar(context, model.message.toString());
+        }
+      }
+    } on SocketException catch (e) {
+      if (mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
+      }
     }
   }
 }

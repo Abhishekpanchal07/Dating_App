@@ -21,12 +21,14 @@ class ShowBottomSheet extends StatefulWidget {
 class _ShowBottomSheetState extends State<ShowBottomSheet> {
   bool readMore = false;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,) {
     return DraggableScrollableSheet(
-        initialChildSize: 0.9,
-        minChildSize: 0.8,
-        maxChildSize: 1.0,
-        builder: (BuildContext context, ScrollController scrollcontroller) {
+     
+        initialChildSize: 0.5,
+        minChildSize: 0.5,
+        maxChildSize: 0.8,
+        builder: (BuildContext context,  scrollController) {
+          
           return Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
@@ -43,8 +45,10 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
             child: ScrollConfiguration(
               behavior: NoGlowScrollBehavior(),
               child: ListView.builder(
+                
+                padding: EdgeInsets.zero,
                   itemCount: 1,
-                  controller: scrollcontroller,
+                  controller: scrollController,
                   itemBuilder: ((context, index) {
                     return Container(
                       padding: EdgeInsets.only(

@@ -14,7 +14,7 @@ class ShowDropDownList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: DimensionConstants.d250.h,
+       // height: DimensionConstants.d250.h,
         width: DimensionConstants.d374.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(
@@ -27,39 +27,33 @@ class ShowDropDownList extends StatelessWidget {
             ]),
           borderRadius: BorderRadius.circular(DimensionConstants.d20.r),
         ),
-        child: Container(
-          height: DimensionConstants.d245.h,
-        width: DimensionConstants.d369.w,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(DimensionConstants.d20.r),
-          color: ColorConstant.buttonbgcolor,
-        ),
-        
-        alignment: Alignment.center,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: DimensionConstants.d25.w,
-                vertical: DimensionConstants.d13.h),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: ScrollConfiguration(
-                behavior: NoGlowScrollBehavior(),
-                child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    itemCount: listname!.length,
-                    itemExtent: DimensionConstants.d35,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          onTap!(listname![index]);
-                        },
-                        child: Text(listname![index]).regularText(
-                            ColorConstant.grey,
-                            TextAlign.start,
-                            DimensionConstants.d16.sp),
-                      );
-                    }),
-              ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: DimensionConstants.d25.w,
+              vertical: DimensionConstants.d13.h),
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: ScrollConfiguration(
+              behavior: NoGlowScrollBehavior(),
+              child: ListView.builder(
+                shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  itemCount: listname!.length,
+                  itemExtent: DimensionConstants.d35,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        onTap!(listname![index]);
+                      },
+                      child: Text(listname![index]).regularText(
+                      
+                        ColorConstant.textcolor,
+                        TextAlign.start,
+                        DimensionConstants.d16.sp,
+                        //backgroundColor:  ColorConstant.textcolor
+                        )
+                    );
+                  }),
             ),
           ),
         ));

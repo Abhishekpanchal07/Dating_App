@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
@@ -5,6 +6,7 @@ import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
+import 'package:demoapp/services/api.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -122,15 +124,10 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    emailAndPasswordVerification(
-                      context,
-                      emailcontroller: emailControllerforcreateaccount,
-                      passwordController: passwordController,
-                     confirmPasswordcontroller: confirmPasswordController
-                    );
-                    // CommonWidgets.emailAndPasswordVerification(context,emailcontroller: emailControllerforcreateaccount,
-                    // passwordController: passwordController,
-                    // confirmPasswordcontroller: confirmPasswordController);
+                    emailAndPasswordVerification(context,
+                        emailcontroller: emailControllerforcreateaccount,
+                        passwordController: passwordController,
+                        confirmPasswordcontroller: confirmPasswordController);
                   },
                   child:
                       CommonWidgets.commonButton(StringConstants.continueText),
@@ -167,6 +164,9 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
           color: ColorConstant.buttonbgcolor,
         ),
         child: TextFormField(
+          style: const TextStyle(
+            color: ColorConstant.headingcolor,
+            fontFamily: StringConstants.familyName),
           controller: controllerName,
           obscureText: isobsecure,
           decoration: InputDecoration(
@@ -228,6 +228,9 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
           color: ColorConstant.buttonbgcolor,
         ),
         child: TextFormField(
+          style: const TextStyle(
+            color: ColorConstant.headingcolor,
+            fontFamily: StringConstants.familyName),
           controller: controllerName,
           obscureText: isconfirmPassword,
           decoration: InputDecoration(
@@ -290,7 +293,31 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
     } else if (confirmPasswordcontroller.text != passwordController.text) {
       CommonWidgets.showflushbar(context, StringConstants.confirmPasswordError);
     } else {
-      Navigator.pushNamed(context, RouteConstants.profileDetaisScreen);
+      hitSignupApi(emailcontroller.text, passwordController.text, "");
+      // Navigator.pushNamed(context, RouteConstants.profileDetaisScreen);
+    }
+  }
+
+// hit Api
+  Future<void> hitSignupApi(
+      String? email, String? password, String? deviceToken) async {
+    try {
+      final modal = await Api.signUp(
+          email: email, password: password, deviceToken: deviceToken);
+      if (modal.success == true) {
+        if (mounted) {
+          Navigator.pushNamed(context, RouteConstants.profileDetaisScreen);
+        } 
+      }
+      else
+      {
+        if(mounted)
+        { CommonWidgets.showflushbar(context, modal.message.toString());}
+      }
+    } on SocketException catch (e) {
+      if (mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
+      }
     }
   }
 }

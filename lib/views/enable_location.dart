@@ -15,8 +15,7 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class EnableLocation extends StatefulWidget {
-  
-   const EnableLocation({super.key});
+  const EnableLocation({super.key});
 
   @override
   State<EnableLocation> createState() => _AddPhotoState();
@@ -27,6 +26,20 @@ class _AddPhotoState extends State<EnableLocation> {
   Position? exactLoaction;
   String? currentLocation;
   double currentValue = 0;
+  @override
+  void initState() {
+    askLocationPermission();
+    super.initState();
+  }
+
+  void askLocationPermission() async {
+    try {
+      await getCurrentLocation();
+      await getAddress();
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,14 +122,7 @@ class _AddPhotoState extends State<EnableLocation> {
                         setState(() {
                           onTap = !onTap;
                         });
-                        if (value) {
-                          try {
-                            await getCurrentLocation(); // Wait for getCurrentLocation to complete
-                            await getAddress();
-                          } catch (e) {
-                            log(e.toString());
-                          }
-                        }
+                        
                       }),
                 ),
               ),
@@ -133,56 +139,59 @@ class _AddPhotoState extends State<EnableLocation> {
               TextAlign.center,
               DimensionConstants.d16.sp),
         ),
-       
+
         SizedBox(
           height: DimensionConstants.d30.h,
         ),
         CommonWidgets.gradientContainer(
-          text: currentLocation ?? StringConstants.locationValue,
+          text: onTap ? currentLocation :  StringConstants.locationValue,
           imagePath: ImageConstants.locationIcon,
         ),
-         SizedBox(
-                    height: DimensionConstants.d30.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(StringConstants.distanceRange).regularText(
-                          ColorConstant.headingcolor,
-                          TextAlign.center,
-                          DimensionConstants.d16.sp),
-                      const Text(StringConstants.distance).regularText(
-                          ColorConstant.darkpink,
-                          TextAlign.center,
-                          DimensionConstants.d16.sp),
-                    ],
-                  ),
-                  SizedBox(
-                    height: DimensionConstants.d20.h,
-                  ),
-                  SfSliderTheme(
-                      data: SfSliderThemeData(
-                          thumbStrokeColor: ColorConstant.lightred,
-                          thumbColor: ColorConstant.textcolor,
-                          thumbStrokeWidth: DimensionConstants.d2),
-                      child: SfSlider(
-                          inactiveColor: ColorConstant.headingcolor,
-                          activeColor: ColorConstant.lightred,
-                          value: currentValue,
-                          onChanged: (value) {
-                            setState(() {
-                              currentValue = value;
-                            });
-                          })),
+        SizedBox(
+          height: DimensionConstants.d30.h,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(StringConstants.distanceRange).regularText(
+                ColorConstant.headingcolor,
+                TextAlign.center,
+                DimensionConstants.d16.sp),
+             Text("${currentValue.toInt()}${StringConstants.distance}").regularText(
+                ColorConstant.darkpink,
+                TextAlign.center,
+                DimensionConstants.d16.sp),
+          ],
+        ),
+        SizedBox(
+          height: DimensionConstants.d20.h,
+        ),
+        SfSliderTheme(
+            data: SfSliderThemeData(
+                thumbStrokeColor: ColorConstant.lightred,
+                thumbColor: ColorConstant.textcolor,
+                thumbStrokeWidth: DimensionConstants.d2),
+            child: SfSlider(
+              
+                inactiveColor: ColorConstant.headingcolor,
+                activeColor: ColorConstant.lightred,
+                value: currentValue,
+                max: DimensionConstants.d50,
+                
+                onChanged: (value) {
+                  setState(() {
+                    currentValue = value;
+                  });
+                })),
         SizedBox(
           height: DimensionConstants.d40.h,
         ),
         GestureDetector(
             onTap: () {
-              if (currentLocation == null) {
-                CommonWidgets.showflushbar(
-                    context, StringConstants.enableLocationError);
-              }
+              // if (currentLocation == null) {
+              //   CommonWidgets.showflushbar(
+              //       context, StringConstants.enableLocationError);
+              // }
               Navigator.pushNamed(
                   context, RouteConstants.bottonNavigationScreen);
             },

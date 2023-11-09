@@ -60,7 +60,10 @@ dependencies:
   # for swipe the cards left , Right
   swipe_cards: ^2.0.0+1
   get_it: ^7.6.4
+  # for implements the Api
   dio: ^5.3.3
+  # for local Stroage
+  shared_preferences: ^2.2.2
 
 
   # The following adds the Cupertino Icons font to your application.

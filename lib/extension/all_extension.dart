@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 
 extension ExtendText on Text {
   regularText(Color color, TextAlign center, double textSize,
-      {double? height, int? maxLines, double? letterSpacing, overFlow}) {
+      {double? height,Color? backgroundColor, int? maxLines, double? letterSpacing, overFlow}) {
     return Text(
       data!,
       textAlign: center,
       maxLines: maxLines,
       overflow: overflow,
       style: TextStyle(
+        backgroundColor: backgroundColor ,
         color: color,
         height: height,
         letterSpacing: letterSpacing,

@@ -1,12 +1,17 @@
+import 'dart:io';
+
 import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/Dimension_Constant.dart';
 import 'package:demoapp/constants/route_constants.dart';
+import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
+import 'package:demoapp/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class InterestScreen extends StatefulWidget {
@@ -36,6 +41,7 @@ class _InterestState extends State<InterestScreen> {
   List<bool> selectInterest = [];
 
   List<String>? passArguments = [];
+  List? userInterests = [];
 
   @override
   void initState() {
@@ -109,6 +115,7 @@ class _InterestState extends State<InterestScreen> {
               child: ScrollConfiguration(
                 behavior: NoGlowScrollBehavior(),
                 child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -121,10 +128,18 @@ class _InterestState extends State<InterestScreen> {
                           setState(() {
                             selectInterest[index] = !selectInterest[index];
                             String selectedContainerText = containerText[index];
-                            selectInterest[index]
-                                ? passArguments!.add(selectedContainerText)
-                                : passArguments!.remove(selectedContainerText);
-                            
+                            // selectInterest[index]
+                            //     ? passArguments!.add(selectedContainerText)
+                            //     : passArguments!.remove(selectedContainerText);
+                            //print(passArguments!.length);
+                            for (int i = 0; i < 1; i++) {
+                              selectInterest[index]
+                                  ? userInterests!.add(
+                                      {"intrestName": selectedContainerText})
+                                  : userInterests!.removeWhere((element) =>
+                                      element["intrestName"] ==
+                                      selectedContainerText);
+                            }
                           });
                         },
                         child: selectInterest[index]
@@ -175,12 +190,11 @@ class _InterestState extends State<InterestScreen> {
                     //       context, RouteConstants.userDetailScreen,
                     //       arguments: passArguments);
                     // }
-                    if (passArguments!.isEmpty) {
+                    if (userInterests!.isEmpty) {
                       CommonWidgets.showflushbar(context,
                           StringConstants.unchooseInterestErrorMessage);
                     } else {
-                      Navigator.pushNamed(
-                          context, RouteConstants.addPhotoScreen);
+                      hitUserInterestApi();
                     }
                   });
                 },
@@ -193,5 +207,29 @@ class _InterestState extends State<InterestScreen> {
         ),
       ),
     );
+  }
+
+  // hit add interest Api
+  Future<void> hitUserInterestApi() async {
+    SharedPreferences jwtToken = await SharedPreferences.getInstance();
+    try {
+      final modal = await Api.addUserInterest(
+          userInterest: userInterests,
+          tokenValue: jwtToken.getString(SharedpreferenceKeys.jwtToken));
+      if (modal.success == true) {
+        if (mounted) {
+          CommonWidgets.showflushbar(context, modal.message.toString());
+          Navigator.pushNamed(context, RouteConstants.addPhotoScreen);
+        }
+      } else {
+        if (mounted) {
+          CommonWidgets.showflushbar(context, modal.message.toString());
+        }
+      }
+    } on SocketException catch (e) {
+      if (mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
+      }
+    }
   }
 }

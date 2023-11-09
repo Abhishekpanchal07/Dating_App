@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           onGenerateRoute: MyRoutes.ongenerateroute,
           // home: FindYourBestMatchScreen(),
-          initialRoute: RouteConstants.filterOptionScreen,
+          initialRoute: RouteConstants.splashPage,
         );
       },
     );

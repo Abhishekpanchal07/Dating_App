@@ -66,23 +66,86 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                   ),
                 )),
             Positioned(
-              top: DimensionConstants.d400.h,
-              child: Container(
-                height: DimensionConstants.d500.h,
-                width: DimensionConstants.d414.w,
-                padding: EdgeInsets.only(
-                    top: DimensionConstants.d30.h,
-                    left: DimensionConstants.d30.w,
-                    right: DimensionConstants.d30.w),
-                decoration: BoxDecoration(
-                    color: ColorConstant.textcolor,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(DimensionConstants.d30.r),
-                        topRight: Radius.circular(DimensionConstants.d30.r))),
-                child: ScrollConfiguration(
-                  behavior: NoGlowScrollBehavior(),
-                  child: SingleChildScrollView(
-                    child: Column(
+              //top: DimensionConstants.d400.h,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: draggableSheet(),
+              )
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+// user interests container
+  Widget gradientcontainer({String? containerchildText}) {
+    return Container(
+      height: DimensionConstants.d32.h,
+      width: DimensionConstants.d118.w,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(DimensionConstants.d5),
+          color: ColorConstant.inboxScreenGradientColor),
+      child: Container(
+        height: DimensionConstants.d27.h,
+        width: DimensionConstants.d111.w,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(DimensionConstants.d5),
+            color: ColorConstant.textcolor),
+        child: Padding(
+          padding: const EdgeInsets.all(DimensionConstants.d5),
+          child: Row(children: [
+            const ImageView(
+              path: ImageConstants.seenIcon,
+            ),
+            Text(containerchildText!).bold(
+                ColorConstant.red, TextAlign.center, DimensionConstants.d11.sp)
+          ]),
+        ),
+      ),
+    );
+  }
+
+  // draggable sheet 
+  Widget draggableSheet(){
+    return DraggableScrollableSheet(
+     
+        initialChildSize: 0.5,
+        minChildSize: 0.5,
+        maxChildSize: 0.9,
+        builder: (BuildContext context,  scrollController) {
+          
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+                color: ColorConstant.textcolor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(
+                    DimensionConstants.d30,
+                  ),
+                  topRight: Radius.circular(
+                    DimensionConstants.d30,
+                  ),
+                )),
+            child: ScrollConfiguration(
+              behavior: NoGlowScrollBehavior(),
+              child: ListView.builder(
+                
+                padding: EdgeInsets.zero,
+                  itemCount: 1,
+                  controller: scrollController,
+                  itemBuilder: ((context, index) {
+                    return Container(
+                      padding: EdgeInsets.only(
+                        top: DimensionConstants.d31.h,
+                        left: DimensionConstants.d20.w,
+                        right: DimensionConstants.d20.w,
+                      ),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(StringConstants.jesicaParker).bold(
@@ -195,44 +258,12 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                                       : const SizedBox();
                                 }),
                           )
-                        ]),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-// user interests container
-  Widget gradientcontainer({String? containerchildText}) {
-    return Container(
-      height: DimensionConstants.d32.h,
-      width: DimensionConstants.d118.w,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(DimensionConstants.d5),
-          color: ColorConstant.inboxScreenGradientColor),
-      child: Container(
-        height: DimensionConstants.d27.h,
-        width: DimensionConstants.d111.w,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(DimensionConstants.d5),
-            color: ColorConstant.textcolor),
-        child: Padding(
-          padding: const EdgeInsets.all(DimensionConstants.d5),
-          child: Row(children: [
-            const ImageView(
-              path: ImageConstants.seenIcon,
+                        ],
+                      ),
+                    );
+                  })),
             ),
-            Text(containerchildText!).bold(
-                ColorConstant.red, TextAlign.center, DimensionConstants.d11.sp)
-          ]),
-        ),
-      ),
-    );
+          );
+        });
   }
 }

@@ -40,7 +40,7 @@ class _UserDetailState extends State<UserDetail> {
                   ),
                 )),
             Positioned(
-              top: DimensionConstants.d300.h,
+              //top: DimensionConstants.d300.h,
               child: SizedBox(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,

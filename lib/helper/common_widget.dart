@@ -6,15 +6,14 @@ import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
-import 'package:demoapp/views/enable_location.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 class CommonWidgets {
   
+
   static Widget commonButton(String text) {
     return Container(
       height: DimensionConstants.d60.h,
@@ -103,7 +102,9 @@ class CommonWidgets {
           color: ColorConstant.buttonbgcolor,
         ),
         child: TextFormField(
-          style: const TextStyle(color: ColorConstant.headingcolor,fontFamily: StringConstants.familyName),
+          style: const TextStyle(
+              color: ColorConstant.headingcolor,
+              fontFamily: StringConstants.familyName),
           controller: controllerName,
           readOnly: value ?? false,
           onTap: onTap,
@@ -135,7 +136,10 @@ class CommonWidgets {
   }
 
   static void emailAndPasswordVerification(BuildContext context,
-      {emailcontroller, passwordController, confirmPasswordcontroller, String? routerName}) {
+      {emailcontroller,
+      passwordController,
+      confirmPasswordcontroller,
+      String? routerName}) {
     if (emailcontroller.text.isEmpty) {
       CommonWidgets.showflushbar(context, StringConstants.unFillEmailText);
     } else if (!RegExp(StringConstants.emailVerificationText)
@@ -155,20 +159,21 @@ class CommonWidgets {
     } else if (confirmPasswordcontroller.text != passwordController.text) {
       CommonWidgets.showflushbar(context, StringConstants.confirmPasswordError);
     } else {
-      Navigator.pushNamed(context,RouteConstants.loginScreen );
+      Navigator.pushNamed(context, RouteConstants.loginScreen);
     }
   }
 
   //gradient container
   static Widget gradientContainer(
-      {String? text, String? imagePath,
-       VoidCallback? ontap,
-       double? height,
-       double? innerContainerHeight,
-       FontWeight? fontweight,
-       Color? textcolor,
-       double? paddingFromTop,
-       double? paddingFromBottom}) {
+      {String? text,
+      String? imagePath,
+      VoidCallback? ontap,
+      double? height,
+      double? innerContainerHeight,
+      FontWeight? fontweight,
+      Color? textcolor,
+      double? paddingFromTop,
+      double? paddingFromBottom}) {
     return GestureDetector(
       onTap: ontap,
       child: Container(
@@ -186,7 +191,7 @@ class CommonWidgets {
                   ])),
           child: Container(
               width: DimensionConstants.d370.w,
-              height:  innerContainerHeight ?? DimensionConstants.d55.h,
+              height: innerContainerHeight ?? DimensionConstants.d55.h,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(DimensionConstants.d9.w),
@@ -206,7 +211,7 @@ class CommonWidgets {
                       style: TextStyle(
                           color: textcolor ?? ColorConstant.headingcolor,
                           fontSize: DimensionConstants.d16.h,
-                          fontWeight:  fontweight ?? FontWeight.w500,
+                          fontWeight: fontweight ?? FontWeight.w500,
                           fontFamily: StringConstants.familyName),
                     ),
                     ImageView(
@@ -220,7 +225,7 @@ class CommonWidgets {
 
   static void profileScreenValidation(
     BuildContext context, {
-      String? imagePath,
+    String? imagePath,
     TextEditingController? firstNameController,
     TextEditingController? lastNameController,
     TextEditingController? aboutNameController,
@@ -230,8 +235,7 @@ class CommonWidgets {
   }) {
     if (imagePath!.isEmpty) {
       showflushbar(context, StringConstants.profilePicErorrMessage);
-    }
-     else if (firstNameController!.text.isEmpty) {
+    } else if (firstNameController!.text.isEmpty) {
       showflushbar(context, StringConstants.firstNameErrortextProfileScreen);
     } else if (lastNameController!.text.isEmpty) {
       showflushbar(context, StringConstants.lastNameErrortextProfileScreen);
@@ -250,13 +254,10 @@ class CommonWidgets {
 
   static Widget gridViewContainer(String containerText) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(DimensionConstants.d10.r)
-      ),
-      elevation: DimensionConstants.d3,
-      shadowColor: ColorConstant.color979797,
-        
-        
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(DimensionConstants.d10.r)),
+        elevation: DimensionConstants.d3,
+        shadowColor: ColorConstant.color979797,
         child: Center(
           child: Text(containerText).regularText(ColorConstant.headingcolor,
               TextAlign.center, DimensionConstants.d14.sp),
@@ -307,33 +308,33 @@ class CommonWidgets {
   }
   // for filterScreen validation
 
-  static void filterScreenValidation(
-    BuildContext context, {
-    String? genderValue,
-    String? selectedLanguage,
-    String? selectedAge,
-    String? selectedFriendshipInterest,
-  }) {
+  static void filterScreenValidation(BuildContext context,
+      {String? genderValue,
+      String? selectedLanguage,
+      String? selectedAge,
+      String? selectedFriendshipInterest,
+      }) {
     if (selectedFriendshipInterest == null) {
       showflushbar(context, StringConstants.filterScreenErrorMessage);
-
-    }
-      else if (genderValue == null) {
+    } else if (genderValue == null) {
       showflushbar(context, StringConstants.filterScreenErrorMessage1);
-    }
-     else if (selectedAge == null) {
+    } else if (selectedAge == null) {
       showflushbar(context, StringConstants.filterScreenErrorMessage2);
-    } 
-     else if (selectedLanguage == null) {
+    } else if (selectedLanguage == null) {
       showflushbar(context, StringConstants.filterScreenErrorMessage3);
-    }
-
-     else {
-      Navigator.pushNamed(context, RouteConstants.enableLocation,);
+    } 
+     
+    else {
+      Navigator.pushNamed(
+        context,
+        RouteConstants.enableLocation,
+      );
     }
   }
-  // user chat card 
-  static Widget userchatCard({String? imagepath,String? username,String? userMessage}) {
+
+  // user chat card
+  static Widget userchatCard(
+      {String? imagepath, String? username, String? userMessage}) {
     return Row(
       children: [
         Container(
@@ -341,8 +342,8 @@ class CommonWidgets {
           width: DimensionConstants.d57.w,
           decoration: const BoxDecoration(shape: BoxShape.circle),
           child: ImageView(
-             height: DimensionConstants.d57.h,
-          width: DimensionConstants.d57.w,
+            height: DimensionConstants.d57.h,
+            width: DimensionConstants.d57.w,
             circleCrop: true,
             fit: BoxFit.cover,
             path: imagepath,
@@ -351,43 +352,45 @@ class CommonWidgets {
         SizedBox(
           width: DimensionConstants.d15.w,
         ),
-       Expanded(
+        Expanded(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(username!).regularText(ColorConstant.black, TextAlign.center,
-                      DimensionConstants.d19.sp),
-                  Text(userMessage!).regularText(ColorConstant.black.withOpacity(0.4),
+                  Text(username!).regularText(ColorConstant.black,
                       TextAlign.center, DimensionConstants.d19.sp),
+                  Text(userMessage!).regularText(
+                      ColorConstant.black.withOpacity(0.4),
+                      TextAlign.center,
+                      DimensionConstants.d19.sp),
                 ],
               ),
-        
-               Container(
-              height: DimensionConstants.d24.h,
-              width: DimensionConstants.d24.w,
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        ColorConstant.dashboardGradientColor1,
-                        ColorConstant.inboxScreenGradientColor
-                      ])),
-              child: Center(
-                child: const Text("1").regularText(ColorConstant.textcolor,
-                    TextAlign.center, DimensionConstants.d13.sp),
-              ))
+              Container(
+                  height: DimensionConstants.d24.h,
+                  width: DimensionConstants.d24.w,
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            ColorConstant.dashboardGradientColor1,
+                            ColorConstant.inboxScreenGradientColor
+                          ])),
+                  child: Center(
+                    child: const Text("1").regularText(ColorConstant.textcolor,
+                        TextAlign.center, DimensionConstants.d13.sp),
+                  ))
             ],
           ),
         ),
       ],
     );
   }
-  // Match Screen Image Container 
+
+  // Match Screen Image Container
   static imageContainer({String? imageurl, String? name, String? age}) {
     return Container(
       height: DimensionConstants.d174.h,
@@ -417,8 +420,10 @@ class CommonWidgets {
               left: DimensionConstants.d18.w,
               child: Row(
                 children: [
-                  Text(name!,).regularText(ColorConstant.textcolor,
-                      TextAlign.center, DimensionConstants.d16.sp),
+                  Text(
+                    name!,
+                  ).regularText(ColorConstant.textcolor, TextAlign.center,
+                      DimensionConstants.d16.sp),
                   Text(age!.toString()).regularText(ColorConstant.textcolor,
                       TextAlign.center, DimensionConstants.d16.sp),
                 ],
@@ -427,6 +432,12 @@ class CommonWidgets {
       ),
     );
   }
+  
+ 
+  
+ // Ask user permission 
 
  
+
+  
 }

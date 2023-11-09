@@ -109,7 +109,7 @@ class StringConstants {
   static const rangeOfAge = "18-25";
   static const english = "English";
   static const cityLocation = "Florida,US";
-  static const distance = "0-50km";
+  static const distance = "-50km";
   static const hindi = "Hindi";
   static const german = "German";
   static const french = "French";
@@ -235,4 +235,6 @@ class StringConstants {
   static const seeMore  = "See more";
   static const hide  = "Hide";
   static const unchooseInterestErrorMessage  = "Interest is required";
+  static const socketExceptionErrorMessage  = "Please turn on your Internet";
+   static const emailRegisteredErrorMessage  = "Email is already exists";
 }

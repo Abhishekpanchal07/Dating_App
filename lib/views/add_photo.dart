@@ -1,16 +1,21 @@
+import 'dart:io';
+
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
+import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
+import 'package:demoapp/services/api.dart';
 import 'package:demoapp/widgets/custom_dialogbox.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddPhoto extends StatefulWidget {
   const AddPhoto({super.key});
@@ -111,8 +116,7 @@ class _AddPhotoState extends State<AddPhoto> {
                     CommonWidgets.showflushbar(
                         context, StringConstants.uploadImageError);
                   } else {
-                    Navigator.pushNamed(
-                        context, RouteConstants.filterOptionScreen);
+                    hitAddUserImages();
                   }
                 },
                 child:
@@ -226,5 +230,30 @@ class _AddPhotoState extends State<AddPhoto> {
         ],
       ),
     );
+  }
+
+  // hit add user images
+  Future<void> hitAddUserImages() async {
+    SharedPreferences getSavedValues = await SharedPreferences.getInstance();
+    try {
+      final modal = await Api.addUserImages(
+          imagepath: imagePaths,
+          tokenValue: getSavedValues.getString(SharedpreferenceKeys.jwtToken),
+          userId: getSavedValues.getString(SharedpreferenceKeys.userId));
+      if (modal.success == true) {
+        if (mounted) {
+          CommonWidgets.showflushbar(context, modal.message.toString());
+          Navigator.pushNamed(context, RouteConstants.filterOptionScreen);
+        }
+      } else {
+        if (mounted) {
+          CommonWidgets.showflushbar(context, modal.message.toString());
+        }
+      }
+    } on SocketException catch (e) {
+      if (mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
+      }
+    }
   }
 }
