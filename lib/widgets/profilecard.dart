@@ -1,6 +1,5 @@
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
-import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/modals/homepage_data.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
@@ -29,15 +28,30 @@ class _ProfileCardState extends State<ProfileCard> {
       ),
       child: Stack(
         children: [
-          ClipRRect(
+          PageView.builder(
+            itemCount:widget.homepageDetailsOfUser.userImage!.length,
+            controller: pageController,
+            itemBuilder: ((context, index) {
+            return 
+            ClipRRect(
             borderRadius: BorderRadius.circular(DimensionConstants.d20.r),
-            child: ImageView(
+            child:  ImageView(
               fit: BoxFit.cover,
-              path: widget.homepageDetailsOfUser.userImage,
+              path: widget.homepageDetailsOfUser.userImage![index],
               height: DimensionConstants.d500.h,
               width: DimensionConstants.d375.w,
             ),
-          ),
+          );
+          })),
+          // ClipRRect(
+          //   borderRadius: BorderRadius.circular(DimensionConstants.d20.r),
+          //   child:  ImageView(
+          //     fit: BoxFit.cover,
+          //     path: widget.homepageDetailsOfUser.userImage.,
+          //     height: DimensionConstants.d500.h,
+          //     width: DimensionConstants.d375.w,
+          //   ),
+          // ),
           Positioned(
               bottom: DimensionConstants.d0.h,
               //left: DimensionConstants.d20.w,
@@ -57,11 +71,11 @@ class _ProfileCardState extends State<ProfileCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(StringConstants.jesicaParker).mediumText(
+                     Text(widget.homepageDetailsOfUser.name.toString()).mediumText(
                         ColorConstant.textcolor,
                         TextAlign.center,
                         DimensionConstants.d24.sp),
-                    const Text(StringConstants.aries).regularText(
+                     Text(widget.homepageDetailsOfUser.name.toString()).regularText(
                         ColorConstant.textcolor,
                         TextAlign.center,
                         DimensionConstants.d14.sp),
@@ -73,7 +87,7 @@ class _ProfileCardState extends State<ProfileCard> {
               left: DimensionConstants.d120.w,
               child: SmoothPageIndicator(
                 controller: pageController,
-                count: 1,
+                count: widget.homepageDetailsOfUser.userImage!.length,
                 effect: JumpingDotEffect(
                     activeDotColor: ColorConstant.textcolor,
                     dotColor: ColorConstant.black.withOpacity(0.4),

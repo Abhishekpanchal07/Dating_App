@@ -5,4 +5,10 @@ class ApiUrls {
   static const useInterestApiUrl = "http://65.2.70.217:8091/dating/userintrest";
   static const addUserImagesApiUrl = "http://65.2.70.217:8091/dating/user/images";
   static const addUserFiltersApiUrl = "http://65.2.70.217:8091/dating/filter/options";
+  static const userLocationApiUrl = "http://65.2.70.217:8091/dating/mylocation";
+  static const userforgetPasswordApiUrl = "http://65.2.70.217:8091/dating/forgetpassword";
+  static const verifyotpApiUrl = "http://65.2.70.217:8091/dating/verifyforget";
+  static const resendotpApiUrl = "http://65.2.70.217:8091/dating/resendCode";
+  static const createNewpassApiUrl = "http://65.2.70.217:8091/dating/resetPassword";
+  static const userListingApiUrl = "http://65.2.70.217:8091/dating/userlisting";
 }

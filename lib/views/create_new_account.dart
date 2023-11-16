@@ -3,6 +3,7 @@ import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
+import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
@@ -10,6 +11,7 @@ import 'package:demoapp/services/api.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateNewAccount extends StatefulWidget {
   const CreateNewAccount({super.key});
@@ -165,8 +167,8 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
         ),
         child: TextFormField(
           style: const TextStyle(
-            color: ColorConstant.headingcolor,
-            fontFamily: StringConstants.familyName),
+              color: ColorConstant.headingcolor,
+              fontFamily: StringConstants.familyName),
           controller: controllerName,
           obscureText: isobsecure,
           decoration: InputDecoration(
@@ -229,8 +231,8 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
         ),
         child: TextFormField(
           style: const TextStyle(
-            color: ColorConstant.headingcolor,
-            fontFamily: StringConstants.familyName),
+              color: ColorConstant.headingcolor,
+              fontFamily: StringConstants.familyName),
           controller: controllerName,
           obscureText: isconfirmPassword,
           decoration: InputDecoration(
@@ -301,18 +303,22 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
 // hit Api
   Future<void> hitSignupApi(
       String? email, String? password, String? deviceToken) async {
+    SharedPreferences accountCreated = await SharedPreferences.getInstance();
     try {
       final modal = await Api.signUp(
           email: email, password: password, deviceToken: deviceToken);
+
       if (modal.success == true) {
+        // craete Account
+        accountCreated.setString(SharedpreferenceKeys.createAccountSuccessfully,
+            modal.message.toString());
         if (mounted) {
           Navigator.pushNamed(context, RouteConstants.profileDetaisScreen);
-        } 
-      }
-      else
-      {
-        if(mounted)
-        { CommonWidgets.showflushbar(context, modal.message.toString());}
+        }
+      } else {
+        if (mounted) {
+          CommonWidgets.showflushbar(context, modal.message.toString());
+        }
       }
     } on SocketException catch (e) {
       if (mounted) {

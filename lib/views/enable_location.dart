@@ -1,18 +1,23 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
+import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
+import 'package:demoapp/services/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
+
 
 class EnableLocation extends StatefulWidget {
   const EnableLocation({super.key});
@@ -26,9 +31,39 @@ class _AddPhotoState extends State<EnableLocation> {
   Position? exactLoaction;
   String? currentLocation;
   double currentValue = 0;
+  Future<void> userloginSuccessfully() async {
+    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+    if (mounted) {
+      CommonWidgets.showflushbar(
+          context,
+          getSavedvalue
+              .getString(SharedpreferenceKeys.loginSuccessfully)
+              .toString());
+    }
+  }
+  bool isvalue = false;
+  Future<void> filterUpdatedSuccessfully() async {
+    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+    if (mounted) {
+      CommonWidgets.showflushbar(
+          context,
+          getSavedvalue
+              .getString(SharedpreferenceKeys.filterUpdatedSuccessfully)
+              .toString());
+    }
+    setState(() {
+      getSavedvalue.getString(
+                  SharedpreferenceKeys.filterUpdatedSuccessfully) ==
+              null
+          ? isvalue = true
+          : isvalue = false;
+    });
+  }
+
   @override
   void initState() {
     askLocationPermission();
+    isvalue ? filterUpdatedSuccessfully() : userloginSuccessfully();
     super.initState();
   }
 
@@ -122,7 +157,6 @@ class _AddPhotoState extends State<EnableLocation> {
                         setState(() {
                           onTap = !onTap;
                         });
-                        
                       }),
                 ),
               ),
@@ -144,7 +178,7 @@ class _AddPhotoState extends State<EnableLocation> {
           height: DimensionConstants.d30.h,
         ),
         CommonWidgets.gradientContainer(
-          text: onTap ? currentLocation :  StringConstants.locationValue,
+          text: onTap ? currentLocation : StringConstants.locationValue,
           imagePath: ImageConstants.locationIcon,
         ),
         SizedBox(
@@ -157,10 +191,9 @@ class _AddPhotoState extends State<EnableLocation> {
                 ColorConstant.headingcolor,
                 TextAlign.center,
                 DimensionConstants.d16.sp),
-             Text("${currentValue.toInt()}${StringConstants.distance}").regularText(
-                ColorConstant.darkpink,
-                TextAlign.center,
-                DimensionConstants.d16.sp),
+            Text("${currentValue.toInt()}${StringConstants.distance}")
+                .regularText(ColorConstant.darkpink, TextAlign.center,
+                    DimensionConstants.d16.sp),
           ],
         ),
         SizedBox(
@@ -172,12 +205,10 @@ class _AddPhotoState extends State<EnableLocation> {
                 thumbColor: ColorConstant.textcolor,
                 thumbStrokeWidth: DimensionConstants.d2),
             child: SfSlider(
-              
                 inactiveColor: ColorConstant.headingcolor,
                 activeColor: ColorConstant.lightred,
                 value: currentValue,
                 max: DimensionConstants.d50,
-                
                 onChanged: (value) {
                   setState(() {
                     currentValue = value;
@@ -192,8 +223,7 @@ class _AddPhotoState extends State<EnableLocation> {
               //   CommonWidgets.showflushbar(
               //       context, StringConstants.enableLocationError);
               // }
-              Navigator.pushNamed(
-                  context, RouteConstants.bottonNavigationScreen);
+              hitUserLocationApi();
             },
             child: CommonWidgets.commonButton(StringConstants.continueText)),
       ]),
@@ -250,6 +280,35 @@ class _AddPhotoState extends State<EnableLocation> {
       // }
     } catch (e) {
       log(e.toString());
+    }
+  }
+
+  // userlocation Api
+  Future<void> hitUserLocationApi() async {
+    SharedPreferences getSavedValues = await SharedPreferences.getInstance();
+    try {
+      final modal = await Api.userLocation(
+          longitude: exactLoaction!.longitude.toString(),
+          latitude: exactLoaction!.latitude.toString(),
+          tokenValue: getSavedValues.getString(SharedpreferenceKeys.jwtToken));
+          // set message value
+      SharedPreferences setMessageValue = await SharedPreferences.getInstance();
+      setMessageValue.setString(
+          SharedpreferenceKeys.enablelocationSuccessfully, modal.message);
+      if (modal.success == true) {
+        if (mounted) {
+          CommonWidgets.showflushbar(context, modal.message.toString());
+          Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen);
+        }
+      } else {
+        if (mounted) {
+          CommonWidgets.showflushbar(context, modal.message.toString());
+        }
+      }
+    } on SocketException catch (e) {
+      if (mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
+      }
     }
   }
 }

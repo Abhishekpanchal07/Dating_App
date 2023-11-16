@@ -231,7 +231,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               itemBuilder: ((context, index) {
                                 return userInterestsContainer(
                                     containerchildText:
-                                        StringConstants.cookingText);
+                                        StringConstants.trackkingText);
                               })),
                         ),
                       ),

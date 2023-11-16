@@ -63,7 +63,7 @@ class StringConstants {
   static const pisces = "Pisces";
   static const selectGender = "Select Gender";
   static const male = "Male";
-  static const female = "FeMale";
+  static const female = "Female";
   static const nonBinary = "Non-Binary";
   static const transGenderMale = "Transgender Male";
   static const transGenderFemale = "Transgender Female";
@@ -77,12 +77,12 @@ class StringConstants {
   static const likeAndInterest = "Like, Interests ";
   static const shareLikeInterestText = "Share your like & possion with others ";
   static const photographyText = "Photography ";
-  static const cookingText = "Cooking";
+  static const trackkingText = "Trekking";
   static const musicText = "Music ";
-  static const videoGamingText = "Video Gaming ";
+  static const campingText = "Camping";
   static const travelingText = "Traveling ";
   static const shopingText = "Shopping ";
-  static const speechesText = "Speeches ";
+  static const racingText = "Racing ";
   static const artCraftText = "Art & Craft ";
   static const swimmingText = "Swimming ";
   static const drinkingText = "Drinking";
@@ -115,6 +115,7 @@ class StringConstants {
   static const french = "French";
   static const spanish = "Spanish";
   static const italian = "Italian";
+  static const rangeOfAges = "18-27";
   static const rangeOfAge1 = "25-30";
   static const rangeOfAge2 = "30-35";
   static const rangeOfAge3 = "35-40";
@@ -171,11 +172,9 @@ class StringConstants {
   static const friendsOnDating = "you're Friends on Dating ";
   static const liveIn = "Live in CA, USA ";
   static const yourMessage = "Your message";
-  static const jessicaDescription =
-      "My Name is Jessica Parker And I Enjoy meeting  new people and finding way to help them have  and uplifting experience. I enjoy reading...";
+  static const jessicaDescription = "My Name is Jessica Parker And I Enjoy meeting  new people and finding way to help them have  and uplifting experience. I enjoy reading...";
   static const story = "Story";
-  static const imageurlInboxScreen =
-      "https://images.pexels.com/photos/2248516/pexels-photo-2248516.jpeg?auto=compress&cs=tinysrgb&w=600";
+  static const imageurlInboxScreen = "https://images.pexels.com/photos/2248516/pexels-photo-2248516.jpeg?auto=compress&cs=tinysrgb&w=600";
   static const lelani = "lelani";
   static const shreya = "Shreya";
   static const lily = "lily";
@@ -188,10 +187,8 @@ class StringConstants {
   static const age = "19";
   static const message = "Messages";
   static const hello = "Hello";
-  static const hiJakeText =
-      "Hi Jake, how are you? I saw on the app that we’ve crossed paths several times this week 😄";
-  static const replyofhiJakeText =
-      "Haha truly! Nice to meet you Grace! What about a cup of coffee today evening? ☕️ ";
+  static const hiJakeText = "Hi Jake, how are you? I saw on the app that we’ve crossed paths several times this week 😄";
+  static const replyofhiJakeText = "Haha truly! Nice to meet you Grace! What about a cup of coffee today evening? ☕️ ";
   static const messageSendTime = "2:55 PM";
   static const messageSeenTime = "3:02 PM";
   static const zodiacSign = "Zodiac Sign";

@@ -36,7 +36,19 @@ class _LoginScreenState extends State<LoginScreen> {
       isobsecure = !isobsecure;
       ischeckbox = !ischeckbox;
     });
+    //getValues();
   }
+
+  // String? passupadated;
+
+  // void getValues() async {
+  //   SharedPreferences getsavedValues = await SharedPreferences.getInstance();
+  //   passupadated = getsavedValues
+  //       .getString(SharedpreferenceKeys.passwordUpdatedSuccessfully);
+  //   if (mounted) {
+  //     CommonWidgets.showflushbar(context, passupadated ?? "");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -256,9 +268,14 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       final model = await Api.login(email: email, password: password);
       SharedPreferences getToken = await SharedPreferences.getInstance();
+      //  store message login successfully
+      getToken.setString(SharedpreferenceKeys.loginSuccessfully, model.message);
+      // JWT Token Value
       getToken.setString(
           SharedpreferenceKeys.jwtToken, model.jwtToken.toString());
-      getToken.setString(SharedpreferenceKeys.userId, model.data!.id);
+      // userId
+      getToken.setString(
+          SharedpreferenceKeys.userId, model.data?.id.toString() ?? "");
       if (model.success == true) {
         if (mounted) {
           CommonWidgets.showflushbar(context, model.message.toString());

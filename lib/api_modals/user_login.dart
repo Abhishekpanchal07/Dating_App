@@ -13,7 +13,7 @@ class UserLogIn {
   UserLogIn.fromJson(Map<String, dynamic> json){
     success = json['success'];
     message = json['message'];
-    data = json['data'] == null ? null : Data.fromJson(json['data']);
+    data = (json['data'] == null ? null : Data.fromJson(json['data'])) ;
     jwtToken = json['jwtToken'];
   }
 
@@ -21,7 +21,7 @@ class UserLogIn {
     final getdata = <String, dynamic>{};
     getdata['success'] = success;
     getdata['message'] = message;
-   // getdata['data'] = data!.toJson();
+    getdata['data'] = data!.toJson();
     getdata['jwtToken'] = jwtToken;
     return getdata;
   }
@@ -29,7 +29,7 @@ class UserLogIn {
 
 class Data {
   Data({
-    required this.id,
+    this.id,
     required this.email,
     required this.password,
     required this.status,
@@ -41,7 +41,7 @@ class Data {
     required this.createdAt,
     required this.V,
   });
-  late final String id;
+   String? id;
   late final String email;
   late final String password;
   late final int status;
@@ -54,7 +54,7 @@ class Data {
   late final int V;
   
   Data.fromJson(Map<String, dynamic> json){
-    id = json['_id'];
+    id = json['_id'] ;
     email = json['email'];
     password = json['password'];
     status = json['status'];

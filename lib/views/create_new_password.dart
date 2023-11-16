@@ -2,12 +2,16 @@ import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
+import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
+import 'package:demoapp/services/api.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateNewPasswordScreen extends StatefulWidget {
   const CreateNewPasswordScreen({super.key});
@@ -20,10 +24,25 @@ class CreateNewPasswordScreen extends StatefulWidget {
 class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
- 
+  void verificationSuccessfully() async {
+    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+    if (mounted) {
+      CommonWidgets.showflushbar(
+          context,
+          getSavedvalue
+              .getString(SharedpreferenceKeys.verificationSuccessfully)
+              .toString());
+    }
+  }
+
   bool isobsecure = false;
   bool ischeckbox = false;
   bool isconfirmPassword = false;
+  @override
+  void initState() {
+    verificationSuccessfully();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,6 +176,9 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
           color: ColorConstant.buttonbgcolor,
         ),
         child: TextFormField(
+          style: const TextStyle(
+              color: ColorConstant.headingcolor,
+              fontFamily: StringConstants.familyName),
           controller: controllerName,
           obscureText: isobsecure,
           decoration: InputDecoration(
@@ -219,6 +241,9 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
           color: ColorConstant.buttonbgcolor,
         ),
         child: TextFormField(
+          style: const TextStyle(
+              color: ColorConstant.headingcolor,
+              fontFamily: StringConstants.familyName),
           controller: controllerName,
           obscureText: isconfirmPassword,
           decoration: InputDecoration(
@@ -275,7 +300,35 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
     } else if (confirmPasswordcontroller.text != passwordController.text) {
       CommonWidgets.showflushbar(context, StringConstants.confirmPasswordError);
     } else {
-      Navigator.pushNamed(context, RouteConstants.loginScreen);
+      hitcreateNewPassword(password: passwordcontroller.text);
+    }
+  }
+
+  // hit create New Password Api
+  Future<void> hitcreateNewPassword({String? password}) async {
+    SharedPreferences getSavedvalues = await SharedPreferences.getInstance();
+    try {
+      final modal = await Api.createNewPassword(
+          email: getSavedvalues
+              .getString(SharedpreferenceKeys.forgetPasswordEmailId),
+          tokenValue: getSavedvalues.getString(SharedpreferenceKeys.jwtToken),
+          password: password);
+      SharedPreferences setvalues = await SharedPreferences.getInstance();
+      setvalues.setString(SharedpreferenceKeys.passwordUpdatedSuccessfully,
+          modal.message.toString());
+      if (modal.success == true) {
+        if (mounted) {
+          Navigator.pushNamed(context, RouteConstants.loginScreen);
+        }
+      } else {
+        if (mounted) {
+          CommonWidgets.showflushbar(context, modal.message);
+        }
+      }
+    } on DioException catch (e) {
+      if (mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
+      }
     }
   }
 }

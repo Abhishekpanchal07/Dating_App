@@ -1,14 +1,19 @@
+import 'dart:io';
+
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
+import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
+import 'package:demoapp/services/api.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -73,8 +78,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               Align(
                 alignment: Alignment.topLeft,
                 child: GestureDetector(
-                  onTap: () =>
-                      Navigator.pop(context),
+                  onTap: () => Navigator.pop(context),
                   child: const ImageView(
                     path: ImageConstants.leftArrowIcon,
                   ),
@@ -129,8 +133,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       controllerName: otpController3,
                       focusnodeValue: otpValue4,
                       focusRequestValue: otpValue4),
-
-                 
                 ],
               ),
               SizedBox(
@@ -148,16 +150,19 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               SizedBox(
                 height: DimensionConstants.d30.h,
               ),
-              GradientText(
-                StringConstants.resendOtp,
-                colors: const [
-                  ColorConstant.colorF53F77,
-                  ColorConstant.color8948EF
-                ],
-                style: TextStyle(
-                    fontFamily: StringConstants.familyName,
-                    fontWeight: FontWeight.w400,
-                    fontSize: DimensionConstants.d16.sp),
+              GestureDetector(
+                onTap: () => hitResendOTPApi(),
+                child: GradientText(
+                  StringConstants.resendOtp,
+                  colors: const [
+                    ColorConstant.colorF53F77,
+                    ColorConstant.color8948EF
+                  ],
+                  style: TextStyle(
+                      fontFamily: StringConstants.familyName,
+                      fontWeight: FontWeight.w400,
+                      fontSize: DimensionConstants.d16.sp),
+                ),
               ),
             ],
           ),
@@ -166,7 +171,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     );
   }
 
-  
   // OTP Container
 
   Widget verifyOTpContainer(
@@ -202,10 +206,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   otpValue.text = value;
                 });
                 if (value.isEmpty && focusnodeValue == otpValue1) {
-                  
                   FocusScope.of(context).requestFocus(otpValue1);
-                }
-              else  if (value.length == 1) {
+                } else if (value.length == 1) {
                   focusnodeValue!.unfocus();
                   FocusScope.of(context).requestFocus(focusRequestValue);
                 } else if (value.isEmpty) {
@@ -272,7 +274,74 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         otpcontroller4!.text.isEmpty) {
       CommonWidgets.showflushbar(context, StringConstants.unfillOTPErrorText);
     } else {
-      Navigator.pushNamed(context, RouteConstants.createNewPasswordScreen);
+      hitVerifyOTPApi(otp: int.parse(otpcontroller1.text+otpcontroller2.text+otpcontroller3.text+otpcontroller4.text));
     }
   }
+
+  // hit verify OTP Api
+  Future<void> hitVerifyOTPApi({int? otp}) async {
+    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+    SharedPreferences verifySuccessfully =
+        await SharedPreferences.getInstance();
+    try {
+      final modal = await Api.verifyOTP(
+          email: getSavedvalue.getString(
+            SharedpreferenceKeys.forgetPasswordEmailId,
+          ),
+          tokenValue: getSavedvalue.getString(
+            SharedpreferenceKeys.jwtToken,
+          ),
+          otp: otp);
+      verifySuccessfully.setString(
+          SharedpreferenceKeys.verificationSuccessfully,
+          modal.message.toString());
+      if (modal.success == true) {
+        if (mounted) {
+          Navigator.pushNamed(context, RouteConstants.createNewPasswordScreen);
+        }
+      } else {
+        if (mounted) {
+          CommonWidgets.showflushbar(context, modal.message.toString());
+        }
+      }
+    } on SocketException catch (e) {
+      if (mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
+      }
+    }
+  }
+
+   // hit resend  otp Api
+    Future<void> hitResendOTPApi() async {
+    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+    SharedPreferences verifySuccessfully =
+        await SharedPreferences.getInstance();
+    try {
+      final modal = await Api.resendOTP(
+          email: getSavedvalue.getString(
+            SharedpreferenceKeys.forgetPasswordEmailId,
+          ),
+          tokenValue: getSavedvalue.getString(
+            SharedpreferenceKeys.jwtToken,
+          ),
+          );
+      verifySuccessfully.setString(
+          SharedpreferenceKeys.verificationSuccessfully,
+          modal.message.toString());
+      if (modal.success == true) {
+        // if (mounted) {
+        //   Navigator.pushNamed(context, RouteConstants.createNewPasswordScreen);
+        // }
+      } else {
+        if (mounted) {
+          CommonWidgets.showflushbar(context, modal.message.toString());
+        }
+      }
+    } on SocketException catch (e) {
+      if (mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
+      }
+    }
+  }
+   
 }

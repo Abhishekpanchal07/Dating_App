@@ -26,6 +26,41 @@ class AddPhoto extends StatefulWidget {
 
 class _AddPhotoState extends State<AddPhoto> {
   List<String> imagePaths = [];
+  Future<void> userloginSuccessfully() async {
+    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+    if (mounted) {
+      CommonWidgets.showflushbar(
+          context,
+          getSavedvalue
+              .getString(SharedpreferenceKeys.loginSuccessfully)
+              .toString());
+    }
+  }
+
+  bool isvalue = false;
+  Future<void> interestUpdatedSuccessfully() async {
+    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+    if (mounted) {
+      CommonWidgets.showflushbar(
+          context,
+          getSavedvalue
+              .getString(SharedpreferenceKeys.interestUpdatedSuccessfully)
+              .toString());
+    }
+    setState(() {
+      getSavedvalue.getString(
+                  SharedpreferenceKeys.interestUpdatedSuccessfully) ==
+              null
+          ? isvalue = true
+          : isvalue = false;
+    });
+  }
+
+  @override
+  void initState() {
+    isvalue ? interestUpdatedSuccessfully() : userloginSuccessfully();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -240,6 +275,10 @@ class _AddPhotoState extends State<AddPhoto> {
           imagepath: imagePaths,
           tokenValue: getSavedValues.getString(SharedpreferenceKeys.jwtToken),
           userId: getSavedValues.getString(SharedpreferenceKeys.userId));
+      // set message value
+      SharedPreferences setMessageValue = await SharedPreferences.getInstance();
+      setMessageValue.setString(
+          SharedpreferenceKeys.picUpdatedSuccessfully, modal.message);
       if (modal.success == true) {
         if (mounted) {
           CommonWidgets.showflushbar(context, modal.message.toString());

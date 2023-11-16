@@ -1,6 +1,8 @@
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
+import 'package:demoapp/constants/sharedperferences_constants.dart';
+import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/views/homepage_bottom_navigation.dart';
 import 'package:demoapp/views/inbox_screen.dart';
 import 'package:demoapp/views/matches.dart';
@@ -8,6 +10,7 @@ import 'package:demoapp/views/user_account_screen.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomNavigationScreen extends StatefulWidget {
   const BottomNavigationScreen({super.key});
@@ -23,8 +26,45 @@ class _DashboardScreenState extends State<BottomNavigationScreen> {
     const HomePageBottomNavigationScreen(),
     const MatchScreen(),
     const InboxScreen(),
-    const UserAccountScreen(conatinerChildTextValue: [],),
+    const UserAccountScreen(
+      conatinerChildTextValue: [],
+    ),
   ];
+  Future<void> userloginSuccessfully() async {
+    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+    if (mounted) {
+      CommonWidgets.showflushbar(
+          context,
+          getSavedvalue
+              .getString(SharedpreferenceKeys.loginSuccessfully)
+              .toString());
+    }
+  }
+   bool isvalue = false;
+  Future<void> enableLocationSuccessfully() async {
+    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+    if (mounted) {
+      CommonWidgets.showflushbar(
+          context,
+          getSavedvalue
+              .getString(SharedpreferenceKeys.enablelocationSuccessfully)
+              .toString());
+    }
+    setState(() {
+      getSavedvalue.getString(
+                  SharedpreferenceKeys.enablelocationSuccessfully) ==
+              null
+          ? isvalue = true
+          : isvalue = false;
+    });
+  }
+
+  @override
+  void initState() {
+    isvalue ? enableLocationSuccessfully() : userloginSuccessfully();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +85,7 @@ class _DashboardScreenState extends State<BottomNavigationScreen> {
               left: DimensionConstants.d1.w,
               right: DimensionConstants.d5.w,
               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   currentIndex == 0
                       ? Container(
@@ -57,11 +97,9 @@ class _DashboardScreenState extends State<BottomNavigationScreen> {
                             ColorConstant.buttongradientcolor2
                           ])))
                       : const SizedBox(),
-
                   SizedBox(
                     width: DimensionConstants.d40.w,
                   ),
-
                   currentIndex == 1
                       ? Container(
                           height: DimensionConstants.d5.h,
@@ -72,11 +110,9 @@ class _DashboardScreenState extends State<BottomNavigationScreen> {
                             ColorConstant.buttongradientcolor2
                           ])))
                       : const SizedBox(),
-
-                       SizedBox(
+                  SizedBox(
                     width: DimensionConstants.d40.w,
                   ),
-
                   currentIndex == 2
                       ? Container(
                           height: DimensionConstants.d5.h,
@@ -87,11 +123,9 @@ class _DashboardScreenState extends State<BottomNavigationScreen> {
                             ColorConstant.buttongradientcolor2
                           ])))
                       : const SizedBox(),
-
-                       SizedBox(
+                  SizedBox(
                     width: DimensionConstants.d40.w,
                   ),
-
                   currentIndex == 3
                       ? Container(
                           height: DimensionConstants.d5.h,
@@ -102,8 +136,6 @@ class _DashboardScreenState extends State<BottomNavigationScreen> {
                             ColorConstant.buttongradientcolor2
                           ])))
                       : const SizedBox(),
-
-                 
                 ],
               ),
             ),
@@ -167,8 +199,6 @@ class _DashboardScreenState extends State<BottomNavigationScreen> {
           ],
         ),
       ),
-
-      
     );
   }
 }

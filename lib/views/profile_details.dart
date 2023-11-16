@@ -56,6 +56,40 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     StringConstants.aquarius,
     StringConstants.pisces
   ];
+  bool isvalue = false;
+  Future<void> accountCreatedSuccessfully() async {
+    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+    if (mounted) {
+      CommonWidgets.showflushbar(
+          context,
+          getSavedvalue
+              .getString(SharedpreferenceKeys.createAccountSuccessfully)
+              .toString());
+    }
+    setState(() {
+      getSavedvalue.getString(SharedpreferenceKeys.createAccountSuccessfully) ==
+              null
+          ? isvalue = true
+          : isvalue = false;
+    });
+  }
+
+  Future<void> userloginSuccessfully() async {
+    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+    if (mounted) {
+      CommonWidgets.showflushbar(
+          context,
+          getSavedvalue
+              .getString(SharedpreferenceKeys.loginSuccessfully)
+              .toString());
+    }
+  }
+
+  @override
+  void initState() {
+    isvalue ? accountCreatedSuccessfully() : userloginSuccessfully();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -376,10 +410,9 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     DateTime todaydate = DateTime.now();
     int age = todaydate.year - dobvalue!.year;
     if (age < 18) {
-      CommonWidgets.showflushbar(
-          context, StringConstants.dobErorrMessage);
+      CommonWidgets.showflushbar(context, StringConstants.dobErorrMessage);
     } else {
-      dob!.text = DateFormat('dd-MM-yyyy').format(dobvalue);
+      dob!.text = DateFormat('yyyy-MM-dd').format(dobvalue);
     }
   }
   // profile Screen Validation Function
@@ -422,7 +455,8 @@ class _ProfileDetailsState extends State<ProfileDetails> {
           userAbout: aboutController.text,
           userDOB: dobNameController.text,
           zodiacValue: horoscopeValue,
-          userImagepath: imagePath);
+          userImagepath: imagePath,
+          userGender: genderValue);
     }
   }
 
@@ -433,7 +467,8 @@ class _ProfileDetailsState extends State<ProfileDetails> {
       String? zodiacValue,
       String? userImagepath,
       String? userAbout,
-      String? userDOB}) async {
+      String? userDOB,
+      String? userGender}) async {
     SharedPreferences getToken = await SharedPreferences.getInstance();
     try {
       final modal = await Api.uploadUserDetails(
@@ -443,12 +478,15 @@ class _ProfileDetailsState extends State<ProfileDetails> {
           lastName: lastName,
           zodiacValue: zodiacValue,
           userImagepath: userImagepath,
+          userGender:  userGender,
           tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken));
+      SharedPreferences setValue = await SharedPreferences.getInstance();
+      setValue.setString(SharedpreferenceKeys.profileUpdatedSuccessfully,
+          modal.message.toString());
 
       if (modal.success == true) {
         if (mounted) {
-          CommonWidgets.showflushbar(
-              context, modal.message.toString());
+          CommonWidgets.showflushbar(context, modal.message.toString());
           Navigator.pushNamed(context, RouteConstants.interestScreen);
         }
       }

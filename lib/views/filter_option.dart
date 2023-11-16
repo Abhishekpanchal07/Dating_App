@@ -51,10 +51,45 @@ class _AddPhotoState extends State<FilterOption> {
     StringConstants.chatting,
   ];
   List<String> ageRangeValue = [
+    StringConstants.rangeOfAges,
     StringConstants.rangeOfAge1,
     StringConstants.rangeOfAge2,
     StringConstants.rangeOfAge3,
   ];
+  Future<void> userloginSuccessfully() async {
+    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+    if (mounted) {
+      CommonWidgets.showflushbar(
+          context,
+          getSavedvalue
+              .getString(SharedpreferenceKeys.loginSuccessfully)
+              .toString());
+    }
+  }
+  bool isvalue = false;
+  Future<void> picUpdatedSuccessfully() async {
+    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+    if (mounted) {
+      CommonWidgets.showflushbar(
+          context,
+          getSavedvalue
+              .getString(SharedpreferenceKeys.picUpdatedSuccessfully)
+              .toString());
+    }
+    setState(() {
+      getSavedvalue.getString(
+                  SharedpreferenceKeys.picUpdatedSuccessfully) ==
+              null
+          ? isvalue = true
+          : isvalue = false;
+    });
+  }
+
+  @override
+  void initState() {
+   isvalue ? picUpdatedSuccessfully() : userloginSuccessfully();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -369,10 +404,15 @@ class _AddPhotoState extends State<FilterOption> {
         ageRange: ageRange,
         language: language,
         tokenValue: getSavedValues.getString(SharedpreferenceKeys.jwtToken),
+       
       );
+       // set message value
+      SharedPreferences setMessageValue = await SharedPreferences.getInstance();
+      setMessageValue.setString(
+          SharedpreferenceKeys.filterUpdatedSuccessfully, modal.message);
       if (modal.success == true) {
         if (mounted) {
-          CommonWidgets.showflushbar(context, modal.message.toString());
+         
           Navigator.pushNamed(context, RouteConstants.enableLocation);
         }
       } else {

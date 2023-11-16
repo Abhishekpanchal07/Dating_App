@@ -1,14 +1,18 @@
+import 'package:demoapp/api_modals/user_listing.dart';
 import 'package:demoapp/constants/Dimension_Constant.dart';
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
+import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/modals/drag_widget.dart';
 import 'package:demoapp/modals/homepage_data.dart';
+import 'package:demoapp/services/api.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class HomePageBottomNavigationScreen extends StatefulWidget {
@@ -23,36 +27,50 @@ class _HomePageBottomNavigationScreenState
     extends State<HomePageBottomNavigationScreen>
     with SingleTickerProviderStateMixin {
   ValueNotifier<Swipe> swipeNotifier = ValueNotifier(Swipe.none);
+  UserListing? modal;
+  List<String>? userImagesUrl;
 
   List<HomepageDetailsOfUser> userDetails = [
     HomepageDetailsOfUser(
         name: StringConstants.jesicaParker,
         horoscopeValue: StringConstants.aries,
-        userImage: StringConstants.imageurlInboxScreen),
+        userImage:userImagesUrl!),
     HomepageDetailsOfUser(
         name: StringConstants.jesicaParker,
         horoscopeValue: StringConstants.aries,
-        userImage: ImageConstants.testingImage),
+        userImage:userImagesUrl!
+        // ImageConstants.testingImage
+        ),
     HomepageDetailsOfUser(
         name: StringConstants.jesicaParker,
         horoscopeValue: StringConstants.aries,
-        userImage: ImageConstants.testingImage1),
+        userImage:userImagesUrl! 
+        // ImageConstants.testingImage1
+         ),
     HomepageDetailsOfUser(
         name: StringConstants.jesicaParker,
         horoscopeValue: StringConstants.aries,
-        userImage: ImageConstants.testingImage2),
+        userImage:userImagesUrl! 
+        // ImageConstants.testingImage2
+         ),
     HomepageDetailsOfUser(
         name: StringConstants.jesicaParker,
         horoscopeValue: StringConstants.aries,
-        userImage: ImageConstants.testingImage3),
+        userImage:userImagesUrl! 
+         //ImageConstants.testingImage3
+         ),
     HomepageDetailsOfUser(
         name: StringConstants.jesicaParker,
         horoscopeValue: StringConstants.aries,
-        userImage: ImageConstants.testingImage4),
+        userImage:userImagesUrl! 
+         //ImageConstants.testingImage4
+         ),
     HomepageDetailsOfUser(
         name: StringConstants.jesicaParker,
         horoscopeValue: StringConstants.aries,
-        userImage: ImageConstants.testingImage5),
+        userImage:userImagesUrl!
+        // ImageConstants.testingImage5
+         ),
   ];
   late final AnimationController _animationController;
 
@@ -103,8 +121,7 @@ class _HomePageBottomNavigationScreenState
                 GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(
-                      context, RouteConstants.notificationScreen
-                    );
+                        context, RouteConstants.notificationScreen);
                   },
                   child: const ImageView(
                     path: ImageConstants.notificationIconInboxScreen,
@@ -298,5 +315,28 @@ class _HomePageBottomNavigationScreenState
         ),
       ),
     );
+  }
+
+  // get user listing
+  Future<void> hitUserListingApi() async {
+    SharedPreferences getSavedValues = await SharedPreferences.getInstance();
+    modal = await Api.userlisting(
+        jwtToken: getSavedValues.getString(SharedpreferenceKeys.jwtToken));
+
+    if (modal!.success == true) {
+      for (int i = 0; i < modal!.data!.length; i++) {
+        DateTime currentDate = DateTime.now();
+        DateTime userDob = modal!.data![i].birthDate as DateTime;
+        int currentAge = currentDate.year - userDob.year;
+
+        userDetails.add(HomepageDetailsOfUser(
+            name: modal!.data![i].firstName +
+                modal!.data![i].firstName +
+                currentAge.toString(),
+            horoscopeValue: modal!.data![i].zodiac,
+            userImage: userImagesUrl!.add(modal!.data![i].image[1].image as String)));
+      }
+    }
+   
   }
 }

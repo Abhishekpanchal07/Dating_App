@@ -5,7 +5,7 @@ class HomepageDetailsOfUser {
   String? age;
   String? location;
   String? horoscopeValue;
-  String? userImage;
+  List<String>? userImage;
   HomepageDetailsOfUser(
       {this.name, this.age, this.horoscopeValue, this.location,this.userImage});
 }
