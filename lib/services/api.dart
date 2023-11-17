@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:demoapp/api_modals/get_user_details.dart';
 import 'package:demoapp/api_modals/user_add_filters.dart';
 import 'package:demoapp/api_modals/user_add_images.dart';
 import 'package:demoapp/api_modals/user_create_new_password.dart';
@@ -212,10 +213,21 @@ class Api {
 
   // get users for like and dislike
   static Future<UserListing> userlisting({String? jwtToken}) async {
-    dio.options.headers["authorization"] = jwtToken;
+    dio.options.headers["Authorization"] = jwtToken;
     try {
       Response response = await dio.get(ApiUrls.userListingApiUrl);
       return UserListing.fromJson(jsonDecode(response.toString()));
+    } on DioException {
+      throw const SocketException(StringConstants.socketExceptionErrorMessage);
+    }
+  }
+
+  // getting  user details 
+  static Future<GetUserDetails> userById({String? jwtToken}) async {
+    dio.options.headers["Authorization"] = jwtToken;
+    try {
+      Response response = await dio.get(ApiUrls.getUserdetailsApiUrl);
+      return GetUserDetails.fromJson(jsonDecode(response.toString()));
     } on DioException {
       throw const SocketException(StringConstants.socketExceptionErrorMessage);
     }

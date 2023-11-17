@@ -52,7 +52,6 @@ class MyRoutes {
       case RouteConstants.createNewAccountScreen:
         return MaterialPageRoute(builder: (_) => const CreateNewAccount());
       case RouteConstants.profileDetaisScreen:
-       
         return MaterialPageRoute(builder: (_) => const ProfileDetails());
       case RouteConstants.interestScreen:
         return MaterialPageRoute(builder: (_) => const InterestScreen());
@@ -95,9 +94,7 @@ class MyRoutes {
                 ));
       case RouteConstants.userAccountScreen:
         return MaterialPageRoute(
-            builder: (_) => const UserAccountScreen(
-                  conatinerChildTextValue: [],
-                ));
+            builder: (_) => const UserAccountScreen());
       case RouteConstants.editProfileScreen:
         return MaterialPageRoute(builder: (_) => const EditProfileScreen());
       case RouteConstants.notificationScreen:
@@ -114,6 +111,7 @@ class MyRoutes {
       case RouteConstants.homepageScreenBottomNavigation:
         return MaterialPageRoute(
             builder: (_) => const HomePageBottomNavigationScreen());
+     
     }
     return MaterialPageRoute(
         builder: (_) => Scaffold(

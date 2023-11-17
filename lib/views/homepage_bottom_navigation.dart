@@ -1,15 +1,16 @@
-import 'package:demoapp/api_modals/user_listing.dart';
 import 'package:demoapp/constants/Dimension_Constant.dart';
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
+import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/modals/drag_widget.dart';
 import 'package:demoapp/modals/homepage_data.dart';
 import 'package:demoapp/services/api.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,56 +28,57 @@ class _HomePageBottomNavigationScreenState
     extends State<HomePageBottomNavigationScreen>
     with SingleTickerProviderStateMixin {
   ValueNotifier<Swipe> swipeNotifier = ValueNotifier(Swipe.none);
-  UserListing? modal;
-  List<String>? userImagesUrl;
+  //UserListing? modal;
+ 
 
   List<HomepageDetailsOfUser> userDetails = [
-    HomepageDetailsOfUser(
-        name: StringConstants.jesicaParker,
-        horoscopeValue: StringConstants.aries,
-        userImage:userImagesUrl!),
-    HomepageDetailsOfUser(
-        name: StringConstants.jesicaParker,
-        horoscopeValue: StringConstants.aries,
-        userImage:userImagesUrl!
-        // ImageConstants.testingImage
-        ),
-    HomepageDetailsOfUser(
-        name: StringConstants.jesicaParker,
-        horoscopeValue: StringConstants.aries,
-        userImage:userImagesUrl! 
-        // ImageConstants.testingImage1
-         ),
-    HomepageDetailsOfUser(
-        name: StringConstants.jesicaParker,
-        horoscopeValue: StringConstants.aries,
-        userImage:userImagesUrl! 
-        // ImageConstants.testingImage2
-         ),
-    HomepageDetailsOfUser(
-        name: StringConstants.jesicaParker,
-        horoscopeValue: StringConstants.aries,
-        userImage:userImagesUrl! 
-         //ImageConstants.testingImage3
-         ),
-    HomepageDetailsOfUser(
-        name: StringConstants.jesicaParker,
-        horoscopeValue: StringConstants.aries,
-        userImage:userImagesUrl! 
-         //ImageConstants.testingImage4
-         ),
-    HomepageDetailsOfUser(
-        name: StringConstants.jesicaParker,
-        horoscopeValue: StringConstants.aries,
-        userImage:userImagesUrl!
-        // ImageConstants.testingImage5
-         ),
+    // HomepageDetailsOfUser(
+    //     name: StringConstants.jesicaParker,
+    //     horoscopeValue: StringConstants.aries,
+    //     userImage:userImagesUrl),
+    // HomepageDetailsOfUser(
+    //     name: StringConstants.jesicaParker,
+    //     horoscopeValue: StringConstants.aries,
+    //     userImage:userImagesUrl
+    //     // ImageConstants.testingImage
+    //     ),
+    // HomepageDetailsOfUser(
+    //     name: StringConstants.jesicaParker,
+    //     horoscopeValue: StringConstants.aries,
+    //     userImage:userImagesUrl!
+    //     // ImageConstants.testingImage1
+    //      ),
+    // HomepageDetailsOfUser(
+    //     name: StringConstants.jesicaParker,
+    //     horoscopeValue: StringConstants.aries,
+    //     userImage:userImagesUrl!
+    //     // ImageConstants.testingImage2
+    //      ),
+    // HomepageDetailsOfUser(
+    //     name: StringConstants.jesicaParker,
+    //     horoscopeValue: StringConstants.aries,
+    //     userImage:userImagesUrl!
+    //      //ImageConstants.testingImage3
+    //      ),
+    // HomepageDetailsOfUser(
+    //     name: StringConstants.jesicaParker,
+    //     horoscopeValue: StringConstants.aries,
+    //     userImage:userImagesUrl!
+    //      //ImageConstants.testingImage4
+    //      ),
+    // HomepageDetailsOfUser(
+    //     name: StringConstants.jesicaParker,
+    //     horoscopeValue: StringConstants.aries,
+    //     userImage:userImagesUrl!
+    //     // ImageConstants.testingImage5
+    //      ),
   ];
   late final AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
+    hitApi();
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
@@ -88,6 +90,21 @@ class _HomePageBottomNavigationScreenState
         swipeNotifier.value = Swipe.none;
       }
     });
+    
+  }
+
+  void hitApi() async {
+    await hitUserListingApi();
+    setState(() {
+      
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    swipeNotifier.dispose();
+    _animationController.dispose();
   }
 
   @override
@@ -187,6 +204,8 @@ class _HomePageBottomNavigationScreenState
                                       child: DragWidget(
                                         homepageDetailsOfUser:
                                             userDetails[index],
+                                       // userimages:dummyImages,
+                                            //userDetails[index].userImage,
                                         index: index,
                                         swipeNotifier: swipeNotifier,
                                         isLastCard: true,
@@ -194,6 +213,8 @@ class _HomePageBottomNavigationScreenState
                             } else {
                               return DragWidget(
                                 homepageDetailsOfUser: userDetails[index],
+                                //userimages: dummyImages,
+                                //userDetails[index].userImage,
                                 index: index,
                                 swipeNotifier: swipeNotifier,
                               );
@@ -314,29 +335,48 @@ class _HomePageBottomNavigationScreenState
           ],
         ),
       ),
+      
     );
+    
   }
+  
+  
 
   // get user listing
   Future<void> hitUserListingApi() async {
     SharedPreferences getSavedValues = await SharedPreferences.getInstance();
-    modal = await Api.userlisting(
-        jwtToken: getSavedValues.getString(SharedpreferenceKeys.jwtToken));
+    try {
+      final modal = await Api.userlisting(
+          jwtToken: getSavedValues.getString(SharedpreferenceKeys.jwtToken));
 
-    if (modal!.success == true) {
-      for (int i = 0; i < modal!.data!.length; i++) {
-        DateTime currentDate = DateTime.now();
-        DateTime userDob = modal!.data![i].birthDate as DateTime;
-        int currentAge = currentDate.year - userDob.year;
+      if (modal.success == true) {
+        for (int i = 0; i < modal.data!.length; i++) {
+          DateTime currentDate = DateTime.now();
+          DateTime userDob = DateTime.parse(modal.data![i].birthDate);
+          int currentAge = currentDate.year - userDob.year;
+          //dummyImages.add(value)
 
-        userDetails.add(HomepageDetailsOfUser(
-            name: modal!.data![i].firstName +
-                modal!.data![i].firstName +
-                currentAge.toString(),
-            horoscopeValue: modal!.data![i].zodiac,
-            userImage: userImagesUrl!.add(modal!.data![i].image[1].image as String)));
+          userDetails.add(
+            HomepageDetailsOfUser(
+              name: modal.data![i].firstName +
+                  modal.data![i].lastName +
+                  currentAge.toString(),
+              horoscopeValue: modal.data![i].zodiac,
+              userImage:modal.data![i].image[0].image,
+              //location: modal.data![i].userLocation
+            ),
+          );
+         
+          
+        }
+         
+      }
+      
+    } on DioException catch (e) {
+      if (mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
       }
     }
-   
   }
+  
 }

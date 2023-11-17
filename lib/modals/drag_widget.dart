@@ -10,12 +10,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 enum Swipe { left, right, none }
 
 class DragWidget extends StatefulWidget {
+  final List<String>? userimages;
   final int index;
   final HomepageDetailsOfUser homepageDetailsOfUser;
   final ValueNotifier<Swipe> swipeNotifier;
   final bool isLastCard;
   const DragWidget(
       {Key? key, required this.homepageDetailsOfUser,
+       this.userimages,
        required this.index,
        required this.swipeNotifier,
        this.isLastCard = false,})
@@ -48,7 +50,8 @@ class _DragWidgetState extends State<DragWidget> {
                     : const AlwaysStoppedAnimation(0),
                   child: Stack(children: [
                     ProfileCard(
-                        homepageDetailsOfUser: widget.homepageDetailsOfUser),
+                        homepageDetailsOfUser: widget.homepageDetailsOfUser,
+                        userImages: widget.userimages,),
                   //  widget.swipeNotifier.value != Swipe.none
                   //       ? widget.swipeNotifier.value == Swipe.right
                    swipe != Swipe.none
@@ -130,7 +133,8 @@ class _DragWidgetState extends State<DragWidget> {
             builder: (BuildContext context, Swipe swipe, Widget? child) {
               return Stack(
                 children: [
-                  ProfileCard(homepageDetailsOfUser: widget.homepageDetailsOfUser),
+                  ProfileCard(homepageDetailsOfUser: widget.homepageDetailsOfUser,
+                  userImages: widget.userimages,),
                   // heck if this is the last card and Swipe is not equal to Swipe.none
                   swipe != Swipe.none && widget.isLastCard
                       ? swipe == Swipe.right

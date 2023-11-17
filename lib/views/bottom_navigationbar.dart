@@ -26,9 +26,7 @@ class _DashboardScreenState extends State<BottomNavigationScreen> {
     const HomePageBottomNavigationScreen(),
     const MatchScreen(),
     const InboxScreen(),
-    const UserAccountScreen(
-      conatinerChildTextValue: [],
-    ),
+    const UserAccountScreen(),
   ];
   Future<void> userloginSuccessfully() async {
     SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
