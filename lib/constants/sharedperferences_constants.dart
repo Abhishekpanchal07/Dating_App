@@ -1,5 +1,6 @@
 class SharedpreferenceKeys {
   static const jwtToken = "JWTTOKEN";
+  static const loginjwtToken = "login JWTTOKEN";
   static const userId = "USERID";
   static const forgetPasswordEmailId = "emailid";
   static const verificationSuccessfully = "verification Successfully";
@@ -10,5 +11,7 @@ class SharedpreferenceKeys {
   static const interestUpdatedSuccessfully = "interest Updated Successfully";
   static const picUpdatedSuccessfully = "pic Updated Successfully";
   static const filterUpdatedSuccessfully = "filter Updated Successfully";
-   static const enablelocationSuccessfully = "enable location Successfully";
+  static const enablelocationSuccessfully = "enable location Successfully";
+  static const logtitudeValue = "longitude";
+   static const latitudeValue = "lontitude";
 }

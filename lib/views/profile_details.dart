@@ -73,6 +73,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
           : isvalue = false;
     });
   }
+  
 
   Future<void> userloginSuccessfully() async {
     SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
@@ -479,7 +480,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
           zodiacValue: zodiacValue,
           userImagepath: userImagepath,
           userGender:  userGender,
-          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken));
+          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken) ?? getToken.getString(SharedpreferenceKeys.loginjwtToken));
       SharedPreferences setValue = await SharedPreferences.getInstance();
       setValue.setString(SharedpreferenceKeys.profileUpdatedSuccessfully,
           modal.message.toString());

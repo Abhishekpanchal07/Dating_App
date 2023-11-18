@@ -269,12 +269,12 @@ class _AddPhotoState extends State<AddPhoto> {
 
   // hit add user images
   Future<void> hitAddUserImages() async {
-    SharedPreferences getSavedValues = await SharedPreferences.getInstance();
+    SharedPreferences getToken = await SharedPreferences.getInstance();
     try {
       final modal = await Api.addUserImages(
           imagepath: imagePaths,
-          tokenValue: getSavedValues.getString(SharedpreferenceKeys.jwtToken),
-          userId: getSavedValues.getString(SharedpreferenceKeys.userId));
+          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken) ?? getToken.getString(SharedpreferenceKeys.loginjwtToken),
+          userId: getToken.getString(SharedpreferenceKeys.userId));
       // set message value
       SharedPreferences setMessageValue = await SharedPreferences.getInstance();
       setMessageValue.setString(

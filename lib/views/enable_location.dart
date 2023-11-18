@@ -285,12 +285,12 @@ class _AddPhotoState extends State<EnableLocation> {
 
   // userlocation Api
   Future<void> hitUserLocationApi() async {
-    SharedPreferences getSavedValues = await SharedPreferences.getInstance();
+    SharedPreferences getToken = await SharedPreferences.getInstance();
     try {
       final modal = await Api.userLocation(
           longitude: exactLoaction!.longitude.toString(),
           latitude: exactLoaction!.latitude.toString(),
-          tokenValue: getSavedValues.getString(SharedpreferenceKeys.jwtToken));
+          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken) ?? getToken.getString(SharedpreferenceKeys.loginjwtToken));
           // set message value
       SharedPreferences setMessageValue = await SharedPreferences.getInstance();
       setMessageValue.setString(

@@ -272,7 +272,7 @@ class _LoginScreenState extends State<LoginScreen> {
       getToken.setString(SharedpreferenceKeys.loginSuccessfully, model.message);
       // JWT Token Value
       getToken.setString(
-          SharedpreferenceKeys.jwtToken, model.jwtToken.toString());
+          SharedpreferenceKeys.loginjwtToken, model.jwtToken.toString());
       // userId
       getToken.setString(
           SharedpreferenceKeys.userId, model.data?.id.toString() ?? "");

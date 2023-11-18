@@ -64,7 +64,7 @@ class Api {
       "lastName": lastName,
       "about": userAbout,
       "birthDate": userDOB,
-      "zodiacValue": zodiacValue,
+      "zodiac": zodiacValue,
       "profileImage": await MultipartFile.fromFile(userImagepath!),
       "gender": userGender
     });

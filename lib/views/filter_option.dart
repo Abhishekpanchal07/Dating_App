@@ -396,14 +396,14 @@ class _AddPhotoState extends State<FilterOption> {
       String? hereTo,
       String? ageRange,
       String? language}) async {
-    SharedPreferences getSavedValues = await SharedPreferences.getInstance();
+    SharedPreferences getToken = await SharedPreferences.getInstance();
     try {
       final modal = await Api.addUserFilters(
         hereTo: hereTo,
         wantToMeet: wantToMeet,
         ageRange: ageRange,
         language: language,
-        tokenValue: getSavedValues.getString(SharedpreferenceKeys.jwtToken),
+        tokenValue:  getToken.getString(SharedpreferenceKeys.jwtToken) ?? getToken.getString(SharedpreferenceKeys.loginjwtToken),
        
       );
        // set message value

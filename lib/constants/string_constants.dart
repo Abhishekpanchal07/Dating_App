@@ -1,4 +1,5 @@
 class StringConstants {
+  static const add = "Add+";
   static const familyName = "Lexend";
   static const loginScreenWelcomeText = "Welcome Back";
   static const loginScreenSignInText = "Sign in to continue";
@@ -196,7 +197,7 @@ class StringConstants {
   static const birthdayDate = "20-04-1998";
   static const editProfile = "Edit profile";
   static const done = "Done";
-  static const myBirthdayIs = "My birthday is";
+  static const birthdayIs = " Birthday ";
   static const dateFormat = "DD-MM-YYYY";
   static const yourAgeWillBePublic = "Your Age will be public";
   static const wordLimit = "500 words";
@@ -204,7 +205,7 @@ class StringConstants {
   static const hideAge = "Don't show my age";
   static const hideDistance = "Don't show my Distance";
   static const hidePhoneNumber = "Don't show my PhoneNumber";
-  static const logout = "logout";
+  static const logout = "Logout";
   static const delete = "Delete";
   static const deleteAccount = "Delete Account";
   static const deleteAccountDialogBoxText = "Delete Account?";

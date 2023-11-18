@@ -248,18 +248,18 @@ class _InterestState extends State<InterestScreen> {
 
   // hit add interest Api
   Future<void> hitUserInterestApi() async {
-    SharedPreferences jwtToken = await SharedPreferences.getInstance();
+    SharedPreferences getToken = await SharedPreferences.getInstance();
     try {
       final modal = await Api.addUserInterest(
           userInterest: userInterests,
-          tokenValue: jwtToken.getString(SharedpreferenceKeys.jwtToken));
+          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken) ?? getToken.getString(SharedpreferenceKeys.loginjwtToken));
           // set message value 
       SharedPreferences setMessageValue = await SharedPreferences.getInstance();
       setMessageValue.setString(
           SharedpreferenceKeys.interestUpdatedSuccessfully, modal.message);
       if (modal.success == true) {
         if (mounted) {
-          CommonWidgets.showflushbar(context, modal.message.toString());
+         // CommonWidgets.showflushbar(context, modal.message.toString());
           Navigator.pushNamed(context, RouteConstants.addPhotoScreen);
         }
       } else {

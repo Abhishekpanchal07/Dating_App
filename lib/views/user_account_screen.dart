@@ -15,6 +15,7 @@ import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -38,16 +39,21 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
 
   void hitgettinguserDetailApi() async {
     await hitUserById();
+    await getAddress();
     setState(() {});
   }
 
   List conatinerChildTextValue = [];
   List<String> userImages = [];
   String userName = "";
-  int userAge = 21;
+  int? userAge;
   String userEmail = "";
   String userBirthdate = "";
   String userAbout = "";
+  String hereTo = "";
+  double? longitude;
+  double? latitude;
+  String? userCurrentLocation;
   final controller = PageController();
   @override
   Widget build(BuildContext context) {
@@ -61,11 +67,12 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                 height: DimensionConstants.d470.h,
                 width: DimensionConstants.d414.w,
                 child: PageView.builder(
+                  
                     itemCount: userImages.length,
                     controller: controller,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return  ImageView(
+                      return ImageView(
                         fit: BoxFit.cover,
                         path: ApiUrls.baseUrl + userImages[index],
                       );
@@ -74,10 +81,10 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
             ),
             Positioned(
                 top: DimensionConstants.d359.h,
-                left: DimensionConstants.d166.w,
+                left: DimensionConstants.d196.w,
                 child: SmoothPageIndicator(
                   controller: controller,
-                  count: 5,
+                  count: userImages.length,
                   effect: const JumpingDotEffect(
                       activeDotColor: ColorConstant.inboxScreenGradientColor,
                       dotColor: ColorConstant.textcolor),
@@ -201,14 +208,14 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                           ),
                           // location
 
-                          const Text(StringConstants.location).bold(
+                           const Text(StringConstants.location).bold(
                               ColorConstant.black,
                               TextAlign.center,
                               DimensionConstants.d16.sp),
                           SizedBox(
                             height: DimensionConstants.d9.h,
                           ),
-                          const Text(StringConstants.jessicaLoaction)
+                           Text(userCurrentLocation!)
                               .regularText(ColorConstant.black,
                                   TextAlign.center, DimensionConstants.d16.sp),
                           SizedBox(
@@ -244,6 +251,24 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                             DimensionConstants.d14.sp,
                           ),
 
+                          SizedBox(
+                            height: DimensionConstants.d30.h,
+                          ),
+                          // Here to
+
+                          const Text(StringConstants.hereto).bold(
+                              ColorConstant.black,
+                              TextAlign.center,
+                              DimensionConstants.d16.sp),
+                          SizedBox(
+                            height: DimensionConstants.d9.h,
+                          ),
+
+                          Text(hereTo).regularText(
+                            ColorConstant.black,
+                            TextAlign.start,
+                            DimensionConstants.d14.sp,
+                          ),
                           SizedBox(
                             height: DimensionConstants.d30.h,
                           ),
@@ -300,11 +325,21 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
         userAge = currentAge;
         userEmail = modal.data![0].email;
         userAbout = modal.data![0].about;
+        hereTo = modal.data![0].filter[0].hereTo;
         for (int i = 0; i < modal.data![0].userInterst.length; i++) {
           conatinerChildTextValue
               .add(modal.data![0].userInterst[i].intrestName);
         }
-        userImages.add(modal.data![0].images[0].image.toString());
+        for (int i = 0; i < modal.data![0].images[0].image.length; i++) {
+          userImages.add(modal.data![0].images[0].image[i]);
+        }
+        // longitude
+        longitude = modal.data![0].location[0].longitude;
+        // latitude
+        latitude = modal.data![0].location[0].latitude;
+        // horoscope value
+        // userhoroscope = modal.data![0].zodiac;
+
         log(userName);
         log(userBirthdate);
         log(userAbout);
@@ -313,6 +348,26 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
       if (mounted) {
         CommonWidgets.showflushbar(context, e.toString());
       }
+    }
+  }
+
+  // get user location
+  Future<void> getAddress() async {
+    try {
+      List<Placemark> placeMarks =
+          await placemarkFromCoordinates(latitude!, longitude!);
+      Placemark place = placeMarks[0];
+      setState(() {
+        userCurrentLocation = "${place.locality},${place.country}";
+      });
+      setState(() {});
+
+      //  else {
+      //   CommonWidgets.showflushbar(
+      //       context, StringConstants.confirmPasswordError);
+      // }
+    } catch (e) {
+      log(e.toString());
     }
   }
 }
