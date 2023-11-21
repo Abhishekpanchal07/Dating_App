@@ -1,20 +1,28 @@
-class GetUserDetails {
-  GetUserDetails({
+class UpdateUserProfile {
+  UpdateUserProfile({
     required this.success,
      this.data,
+    required this.image,
+    required this.filter,
   });
   late final bool success;
-   List<Data>? data;
+  Data? data;
+  late final Image image;
+  late final Filter filter;
   
-  GetUserDetails.fromJson(Map<String, dynamic> json){
+  UpdateUserProfile.fromJson(Map<String, dynamic> json){
     success = json['success'];
-    data = json['data'] == null ? null : List.from(json['data']).map((e)=>Data.fromJson(e)).toList();
+    data = json['data'] == null ? null : Data.fromJson(json['data']);
+    image = Image.fromJson(json['image']);
+    filter = Filter.fromJson(json['filter']);
   }
 
   Map<String, dynamic> toJson() {
     final getdata = <String, dynamic>{};
     getdata['success'] = success;
-    getdata['data'] = data!.map((e)=>e.toJson()).toList();
+    getdata['data'] = data!.toJson();
+    getdata['image'] = image.toJson();
+    getdata['filter'] = filter.toJson();
     return getdata;
   }
 }
@@ -39,10 +47,6 @@ class Data {
     required this.lastName,
     required this.profileImage,
     required this.zodiac,
-    required this.location,
-    required this.userInterst,
-    required this.images,
-    required this.filter,
   });
   late final String id;
   late final String email;
@@ -62,10 +66,6 @@ class Data {
   late final String lastName;
   late final String profileImage;
   late final String zodiac;
-  late final List<Location> location;
-  late final List<UserInterst> userInterst;
-  late final List<Images> images;
-  late final List<Filter> filter;
   
   Data.fromJson(Map<String, dynamic> json){
     id = json['_id'];
@@ -86,10 +86,6 @@ class Data {
     lastName = json['lastName'];
     profileImage = json['profileImage'];
     zodiac = json['zodiac'];
-    location = List.from(json['location']).map((e)=>Location.fromJson(e)).toList();
-    userInterst = List.from(json['userInterst']).map((e)=>UserInterst.fromJson(e)).toList();
-    images = List.from(json['images']).map((e)=>Images.fromJson(e)).toList();
-    filter = List.from(json['filter']).map((e)=>Filter.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -112,94 +108,12 @@ class Data {
     getdata['lastName'] = lastName;
     getdata['profileImage'] = profileImage;
     getdata['zodiac'] = zodiac;
-    getdata['location'] = location.map((e)=>e.toJson()).toList();
-    getdata['userInterst'] = userInterst.map((e)=>e.toJson()).toList();
-    getdata['images'] = images.map((e)=>e.toJson()).toList();
-    getdata['filter'] = filter.map((e)=>e.toJson()).toList();
     return getdata;
   }
 }
 
-class Location {
-  Location({
-    required this.id,
-    required this.userId,
-    required this.longitude,
-    required this.latitude,
-    required this.status,
-    required this.createdAt,
-    required this.V,
-  });
-  late final String id;
-  late final String userId;
-  late final double longitude;
-  late final double latitude;
-  late final int status;
-  late final String createdAt;
-  late final int V;
-  
-  Location.fromJson(Map<String, dynamic> json){
-    id = json['_id'];
-    userId = json['userId'];
-    longitude = json['longitude'];
-    latitude = json['latitude'];
-    status = json['status'];
-    createdAt = json['createdAt'];
-    V = json['__v'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final getdata = <String, dynamic>{};
-    getdata['_id'] = id;
-    getdata['userId'] = userId;
-    getdata['longitude'] = longitude;
-    getdata['latitude'] = latitude;
-    getdata['status'] = status;
-    getdata['createdAt'] = createdAt;
-    getdata['__v'] = V;
-    return getdata;
-  }
-}
-
-class UserInterst {
-  UserInterst({
-    required this.id,
-    required this.userId,
-    required this.intrestName,
-    required this.status,
-    required this.createdAt,
-    required this.V,
-  });
-  late final String id;
-  late final String userId;
-  late final String intrestName;
-  late final int status;
-  late final String createdAt;
-  late final int V;
-  
-  UserInterst.fromJson(Map<String, dynamic> json){
-    id = json['_id'];
-    userId = json['userId'];
-    intrestName = json['intrestName'];
-    status = json['status'];
-    createdAt = json['createdAt'];
-    V = json['__v'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final getdata = <String, dynamic>{};
-    getdata['_id'] = id;
-    getdata['userId'] = userId;
-    getdata['intrestName'] = intrestName;
-    getdata['status'] = status;
-    getdata['createdAt'] = createdAt;
-    getdata['__v'] = V;
-    return getdata;
-  }
-}
-
-class Images {
-  Images({
+class Image {
+  Image({
     required this.id,
     required this.userId,
     required this.image,
@@ -212,7 +126,7 @@ class Images {
   late final int status;
   late final int V;
   
-  Images.fromJson(Map<String, dynamic> json){
+  Image.fromJson(Map<String, dynamic> json){
     id = json['_id'];
     userId = json['userId'];
     image = List.castFrom<dynamic, String>(json['image']);

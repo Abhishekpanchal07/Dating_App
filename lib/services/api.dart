@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:demoapp/api_modals/get_user_details.dart';
+import 'package:demoapp/api_modals/update_user_image.dart';
+import 'package:demoapp/api_modals/update_user_profile.dart';
 import 'package:demoapp/api_modals/user_add_filters.dart';
 import 'package:demoapp/api_modals/user_add_images.dart';
 import 'package:demoapp/api_modals/user_create_new_password.dart';
@@ -222,12 +224,68 @@ class Api {
     }
   }
 
-  // getting  user details 
+  // getting  user details
   static Future<GetUserDetails> userById({String? jwtToken}) async {
     dio.options.headers["Authorization"] = jwtToken;
     try {
       Response response = await dio.get(ApiUrls.getUserdetailsApiUrl);
       return GetUserDetails.fromJson(jsonDecode(response.toString()));
+    } on DioException {
+      throw const SocketException(StringConstants.socketExceptionErrorMessage);
+    }
+  }
+
+  // update user profile
+
+  static Future<UpdateUserProfile> updateUserDetails({
+    String? userBirthDate,
+    String? genderValue,
+    String? tokenValue,
+    String? zodiac,
+    String? hereto,
+    String? wantTomeet,
+    String? agerange,
+    String? language,
+    String? about,
+    //List? userimages,
+  }) async {
+    
+    var map = {
+     // "image": userimages,
+      "birthDate": userBirthDate,
+      "gender": genderValue,
+      "zodiac": zodiac,
+      "hereTo": hereto,
+      "wantToMeet": wantTomeet,
+      "ageRange": agerange,
+      "language": language,
+      "about": about
+    };
+    dio.options.headers["authorization"] = tokenValue;
+    try {
+      Response response =
+          await dio.put(ApiUrls.updateUserProfileApiUrl, data: map);
+      return UpdateUserProfile.fromJson(jsonDecode(response.toString()));
+    } on DioException {
+      throw const SocketException(StringConstants.socketExceptionErrorMessage);
+    }
+  }
+  // update user images 
+  static Future<UpdateUserImage> updateUserImages({
+    
+    String? tokenValue,
+    List? userimages,
+  }) async {
+    
+    var map = {
+      "image": userimages,
+     
+    };
+    dio.options.headers["authorization"] = tokenValue;
+    try {
+      Response response =
+          await dio.put(ApiUrls.updateUserProfileApiUrl, data: map);
+      return UpdateUserImage.fromJson(jsonDecode(response.toString()));
     } on DioException {
       throw const SocketException(StringConstants.socketExceptionErrorMessage);
     }

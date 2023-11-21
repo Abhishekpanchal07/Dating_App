@@ -290,7 +290,7 @@ class _AddPhotoState extends State<EnableLocation> {
       final modal = await Api.userLocation(
           longitude: exactLoaction!.longitude.toString(),
           latitude: exactLoaction!.latitude.toString(),
-          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken) ?? getToken.getString(SharedpreferenceKeys.loginjwtToken));
+          tokenValue:  getToken.getString(SharedpreferenceKeys.jwtToken));
           // set message value
       SharedPreferences setMessageValue = await SharedPreferences.getInstance();
       setMessageValue.setString(

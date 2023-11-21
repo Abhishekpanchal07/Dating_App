@@ -306,9 +306,12 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
     SharedPreferences accountCreated = await SharedPreferences.getInstance();
     try {
       final modal = await Api.signUp(
-          email: email, password: password, );
+        email: email,
+        password: password,
+      );
 
       if (modal.success == true) {
+        accountCreated.setString(SharedpreferenceKeys.userId, modal.data!.id.toString());
         accountCreated.setString(
             SharedpreferenceKeys.jwtToken, modal.jwtToken.toString());
         // create Account

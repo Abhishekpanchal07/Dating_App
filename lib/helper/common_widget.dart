@@ -12,8 +12,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CommonWidgets {
-  
-
   static Widget commonButton(String text) {
     return Container(
       height: DimensionConstants.d60.h,
@@ -308,12 +306,13 @@ class CommonWidgets {
   }
   // for filterScreen validation
 
-  static void filterScreenValidation(BuildContext context,
-      {String? genderValue,
-      String? selectedLanguage,
-      String? selectedAge,
-      String? selectedFriendshipInterest,
-      }) {
+  static void filterScreenValidation(
+    BuildContext context, {
+    String? genderValue,
+    String? selectedLanguage,
+    String? selectedAge,
+    String? selectedFriendshipInterest,
+  }) {
     if (selectedFriendshipInterest == null) {
       showflushbar(context, StringConstants.filterScreenErrorMessage);
     } else if (genderValue == null) {
@@ -322,9 +321,7 @@ class CommonWidgets {
       showflushbar(context, StringConstants.filterScreenErrorMessage2);
     } else if (selectedLanguage == null) {
       showflushbar(context, StringConstants.filterScreenErrorMessage3);
-    } 
-     
-    else {
+    } else {
       Navigator.pushNamed(
         context,
         RouteConstants.enableLocation,
@@ -432,12 +429,16 @@ class CommonWidgets {
       ),
     );
   }
-  
- 
-  
- // Ask user permission 
 
- 
-
-  
+  // show progress indicator
+  static Widget showProgressbar() {
+    return Center(
+        child: SizedBox(
+      height: DimensionConstants.d40.h,
+      width: DimensionConstants.d40.w,
+      child: const CircularProgressIndicator(
+        color: ColorConstant.lightpink,
+      ),
+    ));
+  }
 }

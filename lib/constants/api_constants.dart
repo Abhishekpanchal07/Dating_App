@@ -12,5 +12,7 @@ class ApiUrls {
   static const resendotpApiUrl = "http://65.2.70.217:8091/dating/resendCode";
   static const createNewpassApiUrl ="http://65.2.70.217:8091/dating/resetPassword";
   static const userListingApiUrl = "http://65.2.70.217:8091/dating/userlisting";
-   static const getUserdetailsApiUrl = "http://65.2.70.217:8091/dating/userbyid";
+  static const getUserdetailsApiUrl = "http://65.2.70.217:8091/dating/userbyid";
+  static const updateUserProfileApiUrl = "http://65.2.70.217:8091/dating/updateProfile";
+  static const updateUserImageApiUrl = "http://65.2.70.217:8091/dating/updateImage";
 }

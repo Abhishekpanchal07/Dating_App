@@ -403,7 +403,7 @@ class _AddPhotoState extends State<FilterOption> {
         wantToMeet: wantToMeet,
         ageRange: ageRange,
         language: language,
-        tokenValue:  getToken.getString(SharedpreferenceKeys.jwtToken) ?? getToken.getString(SharedpreferenceKeys.loginjwtToken),
+        tokenValue:   getToken.getString(SharedpreferenceKeys.jwtToken),
        
       );
        // set message value

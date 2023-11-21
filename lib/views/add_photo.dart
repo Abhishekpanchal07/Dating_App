@@ -79,87 +79,92 @@ class _AddPhotoState extends State<AddPhoto> {
               ColorConstant.bggradientcolor1,
               ColorConstant.bggradientcolor2
             ])),
-        child: Column(
-          children: [
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     GestureDetector(
-            //       onTap: () {
-            //         Navigator.pop(context);
-            //       },
-            //       child: ImageView(
-            //         path: ImageConstants.leftArrowIcon,
-            //         height: DimensionConstants.d24.h,
-            //         width: DimensionConstants.d24.w,
-            //       ),
-            //     ),
-            //     GestureDetector(
-            //       onTap: () {
-            //         Navigator.pushNamed(
-            //             context, RouteConstants.filterOptionScreen);
-            //       },
-            //       child: const Text(StringConstants.skipText).mediumText(
-            //           ColorConstant.pink,
-            //           TextAlign.end,
-            //           DimensionConstants.d16.sp),
-            //     ),
-            //   ],
-            // ),
-            const Text(StringConstants.addPhotoText).mediumText(
-                ColorConstant.headingcolor,
-                TextAlign.center,
-                DimensionConstants.d36.sp),
-            SizedBox(
-              height: DimensionConstants.d5.h,
+        child: ScrollConfiguration(
+          behavior: NoGlowScrollBehavior(),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     GestureDetector(
+                //       onTap: () {
+                //         Navigator.pop(context);
+                //       },
+                //       child: ImageView(
+                //         path: ImageConstants.leftArrowIcon,
+                //         height: DimensionConstants.d24.h,
+                //         width: DimensionConstants.d24.w,
+                //       ),
+                //     ),
+                //     GestureDetector(
+                //       onTap: () {
+                //         Navigator.pushNamed(
+                //             context, RouteConstants.filterOptionScreen);
+                //       },
+                //       child: const Text(StringConstants.skipText).mediumText(
+                //           ColorConstant.pink,
+                //           TextAlign.end,
+                //           DimensionConstants.d16.sp),
+                //     ),
+                //   ],
+                // ),
+                const Text(StringConstants.addPhotoText).mediumText(
+                    ColorConstant.headingcolor,
+                    TextAlign.center,
+                    DimensionConstants.d36.sp),
+                SizedBox(
+                  height: DimensionConstants.d5.h,
+                ),
+                const Text(StringConstants.dummyAddPhotosText).regularText(
+                    ColorConstant.headingcolor,
+                    TextAlign.center,
+                    DimensionConstants.d16.sp),
+                const Text(StringConstants.dummyAddPhotosText2).regularText(
+                    ColorConstant.headingcolor,
+                    TextAlign.center,
+                    DimensionConstants.d16.sp),
+                SizedBox(
+                  height: DimensionConstants.d30.h,
+                ),
+                ScrollConfiguration(
+                  behavior: NoGlowScrollBehavior(),
+                  child: GridView.builder(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      itemCount: imagePaths.length + 1,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: DimensionConstants.d3.toInt(),
+                          mainAxisSpacing: DimensionConstants.d30.w,
+                          childAspectRatio: DimensionConstants.d1,
+                          mainAxisExtent: DimensionConstants.d140.h,
+                          crossAxisSpacing: DimensionConstants.d20.h),
+                      itemBuilder: (context, index) {
+                        return index == imagePaths.length
+                            ? addImageButton()
+                            : imageContainer(imagePaths[index], index);
+                      }),
+                ),
+                SizedBox(
+                  height: DimensionConstants.d30.h,
+                ),
+                GestureDetector(
+                    onTap: () {
+                      if (imagePaths.isEmpty) {
+                        CommonWidgets.showflushbar(
+                            context, StringConstants.uploadImageError);
+                      } else {
+                        hitAddUserImages();
+                      }
+                    },
+                    child:
+                        CommonWidgets.commonButton(StringConstants.continueText)),
+                SizedBox(
+                  height: DimensionConstants.d298.h,
+                )
+              ],
             ),
-            const Text(StringConstants.dummyAddPhotosText).regularText(
-                ColorConstant.headingcolor,
-                TextAlign.center,
-                DimensionConstants.d16.sp),
-            const Text(StringConstants.dummyAddPhotosText2).regularText(
-                ColorConstant.headingcolor,
-                TextAlign.center,
-                DimensionConstants.d16.sp),
-            SizedBox(
-              height: DimensionConstants.d30.h,
-            ),
-            ScrollConfiguration(
-              behavior: NoGlowScrollBehavior(),
-              child: GridView.builder(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  itemCount: imagePaths.length + 1,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: DimensionConstants.d3.toInt(),
-                      mainAxisSpacing: DimensionConstants.d30.w,
-                      childAspectRatio: DimensionConstants.d1,
-                      mainAxisExtent: DimensionConstants.d140.h,
-                      crossAxisSpacing: DimensionConstants.d20.h),
-                  itemBuilder: (context, index) {
-                    return index == imagePaths.length
-                        ? addImageButton()
-                        : imageContainer(imagePaths[index], index);
-                  }),
-            ),
-            SizedBox(
-              height: DimensionConstants.d30.h,
-            ),
-            GestureDetector(
-                onTap: () {
-                  if (imagePaths.isEmpty) {
-                    CommonWidgets.showflushbar(
-                        context, StringConstants.uploadImageError);
-                  } else {
-                    hitAddUserImages();
-                  }
-                },
-                child:
-                    CommonWidgets.commonButton(StringConstants.continueText)),
-            SizedBox(
-              height: DimensionConstants.d298.h,
-            )
-          ],
+          ),
         ),
       ),
     );
@@ -273,8 +278,9 @@ class _AddPhotoState extends State<AddPhoto> {
     try {
       final modal = await Api.addUserImages(
           imagepath: imagePaths,
-          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken) ?? getToken.getString(SharedpreferenceKeys.loginjwtToken),
-          userId: getToken.getString(SharedpreferenceKeys.userId));
+          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken),
+          userId: getToken.getString(SharedpreferenceKeys.userId)
+          );
       // set message value
       SharedPreferences setMessageValue = await SharedPreferences.getInstance();
       setMessageValue.setString(

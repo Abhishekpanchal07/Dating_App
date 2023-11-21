@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/Dimension_Constant.dart';
 import 'package:demoapp/constants/route_constants.dart';
@@ -251,8 +250,10 @@ class _InterestState extends State<InterestScreen> {
     SharedPreferences getToken = await SharedPreferences.getInstance();
     try {
       final modal = await Api.addUserInterest(
+        
           userInterest: userInterests,
-          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken) ?? getToken.getString(SharedpreferenceKeys.loginjwtToken));
+          tokenValue:  getToken.getString(SharedpreferenceKeys.jwtToken),
+          );
           // set message value 
       SharedPreferences setMessageValue = await SharedPreferences.getInstance();
       setMessageValue.setString(

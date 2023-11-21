@@ -1,6 +1,5 @@
 class SharedpreferenceKeys {
   static const jwtToken = "JWTTOKEN";
-  static const loginjwtToken = "login JWTTOKEN";
   static const userId = "USERID";
   static const forgetPasswordEmailId = "emailid";
   static const verificationSuccessfully = "verification Successfully";

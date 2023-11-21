@@ -480,7 +480,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
           zodiacValue: zodiacValue,
           userImagepath: userImagepath,
           userGender:  userGender,
-          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken) ?? getToken.getString(SharedpreferenceKeys.loginjwtToken));
+          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken));
       SharedPreferences setValue = await SharedPreferences.getInstance();
       setValue.setString(SharedpreferenceKeys.profileUpdatedSuccessfully,
           modal.message.toString());
