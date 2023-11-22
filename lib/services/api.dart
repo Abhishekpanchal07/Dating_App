@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:demoapp/api_modals/get_user_details.dart';
-import 'package:demoapp/api_modals/update_user_image.dart';
+import 'package:demoapp/api_modals/update_user_interests.dart';
 import 'package:demoapp/api_modals/update_user_profile.dart';
+import 'package:demoapp/api_modals/update_user_single_image.dart';
 import 'package:demoapp/api_modals/user_add_filters.dart';
 import 'package:demoapp/api_modals/user_add_images.dart';
 import 'package:demoapp/api_modals/user_create_new_password.dart';
@@ -247,11 +248,10 @@ class Api {
     String? agerange,
     String? language,
     String? about,
-    //List? userimages,
+    List? userimages,
   }) async {
-    
     var map = {
-     // "image": userimages,
+      "image": userimages,
       "birthDate": userBirthDate,
       "gender": genderValue,
       "zodiac": zodiac,
@@ -270,22 +270,31 @@ class Api {
       throw const SocketException(StringConstants.socketExceptionErrorMessage);
     }
   }
-  // update user images 
-  static Future<UpdateUserImage> updateUserImages({
-    
-    String? tokenValue,
-    List? userimages,
-  }) async {
-    
-    var map = {
-      "image": userimages,
-     
-    };
-    dio.options.headers["authorization"] = tokenValue;
+
+  // update user images
+  static Future<UpdateUserSingleImage> updateUserImages({String? userimages}) async {
+    var map = FormData.fromMap({
+      "image": await MultipartFile.fromFile(userimages.toString()),
+    });
+   
     try {
       Response response =
-          await dio.put(ApiUrls.updateUserProfileApiUrl, data: map);
-      return UpdateUserImage.fromJson(jsonDecode(response.toString()));
+          await dio.post(ApiUrls.updateUserImageApiUrl, data: map);
+      return UpdateUserSingleImage.fromJson(jsonDecode(response.toString()));
+    } on DioException {
+      throw const SocketException(StringConstants.socketExceptionErrorMessage);
+    }
+  }
+  // update user interests 
+   static Future<UpdateUserInterest> updateUserInterests({List<String>? userinterests}) async {
+    var map = {
+      "likes":userinterests,
+    };
+   
+    try {
+      Response response =
+          await dio.put(ApiUrls.updateUserInterestsApiUrl, data: map);
+      return UpdateUserInterest.fromJson(jsonDecode(response.toString()));
     } on DioException {
       throw const SocketException(StringConstants.socketExceptionErrorMessage);
     }

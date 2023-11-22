@@ -14,13 +14,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class InterestScreen extends StatefulWidget {
-  const InterestScreen({super.key});
+  final bool? isfromeditprofileScreen;
+  const InterestScreen({super.key, this.isfromeditprofileScreen});
 
   @override
   State<InterestScreen> createState() => _InterestState();
 }
 
 class _InterestState extends State<InterestScreen> {
+  bool fromeditprofileScreen = false;
   bool isSeeMore = false;
   bool interest = false;
   List<String> containerText = [
@@ -40,9 +42,28 @@ class _InterestState extends State<InterestScreen> {
   List<bool> selectInterest = [];
 
   List<String>? passArguments = [];
+  List<String> userSelectedinterest = [];
   List? userInterests = [];
+  Future<void> getinterest() async {
+    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+    passArguments = getSavedvalue
+            .getStringList(SharedpreferenceKeys.userUpdatedInterestlist) ??
+        [];
+    if (passArguments!.isNotEmpty) {
+      for (int i = 0; i < passArguments!.length; i++) {
+        if (passArguments![i] == containerText[i]) {
+          setState(() {
+            selectInterest[i] = !selectInterest[i];
+          });
+        }
+      }
+    }
+    setState(() {});
+  }
+
   Future<void> userloginSuccessfully() async {
     SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
+
     if (mounted) {
       CommonWidgets.showflushbar(
           context,
@@ -76,8 +97,8 @@ class _InterestState extends State<InterestScreen> {
     super.initState();
     for (var i = 1; i <= containerText.length; i++) {
       selectInterest.add(false);
-      isvalue ? profileUpdatedSuccessfully() : userloginSuccessfully();
     }
+    getinterest();
   }
 
   @override
@@ -158,13 +179,18 @@ class _InterestState extends State<InterestScreen> {
                         return GestureDetector(
                             onTap: () {
                               setState(() {
+                                fromeditprofileScreen =
+                                    widget.isfromeditprofileScreen!;
                                 selectInterest[index] = !selectInterest[index];
                                 String selectedContainerText =
                                     containerText[index];
-                                // selectInterest[index]
-                                //     ? passArguments!.add(selectedContainerText)
-                                //     : passArguments!.remove(selectedContainerText);
-                                //print(passArguments!.length);
+
+                                selectInterest[index]
+                                    ? userSelectedinterest
+                                        .add(selectedContainerText)
+                                    : userSelectedinterest
+                                        .remove(selectedContainerText);
+                                print(userSelectedinterest.length);
                                 for (int i = 0; i < 1; i++) {
                                   selectInterest[index]
                                       ? userInterests!.add({
@@ -213,22 +239,14 @@ class _InterestState extends State<InterestScreen> {
                 GestureDetector(
                     onTap: () {
                       setState(() {
-                        // if (passArguments!.isEmpty) {
-                        //   // CommonWidgets.showflushbar(
-                        //   //     context, StringConstants.unTapInterestError);
-                        //   Navigator.pushNamed(
-                        //       context, RouteConstants.userDetailScreen,
-                        //       arguments: []);
-                        // } else {
-                        //   Navigator.pushNamed(
-                        //       context, RouteConstants.userDetailScreen,
-                        //       arguments: passArguments);
-                        // }
                         if (userInterests!.isEmpty) {
                           CommonWidgets.showflushbar(context,
                               StringConstants.unchooseInterestErrorMessage);
                         } else {
-                          hitUserInterestApi();
+                          fromeditprofileScreen
+                              ? Navigator.pushNamed(
+                                  context, RouteConstants.editProfileScreen)
+                              : hitUserInterestApi();
                         }
                       });
                     },
@@ -248,19 +266,24 @@ class _InterestState extends State<InterestScreen> {
   // hit add interest Api
   Future<void> hitUserInterestApi() async {
     SharedPreferences getToken = await SharedPreferences.getInstance();
+    // for (int i = 0; i < userInterests!.length;i++){
+    //   userSelectedinterest.add()
+    // }
+      getToken.setStringList(
+          SharedpreferenceKeys.userUpdatedInterestlist, userSelectedinterest);
     try {
       final modal = await Api.addUserInterest(
-        
-          userInterest: userInterests,
-          tokenValue:  getToken.getString(SharedpreferenceKeys.jwtToken),
-          );
-          // set message value 
+        userInterest: userInterests,
+        tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken),
+      );
+      // set message value
       SharedPreferences setMessageValue = await SharedPreferences.getInstance();
       setMessageValue.setString(
           SharedpreferenceKeys.interestUpdatedSuccessfully, modal.message);
       if (modal.success == true) {
         if (mounted) {
-         // CommonWidgets.showflushbar(context, modal.message.toString());
+          // CommonWidgets.showflushbar(context, modal.message.toString());
+
           Navigator.pushNamed(context, RouteConstants.addPhotoScreen);
         }
       } else {

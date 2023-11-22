@@ -13,4 +13,5 @@ class SharedpreferenceKeys {
   static const enablelocationSuccessfully = "enable location Successfully";
   static const logtitudeValue = "longitude";
    static const latitudeValue = "lontitude";
+   static const userUpdatedInterestlist = "user Updated Interest list";
 }

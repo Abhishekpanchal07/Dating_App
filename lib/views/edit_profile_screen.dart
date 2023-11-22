@@ -1,6 +1,6 @@
 import 'dart:developer';
-
 import 'package:demoapp/api_modals/get_user_details.dart';
+import 'package:demoapp/api_modals/update_user_single_image.dart';
 import 'package:demoapp/constants/api_constants.dart';
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
@@ -57,10 +57,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String? wantToMeet;
   String? prefferedAge;
   String? prefferedlanguage;
+  String? uploadimagepath;
   List<String> userInterest = [];
   //int? dob;
   List<String> imagePaths = [];
-   List<String> imagepathsofuseraddedpics = [];
+  List<String> imagepathsofuseraddedpics = [];
   List<String> horoscopeList = [
     StringConstants.aries,
     StringConstants.taurus,
@@ -116,6 +117,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   GetUserDetails? modal;
+  UpdateUserSingleImage? modal2;
+  String? jwttoken;
+
+  Future<void> updateuserpic({String? imageurl}) async {
+    SharedPreferences logintoken = await SharedPreferences.getInstance();
+    jwttoken = logintoken.getString(SharedpreferenceKeys.jwtToken);
+    modal2 = await Api.updateUserImages(userimages: imageurl);
+    imagePaths.clear();
+    imagePaths.add(modal2!.image);
+    gettingdetails();
+    setState(() {
+      
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,7 +180,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                await hituserUpdateProfileApi();
+                                //await hituserUpdateProfileApi();
 
                                 if (mounted) {
                                   Navigator.pop(context);
@@ -200,7 +215,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 return index == imagePaths.length
                                     ? addImageButton()
                                     : imageContainer(
-                                      
                                         ApiUrls.baseUrl + imagePaths[index],
                                         index);
                               }),
@@ -310,7 +324,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   onTap: () {
                                     if (userInterest.length == index + 1) {
                                       Navigator.pushNamed(context,
-                                          RouteConstants.interestScreen);
+                                          RouteConstants.interestScreen,arguments: true);
                                     }
                                   },
                                   child: userInterestsContainer(
@@ -676,7 +690,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 source: ImageSource.gallery);
                             if (photo != null) {
                               setState(() {
-                                imagePaths.add(photo.path);
+                                uploadimagepath = photo.path;
+                                updateuserpic(imageurl: uploadimagepath);
                               });
                             }
                           },
@@ -687,7 +702,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 source: ImageSource.camera);
                             if (photo != null) {
                               setState(() {
-                                imagePaths.add(photo.path);
+                                uploadimagepath = photo.path;
+                                updateuserpic(imageurl: uploadimagepath);
+                                // imagePaths.add(photo.path);
                               });
                             }
                           },
@@ -794,7 +811,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   height: DimensionConstants.d10.h,
                 ),
                 SizedBox(
-                  height: DimensionConstants.d28.h,
+                  height: DimensionConstants.d27.h,
                   width: DimensionConstants.d380.w,
                   child: Center(
                     child: TextField(
@@ -1132,32 +1149,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   // hit user update profile Api
-  Future<void> hituserUpdateProfileApi() async {
-    SharedPreferences getToken = await SharedPreferences.getInstance();
-    try {
-      final modal = await Api.updateUserDetails(
-          // userimages: imagePaths,
-          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken),
-          userBirthDate: userDOBController.text,
-          about: useraboutController.text,
-          zodiac: horoscopeSelectedvalue,
-          hereto: selectedFriendshipInterest,
-          wantTomeet: selectedGenderValue,
-          agerange: selectedAge,
-          language: selectedLanguage,
-          genderValue: genderValue);
-      if (modal.success == true) {
-        if (mounted) {
-           await Api.updateUserImages(
-              tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken),userimages:imagePaths );
-          hitUserById();
-         
-        }
-      }
-    } on DioException catch (e) {
-      if (mounted) {
-        CommonWidgets.showflushbar(context, e.toString());
-      }
-    }
-  }
+  // Future<void> hituserUpdateProfileApi() async {
+  //   SharedPreferences getToken = await SharedPreferences.getInstance();
+  //   try {
+  //     final modal = await Api.updateUserDetails(
+  //         userimages: imagePaths,
+  //         tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken),
+  //         userBirthDate: userDOBController.text,
+  //         about: useraboutController.text,
+  //         zodiac: horoscopeSelectedvalue,
+  //         hereto: selectedFriendshipInterest,
+  //         wantTomeet: selectedGenderValue,
+  //         agerange: selectedAge,
+  //         language: selectedLanguage,
+  //         genderValue: genderValue);
+  //     if (modal.success == true) {
+  //       if (mounted) {
+  //         // await Api.updateUserImages(
+  //         //     tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken),
+  //         //     userimages: imagePaths);
+  //         hitUserById();
+  //       }
+  //     }
+  //   } on DioException catch (e) {
+  //     if (mounted) {
+  //       CommonWidgets.showflushbar(context, e.toString());
+  //     }
+  //   }
+  // }
 }
