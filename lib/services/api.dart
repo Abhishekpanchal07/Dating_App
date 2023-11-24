@@ -249,6 +249,7 @@ class Api {
     String? language,
     String? about,
     List? userimages,
+    
   }) async {
     var map = {
       "image": userimages,
@@ -286,7 +287,7 @@ class Api {
     }
   }
   // update user interests 
-   static Future<UpdateUserInterest> updateUserInterests({List<String>? userinterests}) async {
+   static Future<UpdateUserInterest> updateUserInterests({List? userinterests}) async {
     var map = {
       "likes":userinterests,
     };

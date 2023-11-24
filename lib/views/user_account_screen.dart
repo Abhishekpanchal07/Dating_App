@@ -1,6 +1,6 @@
 import 'dart:developer';
-
 import 'package:demoapp/api_modals/get_user_details.dart';
+import 'package:demoapp/api_modals/update_user_interests.dart';
 import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/api_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
@@ -42,6 +42,11 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
     await hitUserById();
     await getAddress();
     setState(() {});
+  }
+
+  UpdateUserInterest? modal3;
+  Future<void> getUpdatedUserInterests() async {
+    modal3 = await Api.updateUserInterests();
   }
 
   List conatinerChildTextValue = [];
@@ -100,7 +105,13 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                       child: GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(
-                              context, RouteConstants.editProfileScreen);
+                                  context, RouteConstants.editProfileScreen)
+                              .then((value) {
+                            if (value == true) {
+                              hitUserById();
+                              setState(() {});
+                            }
+                          });
                         },
                         child: const ImageView(
                           path: ImageConstants.editProfileIcon,
@@ -321,10 +332,14 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
 
       if (modal!.success == true) {
         DateTime currentDate = DateTime.now();
-        DateTime userDob = DateTime.parse(modal!.data![0].birthDate);
+        DateTime userDob = modal!.data![0].birthDate.isNotEmpty
+            ? DateTime.parse(modal!.data![0].birthDate)
+            : DateTime.now();
         int currentAge = currentDate.year - userDob.year;
-        userBirthdate = DateFormat('dd-MM-yyyy')
-            .format(DateTime.parse(modal!.data![0].birthDate));
+        userBirthdate = modal!.data![0].birthDate.isNotEmpty
+            ? DateFormat('dd-MM-yyyy')
+                .format(DateTime.parse(modal!.data![0].birthDate))
+            : "";
         userName =
             ' ${modal!.data![0].firstName}${modal!.data![0].lastName},${currentAge.toString()}';
         // userAge = currentAge;
@@ -332,10 +347,13 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
 
         userAbout = modal!.data![0].about;
         hereTo = modal!.data![0].filter[0].hereTo;
+        // user interests
+        conatinerChildTextValue.clear();
         for (int i = 0; i < modal!.data![0].userInterst.length; i++) {
           conatinerChildTextValue
               .add(modal!.data![0].userInterst[i].intrestName);
         }
+        userImages.clear();
         for (int i = 0; i < modal!.data![0].images[0].image.length; i++) {
           userImages.add(modal!.data![0].images[0].image[i]);
         }
@@ -350,6 +368,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
         log(userName);
         log(userBirthdate);
         log(userAbout);
+        setState(() {});
       }
     } on DioException catch (e) {
       if (mounted) {

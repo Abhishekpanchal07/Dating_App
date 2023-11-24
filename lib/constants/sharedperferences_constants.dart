@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 class SharedpreferenceKeys {
   static const jwtToken = "JWTTOKEN";
   static const userId = "USERID";
@@ -13,5 +15,6 @@ class SharedpreferenceKeys {
   static const enablelocationSuccessfully = "enable location Successfully";
   static const logtitudeValue = "longitude";
    static const latitudeValue = "lontitude";
+   static SharedPreferences? prefs;
    static const userUpdatedInterestlist = "user Updated Interest list";
 }

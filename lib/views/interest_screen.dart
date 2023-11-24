@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:demoapp/api_modals/update_user_interests.dart';
 import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/Dimension_Constant.dart';
 import 'package:demoapp/constants/route_constants.dart';
@@ -15,7 +16,9 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class InterestScreen extends StatefulWidget {
   final bool? isfromeditprofileScreen;
-  const InterestScreen({super.key, this.isfromeditprofileScreen});
+  final List<String>? userinterests;
+  const InterestScreen(
+      {super.key, this.isfromeditprofileScreen, this.userinterests});
 
   @override
   State<InterestScreen> createState() => _InterestState();
@@ -44,21 +47,40 @@ class _InterestState extends State<InterestScreen> {
   List<String>? passArguments = [];
   List<String> userSelectedinterest = [];
   List? userInterests = [];
-  Future<void> getinterest() async {
-    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
-    passArguments = getSavedvalue
-            .getStringList(SharedpreferenceKeys.userUpdatedInterestlist) ??
-        [];
-    if (passArguments!.isNotEmpty) {
-      for (int i = 0; i < passArguments!.length; i++) {
-        if (passArguments![i] == containerText[i]) {
-          setState(() {
-            selectInterest[i] = !selectInterest[i];
-          });
+  List? userUpdatedInterests = [];
+  void getinterest() {
+    if (widget.userinterests!.isNotEmpty) {
+      for (int i = 0; i < widget.userinterests!.length; i++) {
+        for (int j = 0; j < containerText.length; j++) {
+          if (widget.userinterests![i] == containerText[j]) {
+            setState(() {
+              selectInterest[j] = !selectInterest[j];
+             // userUpdatedInterests!.clear();
+              userUpdatedInterests!
+                  .add({"intrestName": widget.userinterests![i]});
+            });
+          }
         }
       }
+      // for (int i = 0; i < userInterests!.length; i++) {
+      //   userUpdatedInterests!.add({"intrestName": userInterests![i]});
+      // }
+      print(userUpdatedInterests);
+      //  print(userInterests);
     }
     setState(() {});
+  }
+
+  UpdateUserInterest? modal2;
+  Future<void> updateUserInterest() async {
+    modal2 = await Api.updateUserInterests(userinterests: userUpdatedInterests);
+    if (modal2!.success == true) {
+      if (mounted) {
+        Navigator.pop(context, true);
+      }
+    } else {
+      CommonWidgets.showProgressbar();
+    }
   }
 
   Future<void> userloginSuccessfully() async {
@@ -98,6 +120,7 @@ class _InterestState extends State<InterestScreen> {
     for (var i = 1; i <= containerText.length; i++) {
       selectInterest.add(false);
     }
+    fromeditprofileScreen = widget.isfromeditprofileScreen!;
     getinterest();
   }
 
@@ -179,18 +202,10 @@ class _InterestState extends State<InterestScreen> {
                         return GestureDetector(
                             onTap: () {
                               setState(() {
-                                fromeditprofileScreen =
-                                    widget.isfromeditprofileScreen!;
                                 selectInterest[index] = !selectInterest[index];
                                 String selectedContainerText =
                                     containerText[index];
-
-                                selectInterest[index]
-                                    ? userSelectedinterest
-                                        .add(selectedContainerText)
-                                    : userSelectedinterest
-                                        .remove(selectedContainerText);
-                                print(userSelectedinterest.length);
+                                //  print(userSelectedinterest.length);
                                 for (int i = 0; i < 1; i++) {
                                   selectInterest[index]
                                       ? userInterests!.add({
@@ -199,6 +214,17 @@ class _InterestState extends State<InterestScreen> {
                                       : userInterests!.removeWhere((element) =>
                                           element["intrestName"] ==
                                           selectedContainerText);
+
+                                  fromeditprofileScreen &&  selectInterest[index]
+                                      ?  userUpdatedInterests!.add({
+                                          "intrestName": selectedContainerText
+                                        })
+                                      : userUpdatedInterests!.removeWhere(
+                                          (element) =>
+                                              element["intrestName"] ==
+                                              selectedContainerText);
+
+                                  print(userUpdatedInterests);
                                 }
                               });
                             },
@@ -244,8 +270,7 @@ class _InterestState extends State<InterestScreen> {
                               StringConstants.unchooseInterestErrorMessage);
                         } else {
                           fromeditprofileScreen
-                              ? Navigator.pushNamed(
-                                  context, RouteConstants.editProfileScreen)
+                              ? updateUserInterest()
                               : hitUserInterestApi();
                         }
                       });
@@ -269,8 +294,7 @@ class _InterestState extends State<InterestScreen> {
     // for (int i = 0; i < userInterests!.length;i++){
     //   userSelectedinterest.add()
     // }
-      getToken.setStringList(
-          SharedpreferenceKeys.userUpdatedInterestlist, userSelectedinterest);
+
     try {
       final modal = await Api.addUserInterest(
         userInterest: userInterests,

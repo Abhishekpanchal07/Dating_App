@@ -74,6 +74,7 @@ class _HomePageBottomNavigationScreenState
     //      ),
   ];
   late final AnimationController _animationController;
+  
 
   @override
   void initState() {
@@ -347,7 +348,7 @@ class _HomePageBottomNavigationScreenState
   Future<void> hitUserListingApi() async {
     SharedPreferences getToken = await SharedPreferences.getInstance();
     try {
-       modal = await Api.userlisting(
+      modal = await Api.userlisting(
           jwtToken: getToken.getString(SharedpreferenceKeys.jwtToken));
 
       if (modal!.success == true) {
@@ -369,6 +370,7 @@ class _HomePageBottomNavigationScreenState
             print(userDetails);
           }
         }
+      //  setState(() {});
       }
     } on DioException catch (e) {
       if (mounted) {

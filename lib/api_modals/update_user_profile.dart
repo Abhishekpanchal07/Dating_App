@@ -79,13 +79,13 @@ class Data {
     isActive = json['isActive'];
     createdAt = json['createdAt'];
     V = json['__v'];
-    about = json['about'];
-    birthDate = json['birthDate'];
-    firstName = json['firstName'];
-    gender = json['gender'];
-    lastName = json['lastName'];
-    profileImage = json['profileImage'];
-    zodiac = json['zodiac'];
+    about = json['about'] ?? "";
+    birthDate = json['birthDate'] ?? "";
+    firstName = json['firstName'] ?? "";
+    gender = json['gender'] ?? "";
+    lastName = json['lastName'] ?? "";
+    profileImage = json['profileImage'] ?? "";
+    zodiac = json['zodiac'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

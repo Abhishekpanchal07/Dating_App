@@ -80,12 +80,12 @@ class Data {
     createdAt = json['createdAt'];
     V = json['__v'];
     about = json['about'];
-    birthDate = json['birthDate'];
+    birthDate = json['birthDate'] ?? "";
     firstName = json['firstName'];
-    gender = json['gender'];
+    gender = json['gender'] ?? "";
     lastName = json['lastName'];
     profileImage = json['profileImage'];
-    zodiac = json['zodiac'];
+    zodiac = json['zodiac'] ?? "";
     location = List.from(json['location']).map((e)=>Location.fromJson(e)).toList();
     userInterst = List.from(json['userInterst']).map((e)=>UserInterst.fromJson(e)).toList();
     images = List.from(json['images']).map((e)=>Images.fromJson(e)).toList();
@@ -254,11 +254,11 @@ class Filter {
   Filter.fromJson(Map<String, dynamic> json){
     id = json['_id'];
     userId = json['userId'];
-    hereTo = json['hereTo'];
-    wantToMeet = json['wantToMeet'];
-    ageRange = json['ageRange'];
-    language = json['language'];
-    status = json['status'];
+    hereTo = json['hereTo'] ?? "";
+    wantToMeet = json['wantToMeet'] ?? "";
+    ageRange = json['ageRange'] ?? "";
+    language = json['language'] ?? "";
+    status = json['status'] ?? "";
     V = json['__v'];
   }
 

@@ -1,5 +1,7 @@
 import 'dart:developer';
+
 import 'package:demoapp/api_modals/get_user_details.dart';
+import 'package:demoapp/api_modals/update_user_interests.dart';
 import 'package:demoapp/api_modals/update_user_single_image.dart';
 import 'package:demoapp/constants/api_constants.dart';
 import 'package:demoapp/constants/color_constants.dart';
@@ -13,6 +15,7 @@ import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/helper/dialog_helper.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/services/api.dart';
+import 'package:demoapp/views/interest_screen.dart';
 import 'package:demoapp/widgets/custom_dialogbox.dart';
 import 'package:demoapp/widgets/dropdownlist.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
@@ -42,6 +45,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final userDOBController = TextEditingController();
   final userDOB = TextEditingController();
   final useraboutController = TextEditingController();
+  int countApiHittime = 0;
+  bool isnavigateInterestScreeen = false;
 
   String? userdob;
   String? userUpdatedDOB;
@@ -61,6 +66,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   List<String> userInterest = [];
   //int? dob;
   List<String> imagePaths = [];
+  List<String> userUpdatedImages = [];
   List<String> imagepathsofuseraddedpics = [];
   List<String> horoscopeList = [
     StringConstants.aries,
@@ -109,6 +115,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   bool newFriends = false;
   bool ageRange = false;
   bool language = false;
+  UpdateUserInterest? modal3;
+
+  // Future<void> updateUserInterest() async {
+  //   modal3 = await Api.updateUserInterests(
+  //       userinterests: widget.updateduserInterest);
+
+  //   hitUserById();
+  // }
+
   @override
   void initState() {
     userInterest.add(StringConstants.add);
@@ -124,12 +139,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     SharedPreferences logintoken = await SharedPreferences.getInstance();
     jwttoken = logintoken.getString(SharedpreferenceKeys.jwtToken);
     modal2 = await Api.updateUserImages(userimages: imageurl);
-    imagePaths.clear();
-    imagePaths.add(modal2!.image);
+    // imagePaths.clear();
+    // imagePaths.add(modal2!.image);
+
     gettingdetails();
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
@@ -180,10 +194,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                //await hituserUpdateProfileApi();
+                                await hituserUpdateProfileApi();
 
                                 if (mounted) {
-                                  Navigator.pop(context);
+                                  Navigator.pop(context, true);
                                 }
                               },
                               child: const Text(StringConstants.done)
@@ -324,8 +338,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   onTap: () {
                                     if (userInterest.length == index + 1) {
                                       Navigator.pushNamed(context,
-                                          RouteConstants.interestScreen,arguments: true);
+                                          RouteConstants.interestScreen,
+                                          arguments: InterestScreen(
+                                            isfromeditprofileScreen: true,
+                                            userinterests: userInterest,
+                                          )).then((value) {
+                                        if (value == true) {
+                                          setState(() {
+                                            isnavigateInterestScreeen = true;
+                                          });
+                                          gettingdetails();
+
+                                          //updateuserpic();
+                                        }
+                                      });
                                     }
+                                    //  setState(() {
+
+                                    //       });
                                   },
                                   child: userInterestsContainer(
                                       containerchildText: userInterest[index]),
@@ -749,6 +779,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       onTap: () {
                         setState(() {
                           imagePaths.removeAt(index);
+                          hituserUpdateProfileApi();
+                          setState(() {
+                            
+                          });
                         });
                       },
                       child: ImageView(
@@ -1074,19 +1108,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
       if (modal!.success == true) {
         // user bitrthdate
-        userdob = DateFormat('dd-MM-yyyy')
-            .format(DateTime.parse(modal!.data![0].birthDate));
+        userdob = modal!.data![0].birthDate.isNotEmpty
+            ? DateFormat('dd-MM-yyyy')
+                .format(DateTime.parse(modal!.data![0].birthDate))
+            : "";
         // user About
         userabout = modal!.data![0].about;
         // user interests
+        modal2 == null ? addInterestWithoutClearList() : null;
 
-        for (int i = 0; i < modal!.data![0].userInterst.length; i++) {
-          userInterest.insert(i, modal!.data![0].userInterst[i].intrestName);
-        }
         // uploaded user images
+
+        imagePaths.clear();
+        modal2 != null ? addUserImages() : null;
+
         for (int i = 0; i < modal!.data![0].images[0].image.length; i++) {
           imagePaths.add(modal!.data![0].images[0].image[i]);
         }
+
         // longitude
         longitude = modal!.data![0].location[0].longitude;
         // latitude
@@ -1104,6 +1143,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         // preffered language
         prefferedlanguage = modal!.data![0].filter[0].language;
       }
+      setState(() {});
     } on DioException catch (e) {
       if (mounted) {
         CommonWidgets.showflushbar(context, e.toString());
@@ -1149,32 +1189,61 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   // hit user update profile Api
-  // Future<void> hituserUpdateProfileApi() async {
-  //   SharedPreferences getToken = await SharedPreferences.getInstance();
-  //   try {
-  //     final modal = await Api.updateUserDetails(
-  //         userimages: imagePaths,
-  //         tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken),
-  //         userBirthDate: userDOBController.text,
-  //         about: useraboutController.text,
-  //         zodiac: horoscopeSelectedvalue,
-  //         hereto: selectedFriendshipInterest,
-  //         wantTomeet: selectedGenderValue,
-  //         agerange: selectedAge,
-  //         language: selectedLanguage,
-  //         genderValue: genderValue);
-  //     if (modal.success == true) {
-  //       if (mounted) {
-  //         // await Api.updateUserImages(
-  //         //     tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken),
-  //         //     userimages: imagePaths);
-  //         hitUserById();
-  //       }
-  //     }
-  //   } on DioException catch (e) {
-  //     if (mounted) {
-  //       CommonWidgets.showflushbar(context, e.toString());
-  //     }
+  Future<void> hituserUpdateProfileApi() async {
+    SharedPreferences getToken = await SharedPreferences.getInstance();
+    try {
+      final modal = await Api.updateUserDetails(
+          userimages: imagePaths,
+          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken),
+          userBirthDate:
+              userDOBController.text.isEmpty ? userdob : userDOBController.text,
+          about: useraboutController.text.isEmpty
+              ? userabout
+              : useraboutController.text,
+          zodiac: horoscopeSelectedvalue ?? userhoroscope,
+          hereto: selectedFriendshipInterest ?? hereTo,
+          wantTomeet: selectedGenderValue ?? wantToMeet,
+          agerange: selectedAge ?? prefferedAge,
+          language: selectedLanguage ?? prefferedlanguage,
+          genderValue: genderValue ?? userGender);
+      if (modal.success == true) {
+        if (mounted) {
+          // hitUserById();
+        }
+      }
+    } on DioException catch (e) {
+      if (mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
+      }
+    }
+  }
+
+  void addUserImages() {
+    imagePaths.add(modal2!.image);
+    for (int i = 0; i < modal!.data![0].images[0].image.length; i++) {
+      imagePaths.add(modal!.data![0].images[0].image[i]);
+    }
+  }
+
+  void addUserImagesWithoutclear() {
+    for (int i = 0; i < modal!.data![0].images[0].image.length; i++) {
+      imagePaths.add(modal!.data![0].images[0].image[i]);
+    }
+  }
+  // void addInterest() {
+  //   userInterest.clear();
+  //   userInterest.add(StringConstants.add);
+
+  //   for (int i = 0; i < modal!.data![0].userInterst.length; i++) {
+  //     userInterest.insert(i, modal!.data![0].userInterst[i].intrestName);
   //   }
   // }
+
+  void addInterestWithoutClearList() {
+    userInterest.clear();
+    userInterest.add(StringConstants.add);
+    for (int i = 0; i < modal!.data![0].userInterst.length; i++) {
+      userInterest.insert(i, modal!.data![0].userInterst[i].intrestName);
+    }
+  }
 }

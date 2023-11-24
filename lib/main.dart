@@ -1,10 +1,13 @@
 import 'package:demoapp/constants/route_constants.dart';
+import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedpreferenceKeys.prefs = await SharedPreferences.getInstance();
   runApp(const MyApp());
 }
 
@@ -17,12 +20,15 @@ class MyApp extends StatelessWidget {
       designSize: const Size(414, 896),
       minTextAdapt: true,
       builder: (context, child) {
-        return const MaterialApp(
-          
+        return MaterialApp(
           debugShowCheckedModeBanner: false,
           onGenerateRoute: MyRoutes.ongenerateroute,
           // home: FindYourBestMatchScreen(),
-          initialRoute: RouteConstants.splashPage,
+          initialRoute: SharedpreferenceKeys.prefs!
+                      .getString(SharedpreferenceKeys.jwtToken) ==
+                  null
+              ? RouteConstants.splashPage
+              : RouteConstants.bottonNavigationScreen,
         );
       },
     );

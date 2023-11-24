@@ -54,8 +54,12 @@ class MyRoutes {
       case RouteConstants.profileDetaisScreen:
         return MaterialPageRoute(builder: (_) => const ProfileDetails());
       case RouteConstants.interestScreen:
-        final args = settings.arguments as bool;
-        return MaterialPageRoute(builder: (_) =>   InterestScreen(isfromeditprofileScreen: args, ));
+        final args = settings.arguments as InterestScreen;
+        return MaterialPageRoute(
+            builder: (_) => InterestScreen(
+                  isfromeditprofileScreen: args.isfromeditprofileScreen,
+                  userinterests: args.userinterests ?? [],
+                ));
       case RouteConstants.addPhotoScreen:
         return MaterialPageRoute(builder: (_) => const AddPhoto());
       case RouteConstants.filterOptionScreen:
@@ -96,7 +100,8 @@ class MyRoutes {
       case RouteConstants.userAccountScreen:
         return MaterialPageRoute(builder: (_) => const UserAccountScreen());
       case RouteConstants.editProfileScreen:
-        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
+        
+        return MaterialPageRoute(builder: (_) =>  const EditProfileScreen());
       case RouteConstants.notificationScreen:
         return MaterialPageRoute(builder: (_) => const NotificationScreen());
       case RouteConstants.recoverAccountScreen:
