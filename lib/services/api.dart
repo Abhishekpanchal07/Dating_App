@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:demoapp/api_modals/get_user_details.dart';
 import 'package:demoapp/api_modals/update_user_interests.dart';
+import 'package:demoapp/api_modals/update_user_location.dart';
 import 'package:demoapp/api_modals/update_user_profile.dart';
 import 'package:demoapp/api_modals/update_user_single_image.dart';
 import 'package:demoapp/api_modals/user_add_filters.dart';
@@ -296,6 +297,21 @@ class Api {
       Response response =
           await dio.put(ApiUrls.updateUserInterestsApiUrl, data: map);
       return UpdateUserInterest.fromJson(jsonDecode(response.toString()));
+    } on DioException {
+      throw const SocketException(StringConstants.socketExceptionErrorMessage);
+    }
+  }
+  // update user location 
+   static Future<UpdateUserLocation> updateUserLocation({double? longitude,double? latitude,String?tokenValue}) async {
+    var map = {
+     "longitude":longitude,
+     "latitude":latitude
+    };
+   dio.options.headers["authorization"] = tokenValue;
+    try {
+      Response response =
+          await dio.put(ApiUrls.updateUserLocationApiUrl, data: map);
+      return UpdateUserLocation.fromJson(jsonDecode(response.toString()));
     } on DioException {
       throw const SocketException(StringConstants.socketExceptionErrorMessage);
     }

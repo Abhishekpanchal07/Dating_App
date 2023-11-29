@@ -29,7 +29,7 @@ class _HomePageBottomNavigationScreenState
     extends State<HomePageBottomNavigationScreen>
     with SingleTickerProviderStateMixin {
   ValueNotifier<Swipe> swipeNotifier = ValueNotifier(Swipe.none);
-  //UserListing? modal;
+ 
 
   List<HomepageDetailsOfUser> userDetails = [
     // HomepageDetailsOfUser(
@@ -80,6 +80,11 @@ class _HomePageBottomNavigationScreenState
   void initState() {
     super.initState();
     hitApi();
+    
+  }
+
+  Future<void> hitApi() async {
+    await hitUserListingApi();
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
@@ -91,11 +96,7 @@ class _HomePageBottomNavigationScreenState
         swipeNotifier.value = Swipe.none;
       }
     });
-  }
-
-  Future<void> hitApi() async {
-    await hitUserListingApi();
-    setState(() {});
+   // setState(() {});
   }
 
   @override
@@ -370,7 +371,7 @@ class _HomePageBottomNavigationScreenState
             print(userDetails);
           }
         }
-      //  setState(() {});
+        setState(() {});
       }
     } on DioException catch (e) {
       if (mounted) {

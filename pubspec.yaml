@@ -64,6 +64,8 @@ dependencies:
   dio: ^5.3.3
   # for local Stroage
   shared_preferences: ^2.2.2
+  # for manage the state of thr App 
+  provider: ^6.1.1
 
 
   # The following adds the Cupertino Icons font to your application.

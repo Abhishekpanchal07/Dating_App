@@ -1,24 +1,17 @@
-import 'dart:developer';
-import 'package:demoapp/api_modals/get_user_details.dart';
-import 'package:demoapp/api_modals/update_user_interests.dart';
 import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/api_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/route_constants.dart';
-import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
-import 'package:demoapp/services/api.dart';
+import 'package:demoapp/providers/getting_user_details.dart';
+import 'package:demoapp/views/base_view.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class UserAccountScreen extends StatefulWidget {
@@ -32,101 +25,109 @@ class UserAccountScreen extends StatefulWidget {
 }
 
 class _UserAccountScreenState extends State<UserAccountScreen> {
-  @override
-  void initState() {
-    hitgettinguserDetailApi();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   //hitgettinguserDetailApi();
+  //   super.initState();
+  // }
 
-  void hitgettinguserDetailApi() async {
-    await hitUserById();
-    await getAddress();
-    setState(() {});
-  }
+  // void hitgettinguserDetailApi() async {
+  //   await hitUserById();
+  //   await getAddress();
+  //   setState(() {});
+  // }
 
-  UpdateUserInterest? modal3;
-  Future<void> getUpdatedUserInterests() async {
-    modal3 = await Api.updateUserInterests();
-  }
+  // UpdateUserInterest? modal3;
+  // Future<void> getUpdatedUserInterests() async {
+  //   modal3 = await Api.updateUserInterests();
+  // }
 
-  List conatinerChildTextValue = [];
-  List<String> userImages = [];
-  String userName = "";
-  int? userAge;
-  String userEmail = "";
-  String userhoroscope = "";
-  String userBirthdate = "";
-  String userAbout = "";
-  String hereTo = "";
-  double? longitude;
-  double? latitude;
-  String userCurrentLocation = "";
-  final controller = PageController();
-  GetUserDetails? modal;
+  // List conatinerChildTextValue = [];
+  // List<String> userImages = [];
+  // String userName = "";
+  // int? userAge;
+  // String userEmail = "";
+  // String userhoroscope = "";
+  // String userBirthdate = "";
+  // String userAbout = "";
+  // String hereTo = "";
+  // double? longitude;
+  // double? latitude;
+  // String userCurrentLocation = "";
+   final controller = PageController();
+  // GetUserDetails? modal;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: modal == null
-          ? CommonWidgets.showProgressbar()
-          : SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: Stack(
-                children: [
-                  Positioned(
-                    child: SizedBox(
-                      height: DimensionConstants.d470.h,
-                      width: DimensionConstants.d414.w,
-                      child: PageView.builder(
-                          itemCount: userImages.length,
-                          controller: controller,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return ImageView(
-                              fit: BoxFit.cover,
-                              path: ApiUrls.baseUrl + userImages[index],
-                            );
-                          }),
-                    ),
-                  ),
-                  Positioned(
-                      top: DimensionConstants.d359.h,
-                      left: DimensionConstants.d196.w,
-                      child: SmoothPageIndicator(
-                        controller: controller,
-                        count: userImages.length,
-                        effect: const JumpingDotEffect(
-                            activeDotColor:
-                                ColorConstant.inboxScreenGradientColor,
-                            dotColor: ColorConstant.textcolor),
-                      )),
-                  Positioned(
-                      top: DimensionConstants.d53.h,
-                      right: DimensionConstants.d20.w,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                                  context, RouteConstants.editProfileScreen)
-                              .then((value) {
-                            if (value == true) {
-                              hitUserById();
-                              setState(() {});
-                            }
-                          });
-                        },
-                        child: const ImageView(
-                          path: ImageConstants.editProfileIcon,
+    return BaseView<GettingUserDetailsProvider>(
+      onModelReady: (provider) {
+        provider.hitgettinguserDetailApi(context);
+      },
+      builder: (context, provider, child) {
+        return Scaffold(
+          body: provider.modal == null
+              ? CommonWidgets.showProgressbar()
+              : SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        child: SizedBox(
+                          height: DimensionConstants.d470.h,
+                          width: DimensionConstants.d414.w,
+                          child: PageView.builder(
+                              itemCount: provider.imagePaths.length,
+                              controller: controller,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return ImageView(
+                                  fit: BoxFit.cover,
+                                  path: ApiUrls.baseUrl + provider.imagePaths[index],
+                                );
+                              }),
                         ),
-                      )),
-                  Positioned(
-                      //top: DimensionConstants.d400.h,
-                      child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: draggableSheet(),
-                  ))
-                ],
-              ),
-            ),
+                      ),
+                      Positioned(
+                          top: DimensionConstants.d359.h,
+                          left: DimensionConstants.d196.w,
+                          child: SmoothPageIndicator(
+                            controller: controller,
+                            count: provider.imagePaths.length,
+                            effect: const JumpingDotEffect(
+                                activeDotColor:
+                                    ColorConstant.inboxScreenGradientColor,
+                                dotColor: ColorConstant.textcolor),
+                          )),
+                      Positioned(
+                          top: DimensionConstants.d53.h,
+                          right: DimensionConstants.d20.w,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                      context, RouteConstants.editProfileScreen)
+                                  .then((value) {
+                                if (value == true) {
+                                  provider.hitUserById(context);
+                                  //hitUserById();
+                                  // setState(() {});
+                                }
+                              });
+                            },
+                            child: const ImageView(
+                              path: ImageConstants.editProfileIcon,
+                            ),
+                          )),
+                      Positioned(
+                          //top: DimensionConstants.d400.h,
+                          child: SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child: draggableSheet(provider),
+                      ))
+                    ],
+                  ),
+                ),
+        );
+      },
     );
   }
 
@@ -161,7 +162,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
   }
 
   // draggable sheet
-  Widget draggableSheet() {
+  Widget draggableSheet(GettingUserDetailsProvider provider) {
     return DraggableScrollableSheet(
         initialChildSize: 0.5,
         minChildSize: 0.5,
@@ -196,12 +197,12 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(userName).bold(ColorConstant.black,
+                          Text(provider.userName).bold(ColorConstant.black,
                               TextAlign.center, DimensionConstants.d24.sp),
                           SizedBox(
                             height: DimensionConstants.d9.h,
                           ),
-                          Text(userEmail).regularText(ColorConstant.black,
+                          Text(provider.userEmail).regularText(ColorConstant.black,
                               TextAlign.start, DimensionConstants.d14.sp),
                           SizedBox(
                             height: DimensionConstants.d30.h,
@@ -214,7 +215,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                           SizedBox(
                             height: DimensionConstants.d9.h,
                           ),
-                          Text(userhoroscope).regularText(ColorConstant.black,
+                          Text(provider.userhoroscope).regularText(ColorConstant.black,
                               TextAlign.start, DimensionConstants.d14.sp),
 
                           SizedBox(
@@ -229,7 +230,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                           SizedBox(
                             height: DimensionConstants.d9.h,
                           ),
-                          Text(userCurrentLocation).regularText(
+                          Text(provider.userCurrentLocation).regularText(
                               ColorConstant.black,
                               TextAlign.center,
                               DimensionConstants.d16.sp),
@@ -244,7 +245,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                           SizedBox(
                             height: DimensionConstants.d9.h,
                           ),
-                          Text(userBirthdate).regularText(ColorConstant.black,
+                          Text(provider.userBirthdate).regularText(ColorConstant.black,
                               TextAlign.center, DimensionConstants.d16.sp),
 
                           SizedBox(
@@ -260,7 +261,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                             height: DimensionConstants.d9.h,
                           ),
 
-                          Text(userAbout).regularText(
+                          Text(provider.userAbout).regularText(
                             ColorConstant.black,
                             TextAlign.start,
                             DimensionConstants.d14.sp,
@@ -279,7 +280,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                             height: DimensionConstants.d9.h,
                           ),
 
-                          Text(hereTo).regularText(
+                          Text(provider.hereTo).regularText(
                             ColorConstant.black,
                             TextAlign.start,
                             DimensionConstants.d14.sp,
@@ -299,7 +300,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                           GridView.builder(
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
-                              itemCount: conatinerChildTextValue.length,
+                              itemCount: provider.conatinerChildTextValue.length,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
@@ -308,10 +309,10 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                                 childAspectRatio: DimensionConstants.d4,
                               ),
                               itemBuilder: (context, index) {
-                                return conatinerChildTextValue.isNotEmpty
+                                return provider.conatinerChildTextValue.isNotEmpty
                                     ? gradientcontainer(
                                         containerchildText:
-                                            conatinerChildTextValue[index])
+                                            provider.conatinerChildTextValue[index])
                                     : const SizedBox();
                               })
                         ],
@@ -324,76 +325,71 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
   }
 
   // getting user details
-  Future<void> hitUserById() async {
-    SharedPreferences getToken = await SharedPreferences.getInstance();
-    try {
-      modal = await Api.userById(
-          jwtToken: getToken.getString(SharedpreferenceKeys.jwtToken));
+  // Future<void> hitUserById() async {
+  //   SharedPreferences getToken = await SharedPreferences.getInstance();
+  //   try {
+  //     modal = await Api.userById(
+  //         jwtToken: getToken.getString(SharedpreferenceKeys.jwtToken));
 
-      if (modal!.success == true) {
-        DateTime currentDate = DateTime.now();
-        DateTime userDob = modal!.data![0].birthDate.isNotEmpty
-            ? DateTime.parse(modal!.data![0].birthDate)
-            : DateTime.now();
-        int currentAge = currentDate.year - userDob.year;
-        userBirthdate = modal!.data![0].birthDate.isNotEmpty
-            ? DateFormat('dd-MM-yyyy')
-                .format(DateTime.parse(modal!.data![0].birthDate))
-            : "";
-        userName =
-            ' ${modal!.data![0].firstName}${modal!.data![0].lastName},${currentAge.toString()}';
-        // userAge = currentAge;
-        userEmail = modal!.data![0].email;
+  //     if (modal!.success == true) {
+  //       DateTime currentDate = DateTime.now();
+  //       DateTime userDob = modal!.data![0].birthDate.isNotEmpty
+  //           ? DateTime.parse(modal!.data![0].birthDate)
+  //           : DateTime.now();
+  //       int currentAge = currentDate.year - userDob.year;
+  //       userBirthdate = modal!.data![0].birthDate.isNotEmpty
+  //           ? DateFormat('dd-MM-yyyy')
+  //               .format(DateTime.parse(modal!.data![0].birthDate))
+  //           : "";
+  //       userName =
+  //           ' ${modal!.data![0].firstName}${modal!.data![0].lastName},${currentAge.toString()}';
+  //       // userAge = currentAge;
+  //       userEmail = modal!.data![0].email;
 
-        userAbout = modal!.data![0].about;
-        hereTo = modal!.data![0].filter[0].hereTo;
-        // user interests
-        conatinerChildTextValue.clear();
-        for (int i = 0; i < modal!.data![0].userInterst.length; i++) {
-          conatinerChildTextValue
-              .add(modal!.data![0].userInterst[i].intrestName);
-        }
-        userImages.clear();
-        for (int i = 0; i < modal!.data![0].images[0].image.length; i++) {
-          userImages.add(modal!.data![0].images[0].image[i]);
-        }
-        // longitude
-        longitude = modal!.data![0].location[0].longitude;
-        // latitude
-        latitude = modal!.data![0].location[0].latitude;
-        // horoscope value
-        userhoroscope = modal!.data![0].zodiac;
-        print(userImages);
+  //       userAbout = modal!.data![0].about;
+  //       hereTo = modal!.data![0].filter[0].hereTo;
+  //       // user interests
+  //       conatinerChildTextValue.clear();
+  //       for (int i = 0; i < modal!.data![0].userInterst.length; i++) {
+  //         conatinerChildTextValue
+  //             .add(modal!.data![0].userInterst[i].intrestName);
+  //       }
+  //       userImages.clear();
+  //       for (int i = 0; i < modal!.data![0].images[0].image.length; i++) {
+  //         userImages.add(modal!.data![0].images[0].image[i]);
+  //       }
+  //       // longitude
+  //       longitude = modal!.data![0].location[0].longitude;
+  //       // latitude
+  //       latitude = modal!.data![0].location[0].latitude;
+  //       // horoscope value
+  //       userhoroscope = modal!.data![0].zodiac;
+  //       print(userImages);
 
-        log(userName);
-        log(userBirthdate);
-        log(userAbout);
-        setState(() {});
-      }
-    } on DioException catch (e) {
-      if (mounted) {
-        CommonWidgets.showflushbar(context, e.toString());
-      }
-    }
-  }
+  //       log(userName);
+  //       log(userBirthdate);
+  //       log(userAbout);
+  //       setState(() {});
+  //     }
+  //   } on DioException catch (e) {
+  //     if (mounted) {
+  //       CommonWidgets.showflushbar(context, e.toString());
+  //     }
+  //   }
+  // }
 
-  // get user location
-  Future<void> getAddress() async {
-    try {
-      List<Placemark> placeMarks =
-          await placemarkFromCoordinates(latitude!, longitude!);
-      Placemark place = placeMarks[0];
-      setState(() {
-        userCurrentLocation = "${place.locality},${place.country}";
-      });
-      setState(() {});
-
-      //  else {
-      //   CommonWidgets.showflushbar(
-      //       context, StringConstants.confirmPasswordError);
-      // }
-    } catch (e) {
-      log(e.toString());
-    }
-  }
+  // // get user location
+  // Future<void> getAddress() async {
+  //   try {
+  //     List<Placemark> placeMarks =
+  //         await placemarkFromCoordinates(latitude!, longitude!);
+  //     Placemark place = placeMarks[0];
+  //     setState(() {
+  //       userCurrentLocation = "${place.locality},${place.country}";
+  //     });
+  //     setState(() {});
+  //   } catch (e) {
+  //     log(e.toString());
+  //   }
+  // }
 }
