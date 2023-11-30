@@ -133,7 +133,7 @@ class Location {
   late final String id;
   late final String userId;
   late final double longitude;
-  late final double latitude;
+  late final num latitude;
   late final int status;
   late final String createdAt;
   late final int V;

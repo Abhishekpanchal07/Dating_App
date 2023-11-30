@@ -275,6 +275,9 @@ class _LoginScreenState extends State<LoginScreen> {
           SharedpreferenceKeys.jwtToken, model.jwtToken.toString());
      
       if (model.success == true) {
+         SharedpreferenceKeys.prefs!.setString(
+            SharedpreferenceKeys.loginStatus,
+            model.data!.status.toString());
         if (mounted) {
           CommonWidgets.showflushbar(context, model.message.toString());
           if (model.data!.status == 0) {

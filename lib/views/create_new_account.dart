@@ -11,7 +11,6 @@ import 'package:demoapp/services/api.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateNewAccount extends StatefulWidget {
   const CreateNewAccount({super.key});
@@ -296,6 +295,8 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
       CommonWidgets.showflushbar(context, StringConstants.confirmPasswordError);
     } else {
       hitSignupApi(emailcontroller.text, passwordController.text, "");
+      accountCreatedSuccessfully();
+
       // Navigator.pushNamed(context, RouteConstants.profileDetaisScreen);
     }
   }
@@ -303,7 +304,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
 // hit Api
   Future<void> hitSignupApi(
       String? email, String? password, String? deviceToken) async {
-    SharedPreferences accountCreated = await SharedPreferences.getInstance();
+    // SharedPreferences accountCreated = await SharedPreferences.getInstance();
     try {
       final modal = await Api.signUp(
         email: email,
@@ -311,12 +312,17 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
       );
 
       if (modal.success == true) {
-        accountCreated.setString(SharedpreferenceKeys.userId, modal.data!.id.toString());
-        accountCreated.setString(
+        SharedpreferenceKeys.prefs!
+            .setString(SharedpreferenceKeys.userId, modal.data!.id.toString());
+        SharedpreferenceKeys.prefs!.setString(
             SharedpreferenceKeys.jwtToken, modal.jwtToken.toString());
         // create Account
-        accountCreated.setString(SharedpreferenceKeys.createAccountSuccessfully,
+        SharedpreferenceKeys.prefs!.setString(
+            SharedpreferenceKeys.createAccountSuccessfully,
             modal.message.toString());
+             SharedpreferenceKeys.prefs!.setString(
+            SharedpreferenceKeys.loginStatus,
+            modal.data!.status.toString());
         if (mounted) {
           Navigator.pushNamed(context, RouteConstants.profileDetaisScreen);
         }
@@ -329,6 +335,16 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
       if (mounted) {
         CommonWidgets.showflushbar(context, e.toString());
       }
+    }
+  }
+
+  Future<void> accountCreatedSuccessfully() async {
+    if (mounted) {
+      CommonWidgets.showflushbar(
+          context,
+          SharedpreferenceKeys.prefs!
+              .getString(SharedpreferenceKeys.createAccountSuccessfully)
+              .toString());
     }
   }
 }

@@ -17,4 +17,5 @@ class SharedpreferenceKeys {
    static const latitudeValue = "lontitude";
    static SharedPreferences? prefs;
    static const userUpdatedInterestlist = "user Updated Interest list";
+   static const loginStatus = "login status";
 }

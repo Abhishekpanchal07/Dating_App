@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:demoapp/api_modals/get_user_details.dart';
+import 'package:demoapp/api_modals/swipe_left.dart';
+import 'package:demoapp/api_modals/swipe_right.dart';
 import 'package:demoapp/api_modals/update_user_interests.dart';
 import 'package:demoapp/api_modals/update_user_location.dart';
 import 'package:demoapp/api_modals/update_user_profile.dart';
@@ -250,7 +252,6 @@ class Api {
     String? language,
     String? about,
     List? userimages,
-    
   }) async {
     var map = {
       "image": userimages,
@@ -274,11 +275,12 @@ class Api {
   }
 
   // update user images
-  static Future<UpdateUserSingleImage> updateUserImages({String? userimages}) async {
+  static Future<UpdateUserSingleImage> updateUserImages(
+      {String? userimages}) async {
     var map = FormData.fromMap({
       "image": await MultipartFile.fromFile(userimages.toString()),
     });
-   
+
     try {
       Response response =
           await dio.post(ApiUrls.updateUserImageApiUrl, data: map);
@@ -287,12 +289,14 @@ class Api {
       throw const SocketException(StringConstants.socketExceptionErrorMessage);
     }
   }
-  // update user interests 
-   static Future<UpdateUserInterest> updateUserInterests({List? userinterests}) async {
+
+  // update user interests
+  static Future<UpdateUserInterest> updateUserInterests(
+      {List? userinterests}) async {
     var map = {
-      "likes":userinterests,
+      "likes": userinterests,
     };
-   
+
     try {
       Response response =
           await dio.put(ApiUrls.updateUserInterestsApiUrl, data: map);
@@ -301,17 +305,41 @@ class Api {
       throw const SocketException(StringConstants.socketExceptionErrorMessage);
     }
   }
-  // update user location 
-   static Future<UpdateUserLocation> updateUserLocation({double? longitude,double? latitude,String?tokenValue}) async {
-    var map = {
-     "longitude":longitude,
-     "latitude":latitude
-    };
-   dio.options.headers["authorization"] = tokenValue;
+
+  // update user location
+  static Future<UpdateUserLocation> updateUserLocation(
+      {double? longitude, double? latitude, String? tokenValue}) async {
+    var map = {"longitude": longitude, "latitude": latitude};
+    dio.options.headers["authorization"] = tokenValue;
     try {
       Response response =
           await dio.put(ApiUrls.updateUserLocationApiUrl, data: map);
       return UpdateUserLocation.fromJson(jsonDecode(response.toString()));
+    } on DioException {
+      throw const SocketException(StringConstants.socketExceptionErrorMessage);
+    }
+  }
+
+  // Swipe left
+  static Future<SwipeLeft> swipeleft({String? opponentId,String? tokenValue}) async {
+    var map = {"opponentId": opponentId};
+     dio.options.headers["authorization"] = tokenValue;
+    try {
+      Response response =
+          await dio.post(ApiUrls.swipeLeftApiUrl, data: map);
+      return SwipeLeft.fromJson(jsonDecode(response.toString()));
+    } on DioException {
+      throw const SocketException(StringConstants.socketExceptionErrorMessage);
+    }
+  }
+  // swipe Right
+  static Future<SwipeRight> swipeRight({String? opponentId,String? tokenValue}) async {
+    var map = {"opponentId": opponentId};
+     dio.options.headers["authorization"] = tokenValue;
+    try {
+      Response response =
+          await dio.post(ApiUrls.swipeRightApiUrl, data: map);
+      return SwipeRight.fromJson(jsonDecode(response.toString()));
     } on DioException {
       throw const SocketException(StringConstants.socketExceptionErrorMessage);
     }

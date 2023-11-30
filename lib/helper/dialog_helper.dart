@@ -38,7 +38,7 @@ class DialogHelper extends StatelessWidget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(DimensionConstants.d20.r)),
       child: SizedBox(
-        height: DimensionConstants.d190.h,
+        height: DimensionConstants.d195.h,
         width: DimensionConstants.d374.w,
         child: Padding(
           padding: EdgeInsets.only(top: DimensionConstants.d18.h),

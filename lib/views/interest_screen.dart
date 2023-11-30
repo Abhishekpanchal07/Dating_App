@@ -65,7 +65,7 @@ class _InterestState extends State<InterestScreen> {
       // for (int i = 0; i < userInterests!.length; i++) {
       //   userUpdatedInterests!.add({"intrestName": userInterests![i]});
       // }
-      print(userUpdatedInterests);
+     
       //  print(userInterests);
     }
     setState(() {});
@@ -224,7 +224,6 @@ class _InterestState extends State<InterestScreen> {
                                               element["intrestName"] ==
                                               selectedContainerText);
 
-                                  print(userUpdatedInterests);
                                 }
                               });
                             },
@@ -305,6 +304,9 @@ class _InterestState extends State<InterestScreen> {
       setMessageValue.setString(
           SharedpreferenceKeys.interestUpdatedSuccessfully, modal.message);
       if (modal.success == true) {
+         SharedpreferenceKeys.prefs!.setString(
+            SharedpreferenceKeys.loginStatus,
+            modal.data![0].status.toString());
         if (mounted) {
           // CommonWidgets.showflushbar(context, modal.message.toString());
 

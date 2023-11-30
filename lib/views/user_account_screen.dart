@@ -81,7 +81,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                               itemBuilder: (context, index) {
                                 return ImageView(
                                   fit: BoxFit.cover,
-                                  path: ApiUrls.baseUrl + provider.imagePaths[index],
+                                  path: provider.imagePaths[index].isEmpty ? ImageConstants.personIcon :   ApiUrls.baseUrl + provider.imagePaths[index],
                                 );
                               }),
                         ),

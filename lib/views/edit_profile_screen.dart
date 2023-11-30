@@ -169,9 +169,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             Row(
                               children: [
                                 GestureDetector(
-                                  onTap: () async{
-                                   
-                                   await provider.hituserUpdateProfileApi(
+                                  onTap: () async {
+                                    await provider.hituserUpdateProfileApi(
                                         context,
                                         horoscopeSelectedvalue:
                                             horoscopeSelectedvalue,
@@ -629,6 +628,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                               StringConstants.wantToLogoutText,
                                           contentValueFontSize:
                                               DimensionConstants.d15.sp,
+                                          // paddingFromTop: DimensionConstants.d5.h ,
                                           negativeTap: () {
                                             setState(() {
                                               Navigator.pop(context);
@@ -638,8 +638,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                             setState(() {
                                               SharedpreferenceKeys.prefs!
                                                   .clear();
-                                              Navigator.pushNamed(context,
-                                                  RouteConstants.loginScreen);
+                                              Navigator.pushNamedAndRemoveUntil(
+                                                  context,
+                                                  RouteConstants.loginScreen,
+                                                  (route) => false);
+                                             
                                             });
                                           },
                                         );

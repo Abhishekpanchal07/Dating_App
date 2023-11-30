@@ -296,6 +296,9 @@ class _AddPhotoState extends State<EnableLocation> {
       setMessageValue.setString(
           SharedpreferenceKeys.enablelocationSuccessfully, modal.message);
       if (modal.success == true) {
+         SharedpreferenceKeys.prefs!.setString(
+            SharedpreferenceKeys.loginStatus,
+            modal.data!.status.toString());
         if (mounted) {
           CommonWidgets.showflushbar(context, modal.message.toString());
           Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen);

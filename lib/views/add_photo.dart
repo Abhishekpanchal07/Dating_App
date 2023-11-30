@@ -286,6 +286,9 @@ class _AddPhotoState extends State<AddPhoto> {
       setMessageValue.setString(
           SharedpreferenceKeys.picUpdatedSuccessfully, modal.message);
       if (modal.success == true) {
+         SharedpreferenceKeys.prefs!.setString(
+            SharedpreferenceKeys.loginStatus,
+            modal.data![0].status.toString());
         if (mounted) {
           CommonWidgets.showflushbar(context, modal.message.toString());
           Navigator.pushNamed(context, RouteConstants.filterOptionScreen);

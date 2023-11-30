@@ -24,7 +24,7 @@ class GettingUserDetailsProvider extends BaseProvider {
   String userAbout = "";
   String hereTo = "";
   double? longitude;
-  double? latitude;
+  num? latitude;
   String userCurrentLocation = "";
   String? userdob;
   String userabout = '';
@@ -133,7 +133,7 @@ class GettingUserDetailsProvider extends BaseProvider {
   Future<void> getAddress() async {
     try {
       List<Placemark> placeMarks =
-          await placemarkFromCoordinates(latitude!, longitude!);
+          await placemarkFromCoordinates(latitude!.toDouble(), longitude!);
       Placemark place = placeMarks[0];
 
       userCurrentLocation = "${place.locality},${place.country}";

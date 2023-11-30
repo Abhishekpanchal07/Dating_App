@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:demoapp/api_modals/user_details.dart';
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
@@ -56,31 +57,22 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     StringConstants.aquarius,
     StringConstants.pisces
   ];
-  bool isvalue = false;
+  UserDetails? modal;
   Future<void> accountCreatedSuccessfully() async {
-    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
     if (mounted) {
       CommonWidgets.showflushbar(
           context,
-          getSavedvalue
+          SharedpreferenceKeys.prefs!
               .getString(SharedpreferenceKeys.createAccountSuccessfully)
               .toString());
     }
-    setState(() {
-      getSavedvalue.getString(SharedpreferenceKeys.createAccountSuccessfully) ==
-              null
-          ? isvalue = true
-          : isvalue = false;
-    });
   }
-  
 
   Future<void> userloginSuccessfully() async {
-    SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
     if (mounted) {
       CommonWidgets.showflushbar(
           context,
-          getSavedvalue
+          SharedpreferenceKeys.prefs!
               .getString(SharedpreferenceKeys.loginSuccessfully)
               .toString());
     }
@@ -88,7 +80,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
 
   @override
   void initState() {
-    isvalue ? accountCreatedSuccessfully() : userloginSuccessfully();
+  
     super.initState();
   }
 
@@ -470,25 +462,28 @@ class _ProfileDetailsState extends State<ProfileDetails> {
       String? userAbout,
       String? userDOB,
       String? userGender}) async {
-    SharedPreferences getToken = await SharedPreferences.getInstance();
+   
     try {
-      final modal = await Api.uploadUserDetails(
+       modal = await Api.uploadUserDetails(
           userAbout: userAbout,
           userDOB: userDOB,
           firstName: firstName,
           lastName: lastName,
           zodiacValue: zodiacValue,
           userImagepath: userImagepath,
-          userGender:  userGender,
-          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken));
+          userGender: userGender,
+          tokenValue:  SharedpreferenceKeys.prefs!.getString(SharedpreferenceKeys.jwtToken));
       SharedPreferences setValue = await SharedPreferences.getInstance();
       setValue.setString(SharedpreferenceKeys.profileUpdatedSuccessfully,
-          modal.message.toString());
+          modal!.message.toString());
 
-      if (modal.success == true) {
+      if (modal!.success == true) {
+         SharedpreferenceKeys.prefs!.setString(
+            SharedpreferenceKeys.loginStatus,
+            modal!.data!.status.toString());
         if (mounted) {
-          CommonWidgets.showflushbar(context, modal.message.toString());
-          Navigator.pushNamed(context, RouteConstants.interestScreen);
+          CommonWidgets.showflushbar(context, modal!.message.toString());
+          Navigator.pushNamed(context, RouteConstants.interestScreen ,arguments: []);
         }
       }
     } on SocketException catch (e) {

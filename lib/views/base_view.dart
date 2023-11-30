@@ -3,7 +3,7 @@ import 'package:demoapp/providers/base_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BaseView<T extends BaseProvider> extends StatefulWidget {
+class BaseView<T extends BaseProvider> extends StatefulWidget  {
   final Widget Function(BuildContext context, T model, Widget? child) builder;
   final Function(T)? onModelReady;
 

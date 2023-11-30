@@ -17,4 +17,6 @@ class ApiUrls {
   static const updateUserImageApiUrl = "http://65.2.70.217:8091/dating/upload";
   static const updateUserInterestsApiUrl = "http://65.2.70.217:8091/dating/updateIntrest";
   static const updateUserLocationApiUrl = "http://65.2.70.217:8091/dating/updateLocation";
+  static const swipeLeftApiUrl = "http://65.2.70.217:8091/dating/swipeleft";
+  static const swipeRightApiUrl = "http://65.2.70.217:8091/dating/swipeupdate";
 }

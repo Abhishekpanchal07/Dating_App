@@ -3,7 +3,7 @@ import 'package:demoapp/locator.dart';
 import 'package:demoapp/services/api.dart';
 import 'package:flutter/material.dart';
 
-class BaseProvider extends ChangeNotifier {
+class BaseProvider extends ChangeNotifier  {
   ViewState _state = ViewState.idle;
 
   ViewState get state => _state;
