@@ -163,7 +163,7 @@ class CommonWidgets {
 
   //gradient container
   static Widget gradientContainer(
-      {String? text,
+      {String text = "",
       String? imagePath,
       VoidCallback? ontap,
       double? height,
@@ -205,7 +205,7 @@ class CommonWidgets {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      text!,
+                      text,
                       style: TextStyle(
                           color: textcolor ?? ColorConstant.headingcolor,
                           fontSize: DimensionConstants.d16.h,

@@ -1,5 +1,5 @@
-class UserDetails {
-  UserDetails({
+class UserDetail {
+  UserDetail({
     required this.success,
     required this.message,
      this.data,
@@ -8,7 +8,7 @@ class UserDetails {
   late final String message;
     Data? data;
   
-  UserDetails.fromJson(Map<String, dynamic> json){
+  UserDetail.fromJson(Map<String, dynamic> json){
     success = json['success'];
     message = json['message'];
     data = json['data'] == null ? null : Data.fromJson(json['data']);

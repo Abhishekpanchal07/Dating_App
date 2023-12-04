@@ -485,7 +485,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                             // want to meet textfield
                             CommonWidgets.gradientContainer(
-                                text: genderValue ?? provider.wantToMeet,
+                                text: genderValue ??
+                                    provider.wantToMeet.toString(),
                                 imagePath:
                                     ImageConstants.dropDownIconFilterScreen,
                                 ontap: () {
@@ -524,7 +525,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                             // preffered Age Range textfield
                             CommonWidgets.gradientContainer(
-                                text: selectedAge ?? provider.prefferedAge,
+                                text: selectedAge ??
+                                    provider.prefferedAge.toString(),
                                 imagePath:
                                     ImageConstants.dropDownIconFilterScreen,
                                 ontap: () {
@@ -563,7 +565,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             // preffered Language textfield
                             CommonWidgets.gradientContainer(
                                 text: selectedLanguage ??
-                                    provider.prefferedlanguage,
+                                    provider.prefferedlanguage.toString(),
                                 imagePath:
                                     ImageConstants.dropDownIconFilterScreen,
                                 ontap: () {
@@ -638,11 +640,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                             setState(() {
                                               SharedpreferenceKeys.prefs!
                                                   .clear();
+                                              SharedpreferenceKeys.islogin =
+                                                  false;
                                               Navigator.pushNamedAndRemoveUntil(
                                                   context,
                                                   RouteConstants.loginScreen,
                                                   (route) => false);
-                                             
                                             });
                                           },
                                         );

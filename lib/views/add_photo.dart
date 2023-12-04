@@ -229,46 +229,39 @@ class _AddPhotoState extends State<AddPhoto> {
   }
 
   Widget imageContainer(String imagePath, int index) {
-    return Container(
-      height: DimensionConstants.d150.h,
-      width: DimensionConstants.d111.w,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(DimensionConstants.d50.r)),
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(DimensionConstants.d14.r),
-            child: ImageView(
-              path: imagePath,
-              height: DimensionConstants.d150.h,
-              width: DimensionConstants.d111.w,
-              fit: BoxFit.cover,
-            ),
+    return Stack(
+      children: [
+        ImageView(
+          circleCrop: true,
+          radius: DimensionConstants.d14.r,
+          path: imagePath,
+          height: DimensionConstants.d150.h,
+          width: DimensionConstants.d111.w,
+          fit: BoxFit.cover,
+        ),
+        Positioned(
+          top: DimensionConstants.d7.h,
+          right: DimensionConstants.d12.w,
+          child: Container(
+            height: DimensionConstants.d30.h,
+            width: DimensionConstants.d25.w,
+            decoration: const BoxDecoration(
+                color: ColorConstant.lightred, shape: BoxShape.circle),
+            child: Center(
+                child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        //  imageTapped[index] = !imageTapped[index];
+                        imagePaths.removeAt(index); // userImages.removeAt();
+                      });
+                    },
+                    child: ImageView(
+                      path: ImageConstants.crossIcon,
+                      height: DimensionConstants.d16.h,
+                    ))),
           ),
-          Positioned(
-            top: DimensionConstants.d7.h,
-            right: DimensionConstants.d12.w,
-            child: Container(
-              height: DimensionConstants.d30.h,
-              width: DimensionConstants.d25.w,
-              decoration: const BoxDecoration(
-                  color: ColorConstant.lightred, shape: BoxShape.circle),
-              child: Center(
-                  child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          //  imageTapped[index] = !imageTapped[index];
-                          imagePaths.removeAt(index); // userImages.removeAt();
-                        });
-                      },
-                      child: ImageView(
-                        path: ImageConstants.crossIcon,
-                        height: DimensionConstants.d16.h,
-                      ))),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

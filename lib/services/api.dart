@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:demoapp/api_modals/get_detail_matched_user.dart';
 import 'package:demoapp/api_modals/get_user_details.dart';
 import 'package:demoapp/api_modals/swipe_left.dart';
 import 'package:demoapp/api_modals/swipe_right.dart';
@@ -22,6 +23,8 @@ import 'package:demoapp/constants/api_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/api_modals/user_location.dart';
 import 'package:dio/dio.dart';
+
+import '../api_modals/user_matchlist.dart';
 
 class Api {
   static Dio dio = Dio();
@@ -56,7 +59,7 @@ class Api {
   }
 
   // upload  user details
-  static Future<UserDetails> uploadUserDetails(
+  static Future<UserDetail> uploadUserDetails(
       {String? firstName,
       String? lastName,
       String? zodiacValue,
@@ -78,7 +81,7 @@ class Api {
     try {
       Response response =
           await dio.put(ApiUrls.userDetailApiUrl, data: formData);
-      return UserDetails.fromJson(jsonDecode(response.toString()));
+      return UserDetail.fromJson(jsonDecode(response.toString()));
     } on DioException {
       throw const SocketException(StringConstants.socketExceptionErrorMessage);
     }
@@ -344,4 +347,30 @@ class Api {
       throw const SocketException(StringConstants.socketExceptionErrorMessage);
     }
   }
+
+  // user Match list 
+   static Future<UserMatchList> userMatchList(
+      {String? tokenValue}) async {
+   
+    dio.options.headers["authorization"] = tokenValue;
+    try {
+      Response response = await dio.post(ApiUrls.userMatchListApiUrl,);
+      return UserMatchList.fromJson(jsonDecode(response.toString()));
+    } on DioException {
+      throw const SocketException(StringConstants.socketExceptionErrorMessage);
+    }
+  }
+  // get details of matched user 
+   static Future<GetSingleMatchedUserDetail> getDetailMatchedUser(
+      {String? tokenValue,String? userId}) async {
+   
+    dio.options.headers["authorization"] = tokenValue;
+    try {
+      Response response = await dio.get(ApiUrls.getDetailsSingleMatchedApiUrl + userId!,);
+      return GetSingleMatchedUserDetail.fromJson(jsonDecode(response.toString()));
+    } on DioException {
+      throw const SocketException(StringConstants.socketExceptionErrorMessage);
+    }
+  }
+
 }

@@ -14,8 +14,11 @@ class SharedpreferenceKeys {
   static const filterUpdatedSuccessfully = "filter Updated Successfully";
   static const enablelocationSuccessfully = "enable location Successfully";
   static const logtitudeValue = "longitude";
-   static const latitudeValue = "lontitude";
-   static SharedPreferences? prefs;
-   static const userUpdatedInterestlist = "user Updated Interest list";
-   static const loginStatus = "login status";
+  static const latitudeValue = "lontitude";
+  static SharedPreferences? prefs;
+  static const userUpdatedInterestlist = "user Updated Interest list";
+  static const loginStatus = "login status";
+  static bool islogin = false;
+  static const myLongitude = "longitude";
+  static const myLatitude = "latitude";
 }

@@ -5,13 +5,14 @@ import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
+import 'package:demoapp/providers/getting_user_details.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShowBottomSheet extends StatefulWidget {
-  final List? conatinerChildTextValue;
-  const ShowBottomSheet({Key? key, required this.conatinerChildTextValue})
+  final GettingUserDetailsProvider singleUserDetail;
+  const ShowBottomSheet({Key? key, required this.singleUserDetail})
       : super(key: key);
 
   @override
@@ -47,7 +48,7 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
               child: ListView.builder(
                 
                 padding: EdgeInsets.zero,
-                  itemCount: 1,
+                  itemCount: DimensionConstants.d1.toInt(),
                   controller: scrollController,
                   itemBuilder: ((context, index) {
                     return Container(
@@ -66,18 +67,21 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(StringConstants.jesicaParker).bold(
+                                   Text(widget.singleUserDetail.matchedUserName).bold(
                                       ColorConstant.black,
                                       TextAlign.center,
                                       DimensionConstants.d24.sp),
-                                  const Text(StringConstants.aries).regularText(
+                                      SizedBox(
+                            height: DimensionConstants.d10.h,
+                          ),
+                                   Text(widget.singleUserDetail.matchedUserHororscope).regularText(
                                       ColorConstant.black,
                                       TextAlign.start,
                                       DimensionConstants.d14.sp),
                                 ],
                               ),
                               GestureDetector(
-                                onTap: () => Navigator.pushNamed(context, RouteConstants.messageScreen),
+                                onTap: () => Navigator.pushNamed(context, RouteConstants.messageScreen,arguments: widget.singleUserDetail),
                                 child: const ImageView(
                                   path: ImageConstants.sendMessaageButton,
                                 ),
@@ -85,7 +89,7 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                             ],
                           ),
                           SizedBox(
-                            height: DimensionConstants.d30.h,
+                            height: DimensionConstants.d20.h,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,7 +104,7 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                                   SizedBox(
                                     height: DimensionConstants.d5.h,
                                   ),
-                                  const Text(StringConstants.jessicaLoaction)
+                                   Text(widget.singleUserDetail.userCurrentLocation)
                                       .regularText(
                                           ColorConstant.black,
                                           TextAlign.center,
@@ -137,7 +141,7 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                             ],
                           ),
                           SizedBox(
-                            height: DimensionConstants.d27.h,
+                            height: DimensionConstants.d20.h,
                           ),
                           const Text(StringConstants.about).bold(
                               ColorConstant.black,
@@ -147,7 +151,7 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                             height: DimensionConstants.d5.h,
                           ),
                           
-                            const Text(StringConstants.jessicaDescription,).regularText(ColorConstant.black, TextAlign.start, DimensionConstants.d14.sp,maxLines:readMore? 6 : 2 ),
+                             Text(widget.singleUserDetail.matchedUserAbout).regularText(ColorConstant.black, TextAlign.start, DimensionConstants.d14.sp,maxLines:readMore? 6 : 2 ),
                             GestureDetector(
                               onTap: (){
                               setState(() {
@@ -160,36 +164,35 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                                 DimensionConstants.d14.sp),
                                 ),
                           SizedBox(
-                            height: DimensionConstants.d30.h,
+                            height: DimensionConstants.d20.h,
                           ),
                           const Text(StringConstants.interests).bold(
                               ColorConstant.black,
                               TextAlign.center,
                               DimensionConstants.d16.sp),
-                          SizedBox(
+                                SizedBox(
                             height: DimensionConstants.d10.h,
                           ),
-                          SizedBox(
-                            height: DimensionConstants.d200.h,
-                            width: MediaQuery.of(context).size.width,
-                            child: GridView.builder(
-                                itemCount: widget.conatinerChildTextValue!.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  crossAxisSpacing: DimensionConstants.d7.w,
-                                  mainAxisSpacing: DimensionConstants.d10.h,
-                                  childAspectRatio: DimensionConstants.d4,
-                                ),
-                                itemBuilder: (context, index) {
-                                  return widget
-                                          .conatinerChildTextValue!.isNotEmpty
-                                      ? gradientcontainer(
-                                          containerchildText: widget
-                                              .conatinerChildTextValue![index])
-                                      : const SizedBox();
-                                }),
-                          )
+                         
+                          GridView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                              itemCount: widget.singleUserDetail.matchedUserInterest.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: DimensionConstants.d7.w,
+                                mainAxisSpacing: DimensionConstants.d10.h,
+                                childAspectRatio: DimensionConstants.d4,
+                              ),
+                              itemBuilder: (context, index) {
+                                return widget
+                                        .singleUserDetail.matchedUserInterest.isNotEmpty
+                                    ? gradientcontainer(
+                                        containerchildText: widget
+                                            .singleUserDetail.matchedUserInterest[index])
+                                    : const SizedBox();
+                              })
                         ],
                       ),
                     );

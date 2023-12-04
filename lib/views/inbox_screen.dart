@@ -112,8 +112,8 @@ class _InboxScreenState extends State<InboxScreen> {
             ),
             // user Stories
             SizedBox(
-              height: DimensionConstants.d97.h,
-              width: DimensionConstants.d394.w,
+              height: DimensionConstants.d102.h,
+             // width: DimensionConstants.d394.w,
               child: ScrollConfiguration(
                 behavior: NoGlowScrollBehavior(),
                 child: SingleChildScrollView(
@@ -121,23 +121,20 @@ class _InboxScreenState extends State<InboxScreen> {
                   child: Row(
                     children: [
                       storyContainer(),
-                      SizedBox(
-                        height: DimensionConstants.d97.h,
-                        width: DimensionConstants.d394.w,
-                        child: ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: userDetail.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: DimensionConstants.d12),
-                                child: userPicContainer(
-                                    userDetail[index].imagePathOfInboxScreen,
-                                    userDetail[index].name),
-                              );
-                            }),
-                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: userDetail.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: DimensionConstants.d12),
+                              child: userPicContainer(
+                                  userDetail[index].imagePathOfInboxScreen,
+                                  userDetail[index].name),
+                            );
+                          }),
                     ],
                   ),
                 ),
@@ -220,18 +217,25 @@ class _InboxScreenState extends State<InboxScreen> {
     return Column(
       children: [
         Container(
-            height: DimensionConstants.d78.h,
-            width: DimensionConstants.d57.w,
+            height: DimensionConstants.d80.h,
+            width: DimensionConstants.d60.w,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
+             // color: ColorConstant.black
             ),
-            child: ImageView(
-              circleCrop: true,
-              path: imagePath,
-              fit: BoxFit.cover,
-              height: DimensionConstants.d60.h,
-              width: DimensionConstants.d57.w,
-            )),
+            child:
+             Center(
+               child: ImageView(
+                circleCrop: true,
+                radius: DimensionConstants.d31.r,
+                path: imagePath,
+                fit: BoxFit.cover,
+                 height: DimensionConstants.d66.h,
+                   width: DimensionConstants.d58.w,
+                   ),
+             )
+              ),
+            
         Text(userName!).semiBold(
             ColorConstant.black, TextAlign.center, DimensionConstants.d14.sp)
       ],
@@ -245,13 +249,16 @@ class _InboxScreenState extends State<InboxScreen> {
         Container(
           height: DimensionConstants.d57.h,
           width: DimensionConstants.d57.w,
-          decoration: const BoxDecoration(shape: BoxShape.circle),
-          child: ImageView(
-            height: DimensionConstants.d57.h,
-            width: DimensionConstants.d57.w,
-            circleCrop: true,
-            fit: BoxFit.cover,
-            path: imagepath,
+          decoration: const BoxDecoration(shape: BoxShape.circle,),
+          child: Center(
+            child: ImageView(
+              height: DimensionConstants.d57.h,
+              width: DimensionConstants.d50.w,
+              radius: DimensionConstants.d27.r,
+              circleCrop: true,
+              fit: BoxFit.cover,
+              path: imagepath,
+            ),
           ),
         ),
         SizedBox(

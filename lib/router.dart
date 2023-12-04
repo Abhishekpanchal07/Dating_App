@@ -2,6 +2,7 @@ import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
+import 'package:demoapp/providers/getting_user_details.dart';
 import 'package:demoapp/views/account_recovery.dart';
 import 'package:demoapp/views/add_photo.dart';
 import 'package:demoapp/views/create_new_account.dart';
@@ -76,18 +77,21 @@ class MyRoutes {
       case RouteConstants.matchScreen:
         return MaterialPageRoute(builder: (_) => const MatchScreen());
       case RouteConstants.userDetailScreen:
-        final args = settings.arguments as List?;
+        final args = settings.arguments as String?;
+
         return MaterialPageRoute(
             builder: (_) => UserDetail(
-                  passedArguments: args ?? [],
+                  userOpponentId: args,
                 ));
       case RouteConstants.showBottomSheetScreen:
+        final args = settings.arguments as GettingUserDetailsProvider;
         return MaterialPageRoute(
-            builder: (_) => const ShowBottomSheet(
-                  conatinerChildTextValue: [],
+            builder: (_) => ShowBottomSheet(
+                  singleUserDetail: args,
                 ));
       case RouteConstants.messageScreen:
-        return MaterialPageRoute(builder: (_) => const MessageScreen());
+       final args = settings.arguments as GettingUserDetailsProvider;
+        return MaterialPageRoute(builder: (_) =>  MessageScreen( provider:  args,));
       case RouteConstants.inboxScreen:
         return MaterialPageRoute(builder: (_) => const InboxScreen());
       case RouteConstants.oneToOneScreen:
@@ -100,8 +104,7 @@ class MyRoutes {
       case RouteConstants.userAccountScreen:
         return MaterialPageRoute(builder: (_) => const UserAccountScreen());
       case RouteConstants.editProfileScreen:
-        
-        return MaterialPageRoute(builder: (_) =>  const EditProfileScreen());
+        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
       case RouteConstants.notificationScreen:
         return MaterialPageRoute(builder: (_) => const NotificationScreen());
       case RouteConstants.recoverAccountScreen:

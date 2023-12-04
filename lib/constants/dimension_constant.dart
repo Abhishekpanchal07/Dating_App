@@ -103,6 +103,7 @@ static const double d100 = 100;
 static const double d101 = 101;
 static const double d102 = 102;
 static const double d103 = 103;
+static const double d10325 = 102.90;
 static const double d104 = 104;
 static const double d105 = 105;
 static const double d106 = 106;

@@ -27,10 +27,8 @@ class MyApp extends StatelessWidget {
           onGenerateRoute: MyRoutes.ongenerateroute,
           // home: FindYourBestMatchScreen(),
           initialRoute: SharedpreferenceKeys.prefs!
-                      .getString(SharedpreferenceKeys.jwtToken) ==
-                  null
-              ? RouteConstants.splashPage
-              : RouteConstants.bottonNavigationScreen,
+                      .getString(SharedpreferenceKeys.jwtToken) !=
+                  null  && SharedpreferenceKeys.islogin == false ? RouteConstants.bottonNavigationScreen : RouteConstants.splashPage 
         );
       },
     );

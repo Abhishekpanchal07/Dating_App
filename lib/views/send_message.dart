@@ -1,6 +1,7 @@
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
@@ -43,35 +44,41 @@ class _SendMessageScreenState extends State<SendMessageScreen> {
              SizedBox(
               height: DimensionConstants.d20.h,
              ),
-             Container(
-              height: DimensionConstants.d56.h,
-              width: DimensionConstants.d256.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(DimensionConstants.d10),
-                gradient: const LinearGradient(colors: [
-                  ColorConstant.bottongradientcolor1,
-                  ColorConstant.buttongradientcolor2
-                ]),
-                
-              ),
-              child: Center(
-                child: const Text(StringConstants.sendMessage).regularText(ColorConstant.textcolor, TextAlign.center, DimensionConstants.d16.sp),
-              )
+             GestureDetector(
+              onTap: () => Navigator.pushNamed(context, RouteConstants.inboxScreen),
+               child: Container(
+                height: DimensionConstants.d56.h,
+                width: DimensionConstants.d256.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(DimensionConstants.d10),
+                  gradient: const LinearGradient(colors: [
+                    ColorConstant.bottongradientcolor1,
+                    ColorConstant.buttongradientcolor2
+                  ]),
+                  
+                ),
+                child: Center(
+                  child: const Text(StringConstants.sendMessage).regularText(ColorConstant.textcolor, TextAlign.center, DimensionConstants.d16.sp),
+                )
+               ),
              ),
              SizedBox(
               height: DimensionConstants.d20.h,
              ),
-             Container(
-              height: DimensionConstants.d56.h,
-              width: DimensionConstants.d256.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(DimensionConstants.d10),
-               color: ColorConstant.buttongradientcolor2
-                
-              ),
-              child: Center(
-                child: const Text(StringConstants.keepSwiping).regularText(ColorConstant.red, TextAlign.center, DimensionConstants.d16.sp),
-              )
+             GestureDetector(
+              onTap:() => Navigator.pop(context) ,
+               child: Container(
+                height: DimensionConstants.d56.h,
+                width: DimensionConstants.d256.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(DimensionConstants.d10),
+                 color: ColorConstant.dashboardGradientColor1.withOpacity(0.1)
+                  
+                ),
+                child: Center(
+                  child: const Text(StringConstants.keepSwiping).regularText(ColorConstant.red, TextAlign.center, DimensionConstants.d16.sp),
+                )
+               ),
              ),
              SizedBox(
               height: DimensionConstants.d118.h,

@@ -1,10 +1,13 @@
 import 'dart:developer';
+import 'package:demoapp/api_modals/get_detail_matched_user.dart';
 import 'package:demoapp/api_modals/update_user_interests.dart';
 import 'package:demoapp/api_modals/update_user_location.dart';
 import 'package:demoapp/api_modals/update_user_single_image.dart';
+import 'package:demoapp/api_modals/user_matchlist.dart';
 import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/helper/common_widget.dart';
+import 'package:demoapp/modals/matchscreen_images.dart';
 import 'package:demoapp/providers/base_provider.dart';
 import 'package:demoapp/services/api.dart';
 import 'package:dio/dio.dart';
@@ -17,13 +20,27 @@ import '../api_modals/get_user_details.dart';
 class GettingUserDetailsProvider extends BaseProvider {
   // variable for Storing Api Responses
   String userName = "";
+  String matchedUserName = "";
+  String matchedUserAbout = "";
+  String matchedUserLocation = "";
+  String matchedUserHororscope = "";
+  String matchedUserimageUrl = "";
+  String matchedUserid = "";
+  String imageurlUserDetailsScreen = "";
+  String matchedUserprofilepicurl = "";
+  String matchedUserFirstName = "";
+  String matchedUseropponentid = "";
+  int? opponentDistance;
   int? userAge;
+  int? matchedUserAge;
   String userEmail = "";
   String userhoroscope = "";
   String userBirthdate = "";
   String userAbout = "";
   String hereTo = "";
   double? longitude;
+  double? opponentUserLongitude;
+  num? opponentUserLatitude;
   num? latitude;
   String userCurrentLocation = "";
   String? userdob;
@@ -33,9 +50,12 @@ class GettingUserDetailsProvider extends BaseProvider {
   String? prefferedlanguage;
   String userGender = "";
   Position? exactLoaction;
+  int? userCurrentIndex;
   // Lists for Storing Api Responses
   List<String> userInterest = [];
+  List<String> matchedUserInterest = [];
   List<String> imagePaths = [];
+  List<MatchScreenImages> matchedUserData = [];
   // List<String> userImages = [];
   List conatinerChildTextValue = [];
   // objects for getting  Api Responses
@@ -43,6 +63,8 @@ class GettingUserDetailsProvider extends BaseProvider {
   UpdateUserSingleImage? modal2;
   UpdateUserInterest? modal3;
   UpdateUserLocation? modal4;
+  UserMatchList? modal5;
+  GetSingleMatchedUserDetail? modal6;
   // controllers
   final userDOBController = TextEditingController();
   final useraboutController = TextEditingController();
@@ -132,8 +154,11 @@ class GettingUserDetailsProvider extends BaseProvider {
   // get user location
   Future<void> getAddress() async {
     try {
-      List<Placemark> placeMarks =
-          await placemarkFromCoordinates(latitude!.toDouble(), longitude!);
+      List<Placemark> placeMarks = await placemarkFromCoordinates(
+          opponentUserLatitude == null
+              ? latitude!.toDouble()
+              : opponentUserLatitude!.toDouble(),
+          opponentUserLongitude == null ? longitude! : opponentUserLongitude!);
       Placemark place = placeMarks[0];
 
       userCurrentLocation = "${place.locality},${place.country}";
@@ -161,11 +186,10 @@ class GettingUserDetailsProvider extends BaseProvider {
   }) async {
     modal2 = await Api.updateUserImages(userimages: imageurl);
     // ignore: use_build_context_synchronously
-   await hituserUpdateProfileApi(context);
+    await hituserUpdateProfileApi(context);
 
     // ignore: use_build_context_synchronously
-     hitUserById(context);
-    
+    hitUserById(context);
 
     notifyListeners();
   }
@@ -195,8 +219,9 @@ class GettingUserDetailsProvider extends BaseProvider {
           userimages: imagePaths,
           tokenValue: SharedpreferenceKeys.prefs!
               .getString(SharedpreferenceKeys.jwtToken),
-          userBirthDate:
-              userDOBController.text.isEmpty ? userBirthdate : userDOBController.text,
+          userBirthDate: userDOBController.text.isEmpty
+              ? userBirthdate
+              : userDOBController.text,
           about: useraboutController.text.isEmpty
               ? userAbout
               : useraboutController.text,
@@ -294,5 +319,95 @@ class GettingUserDetailsProvider extends BaseProvider {
     // ignore: use_build_context_synchronously
     hitUserById(context);
     notifyListeners();
+  }
+
+  // user Match List
+  Future<void> getMatchuser(BuildContext context) async {
+    try {
+      modal5 = await Api.userMatchList(
+          tokenValue: SharedpreferenceKeys.prefs!
+              .getString(SharedpreferenceKeys.jwtToken));
+      if (modal5!.success == true) {
+        matchedUserData.clear();
+        matchedUserInterest.clear();
+
+        for (int i = 0; i < modal5!.data!.length; i++) {
+          DateTime currentyear = DateTime.now();
+          DateTime userdob =
+              DateTime.parse(modal5!.data![i].userDetails.birthDate);
+          matchedUserAge = currentyear.year - userdob.year;
+          for (int i = 0; i < modal5!.currentUserIntrests.length; i++) {
+            matchedUserInterest.add(modal5!.currentUserIntrests[i].intrestName);
+          }
+          if (modal5!.data![i].userId != modal5!.data![i].userDetails.id) {
+            matchedUseropponentid = modal5!.data![i].opponentId;
+          } else {
+            matchedUseropponentid = modal5!.data![i].userId;
+          }
+
+          matchedUserData.add(MatchScreenImages(
+              horoscope: modal5!.data![i].userDetails.zodiac,
+              about: modal5!.data![i].userDetails.about,
+              name: modal5!.data![i].fullName,
+              userinterests: matchedUserInterest,
+              age: matchedUserAge.toString(),
+              imageUrl: modal5!.data![i].userDetails.profileImage,
+              matcheduserId:matchedUseropponentid));
+        }
+
+        /* matchedUserName = modal5!.data![0].fullName;
+      matchedUserHororscope = modal5!.data![0].userDetails.zodiac;
+      matchedUserAbout = modal5!.data![0].userDetails.about;
+
+      matchedUserimageUrl = modal5!.data![0].userDetails.profileImage; */
+      }
+      notifyListeners();
+    } on DioException catch (e) {
+      if (context.mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
+      }
+    }
+  }
+
+  Future<void> matchedSingleUserDetail(BuildContext context,
+      {String? opponentId}) async {
+    try {
+      modal6 = await Api.getDetailMatchedUser(
+          tokenValue: SharedpreferenceKeys.prefs!
+              .getString(SharedpreferenceKeys.jwtToken),
+          userId: opponentId);
+      if (modal6!.success == true) {
+        DateTime currentyear = DateTime.now();
+        DateTime userdob = DateTime.parse(modal6!.data[0].birthDate);
+        matchedUserAge = currentyear.year - userdob.year;
+        for (int i = 0; i < modal6!.data[0].userIntrests.length; i++) {
+          matchedUserInterest.add(modal6!.data[0].userIntrests[i].intrestName);
+        }
+        matchedUserHororscope = modal6!.data[0].zodiac;
+        matchedUserprofilepicurl = modal6!.data[0].profileImage;
+        matchedUserAbout = modal6!.data[0].about;
+        matchedUserName =
+            "${modal6!.data[0].firstName} ${modal6!.data[0].lastName},$matchedUserAge";
+        matchedUserFirstName =
+            "${modal6!.data[0].firstName} ${modal6!.data[0].lastName}";
+      }
+      opponentUserLongitude = modal6!.data[0].userLocation[0].longitude;
+      opponentUserLatitude = modal6!.data[0].userLocation[0].latitude;
+      await getAddress();
+      /* double opponentdistance = await Geolocator.distanceBetween(
+          double.parse(SharedpreferenceKeys.prefs!
+              .getString(SharedpreferenceKeys.myLatitude)!),
+          double.parse(SharedpreferenceKeys.prefs!
+              .getString(SharedpreferenceKeys.myLongitude)!),
+          opponentUserLatitude!.toDouble(),
+          opponentUserLongitude!);
+      opponentDistance = (opponentdistance * 1000).toInt(); */
+
+      notifyListeners();
+    } on DioException catch (e) {
+      if (context.mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
+      }
+    }
   }
 }

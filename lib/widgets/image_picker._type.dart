@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:demoapp/constants/Color_Constants.dart';
+import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ImageView extends StatelessWidget {
@@ -79,9 +81,12 @@ class ImageView extends StatelessWidget {
       );
     }
     return circleCrop!
-        ? CircleAvatar(
-          backgroundColor: Colors.white,
-          radius: radius, child: ClipOval(child: imageWidget))
-        : imageWidget;
-  }
+    ? ClipRRect(borderRadius: BorderRadius.circular(radius ?? DimensionConstants.d100.r), child: imageWidget)
+    : imageWidget;
+  //   return circleCrop!
+  //       ? CircleAvatar(
+  //         backgroundColor: Colors.white,
+  //         radius: radius, child: ClipOval(child: imageWidget))
+  //       : imageWidget;
+   }
 }

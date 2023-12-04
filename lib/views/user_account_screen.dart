@@ -71,17 +71,22 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                   child: Stack(
                     children: [
                       Positioned(
-                        child: SizedBox(
+                        child: Container(
                           height: DimensionConstants.d470.h,
                           width: DimensionConstants.d414.w,
-                          child: PageView.builder(
-                              itemCount: provider.imagePaths.length,
+                          color:ColorConstant.dashboardGradientColor1
+                                      .withOpacity(0.1),
+                          child: provider.imagePaths.isEmpty ?  const ImageView(
+                            fit: BoxFit.cover,
+                            path:ImageConstants.personIcon,): PageView.builder(
+                              itemCount:  provider.imagePaths.length,
                               controller: controller,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
                                 return ImageView(
+                                   height: DimensionConstants.d470.h,
                                   fit: BoxFit.cover,
-                                  path: provider.imagePaths[index].isEmpty ? ImageConstants.personIcon :   ApiUrls.baseUrl + provider.imagePaths[index],
+                                  path:  provider.imagePaths.isEmpty ? ImageConstants.personIcon :   ApiUrls.baseUrl + provider.imagePaths[index],
                                 );
                               }),
                         ),
@@ -91,7 +96,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                           left: DimensionConstants.d196.w,
                           child: SmoothPageIndicator(
                             controller: controller,
-                            count: provider.imagePaths.length,
+                            count:   provider.imagePaths.length ,
                             effect: const JumpingDotEffect(
                                 activeDotColor:
                                     ColorConstant.inboxScreenGradientColor,
@@ -112,7 +117,8 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                                 }
                               });
                             },
-                            child: const ImageView(
+                            child:  ImageView(
+                              height: DimensionConstants.d40.h,
                               path: ImageConstants.editProfileIcon,
                             ),
                           )),

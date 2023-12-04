@@ -18,7 +18,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
-
 class EnableLocation extends StatefulWidget {
   const EnableLocation({super.key});
 
@@ -41,6 +40,7 @@ class _AddPhotoState extends State<EnableLocation> {
               .toString());
     }
   }
+
   bool isvalue = false;
   Future<void> filterUpdatedSuccessfully() async {
     SharedPreferences getSavedvalue = await SharedPreferences.getInstance();
@@ -52,8 +52,7 @@ class _AddPhotoState extends State<EnableLocation> {
               .toString());
     }
     setState(() {
-      getSavedvalue.getString(
-                  SharedpreferenceKeys.filterUpdatedSuccessfully) ==
+      getSavedvalue.getString(SharedpreferenceKeys.filterUpdatedSuccessfully) ==
               null
           ? isvalue = true
           : isvalue = false;
@@ -178,7 +177,9 @@ class _AddPhotoState extends State<EnableLocation> {
           height: DimensionConstants.d30.h,
         ),
         CommonWidgets.gradientContainer(
-          text: onTap ? currentLocation : StringConstants.locationValue,
+          text: onTap
+              ? currentLocation.toString()
+              : StringConstants.locationValue,
           imagePath: ImageConstants.locationIcon,
         ),
         SizedBox(
@@ -259,6 +260,8 @@ class _AddPhotoState extends State<EnableLocation> {
     }
 
     exactLoaction = await Geolocator.getCurrentPosition();
+    SharedpreferenceKeys.prefs!.setString(SharedpreferenceKeys.myLatitude,exactLoaction!.latitude.toString());
+     SharedpreferenceKeys.prefs!.setString(SharedpreferenceKeys.myLongitude,exactLoaction!.longitude.toString());
     setState(() {});
   }
 
@@ -290,15 +293,14 @@ class _AddPhotoState extends State<EnableLocation> {
       final modal = await Api.userLocation(
           longitude: exactLoaction!.longitude.toString(),
           latitude: exactLoaction!.latitude.toString(),
-          tokenValue:  getToken.getString(SharedpreferenceKeys.jwtToken));
-          // set message value
+          tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken));
+      // set message value
       SharedPreferences setMessageValue = await SharedPreferences.getInstance();
       setMessageValue.setString(
           SharedpreferenceKeys.enablelocationSuccessfully, modal.message);
       if (modal.success == true) {
-         SharedpreferenceKeys.prefs!.setString(
-            SharedpreferenceKeys.loginStatus,
-            modal.data!.status.toString());
+        SharedpreferenceKeys.prefs!.setString(
+            SharedpreferenceKeys.loginStatus, modal.data!.status.toString());
         if (mounted) {
           CommonWidgets.showflushbar(context, modal.message.toString());
           Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen);

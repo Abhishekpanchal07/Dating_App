@@ -9,6 +9,7 @@ import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/services/api.dart';
+import 'package:demoapp/views/interest_screen.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -283,7 +284,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if (model.data!.status == 0) {
             Navigator.pushNamed(context, RouteConstants.profileDetaisScreen);
           } else if (model.data!.status == 1) {
-            Navigator.pushNamed(context, RouteConstants.interestScreen);
+            Navigator.pushNamed(context, RouteConstants.interestScreen ,arguments: const InterestScreen(userinterests: [],isfromeditprofileScreen: false,));
           } else if (model.data!.status == 2) {
             Navigator.pushNamed(context, RouteConstants.addPhotoScreen);
           } else if (model.data!.status == 3) {

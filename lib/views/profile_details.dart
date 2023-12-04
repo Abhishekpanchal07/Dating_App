@@ -10,6 +10,7 @@ import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/helper/stop_scroll.dart';
 import 'package:demoapp/services/api.dart';
+import 'package:demoapp/views/interest_screen.dart';
 import 'package:demoapp/widgets/dropdownlist.dart';
 import 'package:demoapp/widgets/custom_dialogbox.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
@@ -57,7 +58,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     StringConstants.aquarius,
     StringConstants.pisces
   ];
-  UserDetails? modal;
+  UserDetail? modal;
   Future<void> accountCreatedSuccessfully() async {
     if (mounted) {
       CommonWidgets.showflushbar(
@@ -483,7 +484,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
             modal!.data!.status.toString());
         if (mounted) {
           CommonWidgets.showflushbar(context, modal!.message.toString());
-          Navigator.pushNamed(context, RouteConstants.interestScreen ,arguments: []);
+          Navigator.pushNamed(context, RouteConstants.interestScreen ,arguments: const InterestScreen(userinterests: [],isfromeditprofileScreen: false,));
         }
       }
     } on SocketException catch (e) {

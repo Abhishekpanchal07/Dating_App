@@ -1,14 +1,17 @@
+import 'package:demoapp/constants/api_constants.dart';
 import 'package:demoapp/constants/color_constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
+import 'package:demoapp/providers/getting_user_details.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageScreen extends StatefulWidget {
-  const MessageScreen({super.key});
+  final GettingUserDetailsProvider provider;
+  const MessageScreen({super.key, required this.provider});
 
   @override
   State<MessageScreen> createState() => _MessageScreenState();
@@ -47,14 +50,16 @@ class _MessageScreenState extends State<MessageScreen> {
                     childConatinerwidth: DimensionConstants.d38.w,
                     imageBorderRaius: DimensionConstants.d18,
                     imageHeight: DimensionConstants.d38.h,
-                    imageWidth: DimensionConstants.d38.w),
+                    imageWidth: DimensionConstants.d48.w,
+                    imagePath: ApiUrls.baseUrl +
+                        widget.provider.matchedUserprofilepicurl),
                 SizedBox(
                   width: DimensionConstants.d8.w,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(StringConstants.grace).regularText(
+                    Text(widget.provider.matchedUserFirstName).regularText(
                         ColorConstant.black,
                         TextAlign.center,
                         DimensionConstants.d20.sp),
@@ -70,16 +75,18 @@ class _MessageScreenState extends State<MessageScreen> {
               height: DimensionConstants.d50.h,
             ),
             circularGradientConatiner(
-              parentConatinerHeight: DimensionConstants.d128.h,
-              parentConatinerWidth: DimensionConstants.d128.w,
-              childConatinerHeight: DimensionConstants.d118.h,
-              childConatinerwidth: DimensionConstants.d119.w,
-              imageBorderRaius: DimensionConstants.d55,
-              imageHeight: DimensionConstants.d110.h,
-              imageWidth: DimensionConstants.d110.w,
-            ),
-            const Text(StringConstants.graceAge).bold(ColorConstant.black,
-                TextAlign.center, DimensionConstants.d24.sp),
+                parentConatinerHeight: DimensionConstants.d128.h,
+                parentConatinerWidth: DimensionConstants.d130.w,
+                // childConatinerHeight: DimensionConstants.d118.h,
+                // childConatinerwidth: DimensionConstants.d119.w,
+                imageBorderRaius: DimensionConstants.d55,
+                imageHeight: DimensionConstants.d118.h,
+                imageWidth: DimensionConstants.d119.w,
+                imagePath:
+                    ApiUrls.baseUrl + widget.provider.matchedUserprofilepicurl),
+            Text('${widget.provider.matchedUserFirstName},${widget.provider.matchedUserAge}')
+                .bold(ColorConstant.black, TextAlign.center,
+                    DimensionConstants.d24.sp),
             const Text(StringConstants.friendsOnDating).regularText(
                 ColorConstant.black.withOpacity(0.4),
                 TextAlign.center,
@@ -185,22 +192,19 @@ class _MessageScreenState extends State<MessageScreen> {
             ]),
       ),
       child: Container(
-        height: childConatinerHeight,
-        width: childConatinerwidth,
+        height: imageHeight!+ 2.h ,
+        width: imageWidth! - 14.w,
         alignment: Alignment.center,
         decoration: const BoxDecoration(
-            shape: BoxShape.circle, color: ColorConstant.textcolor),
-        child: Padding(
-          padding: const EdgeInsets.all(DimensionConstants.d2),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(imageBorderRaius!),
-            child: ImageView(
-                path: ImageConstants.userDetailScreenGirlImage,
-                fit: BoxFit.cover,
-                height: imageHeight,
-                width: imageWidth),
-          ),
-        ),
+            shape: BoxShape.circle, ),
+        child: ImageView(
+          circleCrop: true,
+            path: imagePath,
+            fit: BoxFit.cover,
+            radius: DimensionConstants.d60.r,
+            height: imageHeight,
+            width: imageWidth
+             ),
       ),
     );
   }

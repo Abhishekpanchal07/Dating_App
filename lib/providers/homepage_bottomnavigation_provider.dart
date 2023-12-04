@@ -1,4 +1,5 @@
 import 'package:demoapp/api_modals/user_listing.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/modals/homepage_data.dart';
@@ -50,40 +51,50 @@ class HomePageProvider extends BaseProvider {
   }
 
   // swipe left Api
-  Future<void> swipeLeft(BuildContext context,{String? useropponentid}) async {
-   try{
-     final model = await Api.swipeleft(
-      tokenValue:
-          SharedpreferenceKeys.prefs!.getString(SharedpreferenceKeys.jwtToken),
-      opponentId: useropponentid,
-    );
-    if (model.success == true) {
-      if(context.mounted){
- CommonWidgets.showflushbar(context, model.message!);
+  Future<void> swipeLeft(BuildContext context, {String? useropponentid}) async {
+    try {
+      final model = await Api.swipeleft(
+        tokenValue: SharedpreferenceKeys.prefs!
+            .getString(SharedpreferenceKeys.jwtToken),
+        opponentId: useropponentid,
+      );
+      if (model.success == true) {
+        if (context.mounted) {
+          CommonWidgets.showflushbar(context, model.message!);
+        }
       }
-     
-    }} on DioException catch(e) {
-     if(context.mounted){
- CommonWidgets.showflushbar(context, e.toString());
+    } on DioException catch (e) {
+      if (context.mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
       }
     }
   }
-  // swipe Right 
-  Future<void> swipeRight(BuildContext context,{String? useropponentid}) async {
-   try{
-     final model = await Api.swipeRight(
-      tokenValue:
-          SharedpreferenceKeys.prefs!.getString(SharedpreferenceKeys.jwtToken),
-      opponentId: useropponentid,
-    );
-    if (model.success == true) {
-      if(context.mounted){
- CommonWidgets.showflushbar(context, model.message);
+
+  // swipe Right
+  Future<void> swipeRight(BuildContext context,
+      {String? useropponentid}) async {
+    try {
+      final model = await Api.swipeRight(
+        tokenValue: SharedpreferenceKeys.prefs!
+            .getString(SharedpreferenceKeys.jwtToken),
+        opponentId: useropponentid,
+      );
+      if (model.success == true) {
+        if (model.data!.matchRequestStatus == 1) {
+           if (context.mounted) {
+            Navigator.pushNamed(context, RouteConstants.sendMessageScreen);
+         
+        }
+          
+        }
+
+        if (context.mounted) {
+          CommonWidgets.showflushbar(context, model.message);
+        }
       }
-     
-    }} on DioException catch(e) {
-     if(context.mounted){
- CommonWidgets.showflushbar(context, e.toString());
+    } on DioException catch (e) {
+      if (context.mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
       }
     }
   }
