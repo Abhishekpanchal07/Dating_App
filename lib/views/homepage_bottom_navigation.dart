@@ -113,7 +113,7 @@ class _HomePageBottomNavigationScreenState
   Widget build(BuildContext context) {
     return BaseView<HomePageProvider>(
       onModelReady: (provider) async {
-        SharedpreferenceKeys.islogin = true;
+       
         await provider.hitUserListingApi(context);
         _animationController = AnimationController(
           duration: const Duration(milliseconds: 500),

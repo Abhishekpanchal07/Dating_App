@@ -310,6 +310,7 @@ class GettingUserDetailsProvider extends BaseProvider {
         latitude: exactLoaction!.latitude.toDouble(),
         tokenValue: SharedpreferenceKeys.prefs!
             .getString(SharedpreferenceKeys.jwtToken));
+    notifyListeners();
   }
 
   // update user location
@@ -352,7 +353,7 @@ class GettingUserDetailsProvider extends BaseProvider {
               userinterests: matchedUserInterest,
               age: matchedUserAge.toString(),
               imageUrl: modal5!.data![i].userDetails.profileImage,
-              matcheduserId:matchedUseropponentid));
+              matcheduserId: matchedUseropponentid));
         }
 
         /* matchedUserName = modal5!.data![0].fullName;

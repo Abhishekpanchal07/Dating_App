@@ -224,7 +224,7 @@ class _AddPhotoState extends State<EnableLocation> {
               //   CommonWidgets.showflushbar(
               //       context, StringConstants.enableLocationError);
               // }
-              hitUserLocationApi();
+            exactLoaction != null ?  hitUserLocationApi() :  Navigator.pushNamed(context, RouteConstants.bottonNavigationScreen) ;
             },
             child: CommonWidgets.commonButton(StringConstants.continueText)),
       ]),
@@ -291,8 +291,8 @@ class _AddPhotoState extends State<EnableLocation> {
     SharedPreferences getToken = await SharedPreferences.getInstance();
     try {
       final modal = await Api.userLocation(
-          longitude: exactLoaction!.longitude.toString(),
-          latitude: exactLoaction!.latitude.toString(),
+          longitude: exactLoaction == null ? "" : exactLoaction!.longitude.toString() ,
+          latitude: exactLoaction == null ? "" : exactLoaction!.latitude.toString(),
           tokenValue: getToken.getString(SharedpreferenceKeys.jwtToken));
       // set message value
       SharedPreferences setMessageValue = await SharedPreferences.getInstance();

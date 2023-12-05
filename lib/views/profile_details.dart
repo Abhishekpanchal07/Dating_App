@@ -14,6 +14,7 @@ import 'package:demoapp/views/interest_screen.dart';
 import 'package:demoapp/widgets/dropdownlist.dart';
 import 'package:demoapp/widgets/custom_dialogbox.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
+import 'package:demoapp/widgets/stack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
@@ -150,25 +151,33 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                   SizedBox(
                     height: DimensionConstants.d34.h,
                   ),
-                  Stack(
+                  Stack2(
+                    clipBehavior: Clip.none,
                     children: [
-                      ImageView(
-                          path: _image.isNotEmpty
-                              ? _image
-                              : ImageConstants.personIcon,
-                          radius: DimensionConstants.d60.r,
-                          height: _image.isNotEmpty
-                              ? DimensionConstants.d116.h
-                              : DimensionConstants.d46.h,
-                          width: DimensionConstants.d116.h,
-                          fit: BoxFit.cover,
-                          circleCrop: true,
-                          color: ColorConstant.bggradientcolor1),
+                      Container(
+                       height:  DimensionConstants.d116.h,
+                       width: DimensionConstants.d116.h,
+                       decoration: const BoxDecoration(shape: BoxShape.circle,),
+                        child: Center(
+                          child: ImageView(
+                              path: _image.isNotEmpty
+                                  ? _image
+                                  : ImageConstants.personIcon,
+                              radius: DimensionConstants.d60.r,
+                              height: _image.isNotEmpty
+                                  ? DimensionConstants.d116.h
+                                  : DimensionConstants.d46.h,
+                              width: DimensionConstants.d116.h,
+                              fit: _image.isNotEmpty ?  BoxFit.cover : BoxFit.none,
+                              circleCrop: true,
+                              color: ColorConstant.bggradientcolor1),
+                        ),
+                      ),
                       Positioned(
-                        top: DimensionConstants.d75.h,
-                        left: DimensionConstants.d79.w,
-                        bottom: DimensionConstants.d2.h,
-                        right: DimensionConstants.d2.w,
+                         top: DimensionConstants.d79.h,
+                         left: DimensionConstants.d70.w,
+                        // bottom: DimensionConstants.d2.h,
+                        // right: DimensionConstants.d2.w,
                         child: Container(
                           height: DimensionConstants.d39.h,
                           width: DimensionConstants.d39.w,

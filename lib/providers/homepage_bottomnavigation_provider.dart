@@ -41,6 +41,7 @@ class HomePageProvider extends BaseProvider {
             );
           }
         }
+         SharedpreferenceKeys.prefs!.setBool(SharedpreferenceKeys.islogin, true);
         notifyListeners();
       }
     } on DioException catch (e) {

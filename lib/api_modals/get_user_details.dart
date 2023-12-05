@@ -141,8 +141,8 @@ class Location {
   Location.fromJson(Map<String, dynamic> json){
     id = json['_id'];
     userId = json['userId'];
-    longitude = json['longitude'];
-    latitude = json['latitude'];
+    longitude = json['longitude'] ?? 0.0;
+    latitude = json['latitude'] ?? 0;
     status = json['status'];
     createdAt = json['createdAt'];
     V = json['__v'];

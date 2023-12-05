@@ -640,8 +640,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                             setState(() {
                                               SharedpreferenceKeys.prefs!
                                                   .clear();
-                                              SharedpreferenceKeys.islogin =
-                                                  false;
+                                              SharedpreferenceKeys.prefs!.setBool(SharedpreferenceKeys.islogin, false);
                                               Navigator.pushNamedAndRemoveUntil(
                                                   context,
                                                   RouteConstants.loginScreen,
@@ -870,7 +869,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget userLocation(GettingUserDetailsProvider provider) {
     return GestureDetector(
       onTap: () {
-        provider.updateUserLocation(context);
+        provider.hitupdateuserlocationApi(context);
       },
       child: SizedBox(
         height: DimensionConstants.d60.h,
@@ -904,7 +903,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   // user Birthday Container
   Widget userBirthday(GettingUserDetailsProvider provider) {
     return SizedBox(
-      height: DimensionConstants.d60.h,
+      height: DimensionConstants.d61.h,
       width: DimensionConstants.d414.w,
       child: Center(
         child: Row(

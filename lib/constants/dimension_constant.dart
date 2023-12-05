@@ -501,4 +501,5 @@ static const double d497 = 497;
 static const double d498 = 498;
 static const double d499 = 499;
 static const double d500 = 500;
+static const double d550 = 550;
 }
