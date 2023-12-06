@@ -1,11 +1,11 @@
 class UserListing {
   UserListing({
     required this.success,
-    required this.unreadNoti,
+     this.unreadNoti,
     this.data,
   });
   late final bool success;
-  late final int unreadNoti;
+   int? unreadNoti;
   List<Data>? data;
   
   UserListing.fromJson(Map<String, dynamic> json){

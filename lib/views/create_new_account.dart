@@ -1,13 +1,11 @@
-import 'dart:io';
 import 'package:demoapp/constants/Color_Constants.dart';
 import 'package:demoapp/constants/dimension_constant.dart';
 import 'package:demoapp/constants/image_constants.dart';
-import 'package:demoapp/constants/route_constants.dart';
-import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/extension/all_extension.dart';
 import 'package:demoapp/helper/common_widget.dart';
-import 'package:demoapp/services/api.dart';
+import 'package:demoapp/providers/login_and_create_new_account.dart';
+import 'package:demoapp/views/base_view.dart';
 import 'package:demoapp/widgets/image_picker._type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,109 +29,110 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            padding: EdgeInsets.only(
-                top: DimensionConstants.d43.h,
-                left: DimensionConstants.d20.w,
-                right: DimensionConstants.d20.w),
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                  ColorConstant.bggradientcolor1,
-                  ColorConstant.bggradientcolor2,
-                ])),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: const ImageView(
-                      path: ImageConstants.leftArrowIcon,
+      child: BaseView<LoginAndcreateNewAccountProvider>(
+        builder: (context, provider, child) => Scaffold(
+          body: SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              padding: EdgeInsets.only(
+                  top: DimensionConstants.d43.h,
+                  left: DimensionConstants.d20.w,
+                  right: DimensionConstants.d20.w),
+              decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                    ColorConstant.bggradientcolor1,
+                    ColorConstant.bggradientcolor2,
+                  ])),
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: const ImageView(
+                        path: ImageConstants.leftArrowIcon,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: DimensionConstants.d64.h,
-                ),
-                ImageView(
-                  path: ImageConstants.datingLogo,
-                  height: DimensionConstants.d87.h,
-                  width: DimensionConstants.d193.w,
-                ),
-                SizedBox(
-                  height: DimensionConstants.d90.h,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: const Text(StringConstants.createNewAccount)
-                      .regularText(ColorConstant.headingcolor, TextAlign.center,
-                          DimensionConstants.d24.sp),
-                ),
-                SizedBox(
-                  height: DimensionConstants.d13.h,
-                ),
-                CommonWidgets.gradientTextField(context,
-                    controllerName: emailControllerforcreateaccount,
-                    textFieldHintText: StringConstants.emailText),
-                SizedBox(
-                  height: DimensionConstants.d21.h,
-                ),
-                aminatedTextField(
-                    textfieldhinttext: StringConstants.passwordText,
-                    controllerName: passwordController),
-                SizedBox(
-                  height: DimensionConstants.d20.h,
-                ),
-                confirmPasswordAnimatedTextField(
-                    controllerName: confirmPasswordController,
-                    textfieldhinttext: StringConstants.confirmPassword),
-                SizedBox(
-                  height: DimensionConstants.d20.h,
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(DimensionConstants.d10),
-                      child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              ischeckbox = !ischeckbox;
-                            });
-                          },
-                          child: ischeckbox
-                              ? const ImageView(
-                                  path: ImageConstants.markedCheckbox,
-                                )
-                              : const ImageView(path: ImageConstants.checkBox)),
-                    ),
-                    SizedBox(
-                      width: DimensionConstants.d5.w,
-                    ),
-                    const Text(StringConstants.loginScreenRememberMe)
-                        .regularText(ColorConstant.lightpink, TextAlign.center,
-                            DimensionConstants.d16.sp)
-                  ],
-                ),
-                SizedBox(
-                  height: DimensionConstants.d20.h,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    emailAndPasswordVerification(context,
-                        emailcontroller: emailControllerforcreateaccount,
-                        passwordController: passwordController,
-                        confirmPasswordcontroller: confirmPasswordController);
-                  },
-                  child:
-                      CommonWidgets.commonButton(StringConstants.continueText),
-                )
-              ],
+                  SizedBox(
+                    height: DimensionConstants.d64.h,
+                  ),
+                  ImageView(
+                    path: ImageConstants.datingLogo,
+                    height: DimensionConstants.d87.h,
+                    width: DimensionConstants.d193.w,
+                  ),
+                  SizedBox(
+                    height: DimensionConstants.d90.h,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: const Text(StringConstants.createNewAccount)
+                        .regularText(ColorConstant.headingcolor,
+                            TextAlign.center, DimensionConstants.d24.sp),
+                  ),
+                  SizedBox(
+                    height: DimensionConstants.d13.h,
+                  ),
+                  CommonWidgets.gradientTextField(context,
+                      controllerName: emailControllerforcreateaccount,
+                      textFieldHintText: StringConstants.emailText),
+                  SizedBox(
+                    height: DimensionConstants.d21.h,
+                  ),
+                  aminatedTextField(provider,
+                      textfieldhinttext: StringConstants.passwordText,
+                      controllerName: passwordController),
+                  SizedBox(
+                    height: DimensionConstants.d20.h,
+                  ),
+                  confirmPasswordAnimatedTextField(provider,
+                      controllerName: confirmPasswordController,
+                      textfieldhinttext: StringConstants.confirmPassword),
+                  SizedBox(
+                    height: DimensionConstants.d20.h,
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(DimensionConstants.d10),
+                        child: GestureDetector(
+                            onTap: () {
+                              provider.changeremembermeboolValue();
+                            },
+                            child: provider.rememberMe
+                                ? const ImageView(
+                                    path: ImageConstants.markedCheckbox,
+                                  )
+                                : const ImageView(
+                                    path: ImageConstants.checkBox)),
+                      ),
+                      SizedBox(
+                        width: DimensionConstants.d5.w,
+                      ),
+                      const Text(StringConstants.loginScreenRememberMe)
+                          .regularText(ColorConstant.lightpink,
+                              TextAlign.center, DimensionConstants.d16.sp)
+                    ],
+                  ),
+                  SizedBox(
+                    height: DimensionConstants.d20.h,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      emailAndPasswordVerification(context, provider,
+                          emailcontroller: emailControllerforcreateaccount,
+                          passwordController: passwordController,
+                          confirmPasswordcontroller: confirmPasswordController);
+                    },
+                    child: CommonWidgets.commonButton(
+                        StringConstants.continueText),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -141,7 +140,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
     );
   }
 
-  Widget aminatedTextField(
+  Widget aminatedTextField(LoginAndcreateNewAccountProvider provider,
       {String? textfieldhinttext, TextEditingController? controllerName}) {
     return Container(
       width: DimensionConstants.d374.w,
@@ -169,7 +168,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
               color: ColorConstant.headingcolor,
               fontFamily: StringConstants.familyName),
           controller: controllerName,
-          obscureText: isobsecure,
+          obscureText: provider.changeVisibility,
           decoration: InputDecoration(
               border: InputBorder.none,
               hintText: textfieldhinttext,
@@ -184,11 +183,9 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
               ),
               suffixIcon: IconButton(
                   onPressed: () {
-                    setState(() {
-                      isobsecure = !isobsecure;
-                    });
+                    provider.changeboolValue();
                   },
-                  icon: isobsecure
+                  icon: provider.changeVisibility
                       ? const Padding(
                           padding: EdgeInsets.all(DimensionConstants.d5),
                           child: Padding(
@@ -206,7 +203,9 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
   }
 
   Widget confirmPasswordAnimatedTextField(
-      {String? textfieldhinttext, TextEditingController? controllerName}) {
+      LoginAndcreateNewAccountProvider provider,
+      {String? textfieldhinttext,
+      TextEditingController? controllerName}) {
     return Container(
       width: DimensionConstants.d374.w,
       height: DimensionConstants.d60.h,
@@ -233,7 +232,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
               color: ColorConstant.headingcolor,
               fontFamily: StringConstants.familyName),
           controller: controllerName,
-          obscureText: isconfirmPassword,
+          obscureText: provider.confirmPasswordbool,
           decoration: InputDecoration(
               border: InputBorder.none,
               hintText: textfieldhinttext,
@@ -248,11 +247,9 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
               ),
               suffixIcon: IconButton(
                   onPressed: () {
-                    setState(() {
-                      isconfirmPassword = !isconfirmPassword;
-                    });
+                    provider.changeconfirmboolValue();
                   },
-                  icon: isconfirmPassword
+                  icon: provider.confirmPasswordbool
                       ? const Padding(
                           padding: EdgeInsets.all(DimensionConstants.d5),
                           child: Padding(
@@ -270,7 +267,8 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
   }
 
   void emailAndPasswordVerification(
-    BuildContext context, {
+    BuildContext context,
+    LoginAndcreateNewAccountProvider provider, {
     emailcontroller,
     passwordController,
     confirmPasswordcontroller,
@@ -294,57 +292,57 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
     } else if (confirmPasswordcontroller.text != passwordController.text) {
       CommonWidgets.showflushbar(context, StringConstants.confirmPasswordError);
     } else {
-      hitSignupApi(emailcontroller.text, passwordController.text, "");
-      accountCreatedSuccessfully();
+      provider.hitSignupApi(
+          context, emailcontroller.text, passwordController.text);
 
       // Navigator.pushNamed(context, RouteConstants.profileDetaisScreen);
     }
   }
 
 // hit Api
-  Future<void> hitSignupApi(
-      String? email, String? password, String? deviceToken) async {
-    // SharedPreferences accountCreated = await SharedPreferences.getInstance();
-    try {
-      final modal = await Api.signUp(
-        email: email,
-        password: password,
-      );
+  // Future<void> hitSignupApi(
+  //     String? email, String? password, String? deviceToken) async {
 
-      if (modal.success == true) {
-        SharedpreferenceKeys.prefs!
-            .setString(SharedpreferenceKeys.userId, modal.data!.id.toString());
-        SharedpreferenceKeys.prefs!.setString(
-            SharedpreferenceKeys.jwtToken, modal.jwtToken.toString());
-        // create Account
-        SharedpreferenceKeys.prefs!.setString(
-            SharedpreferenceKeys.createAccountSuccessfully,
-            modal.message.toString());
-             SharedpreferenceKeys.prefs!.setString(
-            SharedpreferenceKeys.loginStatus,
-            modal.data!.status.toString());
-        if (mounted) {
-          Navigator.pushNamed(context, RouteConstants.profileDetaisScreen);
-        }
-      } else {
-        if (mounted) {
-          CommonWidgets.showflushbar(context, modal.message.toString());
-        }
-      }
-    } on SocketException catch (e) {
-      if (mounted) {
-        CommonWidgets.showflushbar(context, e.toString());
-      }
-    }
-  }
+  //   try {
+  //     final modal = await Api.signUp(
+  //       email: email,
+  //       password: password,
+  //     );
 
-  Future<void> accountCreatedSuccessfully() async {
-    if (mounted) {
-      CommonWidgets.showflushbar(
-          context,
-          SharedpreferenceKeys.prefs!
-              .getString(SharedpreferenceKeys.createAccountSuccessfully)
-              .toString());
-    }
-  }
+  //     if (modal.success == true) {
+  //       SharedpreferenceKeys.prefs!
+  //           .setString(SharedpreferenceKeys.userId, modal.data!.id.toString());
+  //       SharedpreferenceKeys.prefs!.setString(
+  //           SharedpreferenceKeys.jwtToken, modal.jwtToken.toString());
+  //       // create Account
+  //       SharedpreferenceKeys.prefs!.setString(
+  //           SharedpreferenceKeys.createAccountSuccessfully,
+  //           modal.message.toString());
+  //            SharedpreferenceKeys.prefs!.setString(
+  //           SharedpreferenceKeys.loginStatus,
+  //           modal.data!.status.toString());
+  //       if (mounted) {
+  //         Navigator.pushNamed(context, RouteConstants.profileDetaisScreen);
+  //       }
+  //     } else {
+  //       if (mounted) {
+  //         CommonWidgets.showflushbar(context, modal.message.toString());
+  //       }
+  //     }
+  //   } on SocketException catch (e) {
+  //     if (mounted) {
+  //       CommonWidgets.showflushbar(context, e.toString());
+  //     }
+  //   }
+  // }
+
+  // Future<void> accountCreatedSuccessfully() async {
+  //   if (mounted) {
+  //     CommonWidgets.showflushbar(
+  //         context,
+  //         SharedpreferenceKeys.prefs!
+  //             .getString(SharedpreferenceKeys.createAccountSuccessfully)
+  //             .toString());
+  //   }
+  // }
 }

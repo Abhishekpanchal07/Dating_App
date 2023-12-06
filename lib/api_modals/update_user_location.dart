@@ -4,7 +4,7 @@ class UpdateUserLocation {
      this.data,
   });
   late final bool success;
-  Data? data;
+   Data? data;
   
   UpdateUserLocation.fromJson(Map<String, dynamic> json){
     success = json['success'];
@@ -21,33 +21,30 @@ class UpdateUserLocation {
 
 class Data {
   Data({
-     this.id,
-     this.userId,
-     this.longitude,
-     this.latitude,
-     this.distanceRange,
-     this.status,
-     this.createdAt,
-     this.V,
+    required this.id,
+    required this.userId,
+    required this.longitude,
+    required this.latitude,
+    required this.status,
+    required this.createdAt,
+    required this.V,
   });
-   String? id;
-   String? userId;
-   double? longitude;
-   double? latitude;
-   int? distanceRange;
-   int? status;
-   String? createdAt;
-   int? V;
+  late final String id;
+  late final String userId;
+  late final double longitude;
+  late final double latitude;
+  late final int status;
+  late final String createdAt;
+  late final int V;
   
   Data.fromJson(Map<String, dynamic> json){
     id = json['_id'];
     userId = json['userId'];
     longitude = json['longitude'];
     latitude = json['latitude'];
-    distanceRange = json['distanceRange'] ;
-    status = json['status'] ;
-    createdAt = json['createdAt'] ;
-    V = json['__v'] ;
+    status = json['status'];
+    createdAt = json['createdAt'];
+    V = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
@@ -56,7 +53,6 @@ class Data {
     getdata['userId'] = userId;
     getdata['longitude'] = longitude;
     getdata['latitude'] = latitude;
-    getdata['distanceRange'] = distanceRange;
     getdata['status'] = status;
     getdata['createdAt'] = createdAt;
     getdata['__v'] = V;

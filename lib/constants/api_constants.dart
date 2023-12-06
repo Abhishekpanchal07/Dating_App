@@ -21,4 +21,5 @@ class ApiUrls {
   static const swipeRightApiUrl = "http://65.2.70.217:8091/dating/swipeupdate";
   static const userMatchListApiUrl = "http://65.2.70.217:8091/dating/matches";
   static const getDetailsSingleMatchedApiUrl = "http://65.2.70.217:8091/dating/matchedUserDetails/";
+  static const deleteAccountApiUrl = "http://65.2.70.217:8091/dating/deleteAccount";
 }

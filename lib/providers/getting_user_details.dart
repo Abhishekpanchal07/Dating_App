@@ -1,9 +1,11 @@
 import 'dart:developer';
+import 'package:demoapp/api_modals/delete_account.dart';
 import 'package:demoapp/api_modals/get_detail_matched_user.dart';
 import 'package:demoapp/api_modals/update_user_interests.dart';
 import 'package:demoapp/api_modals/update_user_location.dart';
 import 'package:demoapp/api_modals/update_user_single_image.dart';
 import 'package:demoapp/api_modals/user_matchlist.dart';
+import 'package:demoapp/constants/route_constants.dart';
 import 'package:demoapp/constants/sharedperferences_constants.dart';
 import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/helper/common_widget.dart';
@@ -39,9 +41,11 @@ class GettingUserDetailsProvider extends BaseProvider {
   String userAbout = "";
   String hereTo = "";
   double? longitude;
+  double? modal4longitude;
   double? opponentUserLongitude;
   num? opponentUserLatitude;
   num? latitude;
+  num? modal4latitude;
   String userCurrentLocation = "";
   String? userdob;
   String userabout = '';
@@ -65,6 +69,7 @@ class GettingUserDetailsProvider extends BaseProvider {
   UpdateUserLocation? modal4;
   UserMatchList? modal5;
   GetSingleMatchedUserDetail? modal6;
+  DeleteAccount? modal7;
   // controllers
   final userDOBController = TextEditingController();
   final useraboutController = TextEditingController();
@@ -72,84 +77,84 @@ class GettingUserDetailsProvider extends BaseProvider {
   // Api Operations
 
   // getting user details
-  Future<void> hitUserById(BuildContext context) async {
-    try {
-      modal = await Api.userById(
-          jwtToken: SharedpreferenceKeys.prefs!
-              .getString(SharedpreferenceKeys.jwtToken));
+  // Future<void> hitUserById(BuildContext context) async {
+  //   try {
+  //     modal = await Api.userById(
+  //         jwtToken: SharedpreferenceKeys.prefs!
+  //             .getString(SharedpreferenceKeys.jwtToken));
 
-      if (modal!.success == true) {
-        DateTime currentDate = DateTime.now();
-        DateTime userDob = modal!.data![0].birthDate.isNotEmpty
-            ? DateTime.parse(modal!.data![0].birthDate)
-            : DateTime.now();
-        int currentAge = currentDate.year - userDob.year;
-        userBirthdate = modal!.data![0].birthDate.isNotEmpty
-            ? DateFormat('dd-MM-yyyy')
-                .format(DateTime.parse(modal!.data![0].birthDate))
-            : "";
-        userName =
-            ' ${modal!.data![0].firstName}${modal!.data![0].lastName},${currentAge.toString()}';
-        // userAge = currentAge;
-        userEmail = modal!.data![0].email;
+  //     if (modal!.success == true) {
+  //       DateTime currentDate = DateTime.now();
+  //       DateTime userDob = modal!.data![0].birthDate.isNotEmpty
+  //           ? DateTime.parse(modal!.data![0].birthDate)
+  //           : DateTime.now();
+  //       int currentAge = currentDate.year - userDob.year;
+  //       userBirthdate = modal!.data![0].birthDate.isNotEmpty
+  //           ? DateFormat('dd-MM-yyyy')
+  //               .format(DateTime.parse(modal!.data![0].birthDate))
+  //           : "";
+  //       userName =
+  //           ' ${modal!.data![0].firstName}${modal!.data![0].lastName},${currentAge.toString()}';
+  //       // userAge = currentAge;
+  //       userEmail = modal!.data![0].email;
 
-        userAbout = modal!.data![0].about;
+  //       userAbout = modal!.data![0].about;
 
-        // user interests
-        conatinerChildTextValue.clear();
-        for (int i = 0; i < modal!.data![0].userInterst.length; i++) {
-          conatinerChildTextValue
-              .add(modal!.data![0].userInterst[i].intrestName);
-        }
+  //       // user interests
+  //       conatinerChildTextValue.clear();
+  //       for (int i = 0; i < modal!.data![0].userInterst.length; i++) {
+  //         conatinerChildTextValue
+  //             .add(modal!.data![0].userInterst[i].intrestName);
+  //       }
 
-        modal2 == null ? addInterestWithoutClearList() : addInterest();
+  //       modal2 == null ? addInterestWithoutClearList() : addInterest();
 
-        // // user images
-        // for (int i = 0; i < modal!.data![0].images[0].image.length; i++) {
-        //   userImages.add(modal!.data![0].images[0].image[i]);
-        // }
+  //       // // user images
+  //       // for (int i = 0; i < modal!.data![0].images[0].image.length; i++) {
+  //       //   userImages.add(modal!.data![0].images[0].image[i]);
+  //       // }
 
-        // uploaded user images
+  //       // uploaded user images
 
-        imagePaths.clear();
-        modal2 != null ? addUserImages() : addUserImagesWithoutclear();
+  //       imagePaths.clear();
+  //       modal2 != null ? addUserImages() : addUserImagesWithoutclear();
 
-        // longitude
-        longitude = modal == null
-            ? modal4!.data!.longitude
-            : modal!.data![0].location[0].longitude;
-        // latitude
-        latitude = modal == null
-            ? modal4!.data!.longitude
-            : modal!.data![0].location[0].latitude;
-        // horoscope value
-        userhoroscope = modal!.data![0].zodiac;
-        // user gender Value
-        userGender = modal!.data![0].gender;
-        // here to
-        hereTo = modal!.data![0].filter[0].hereTo;
-        // want to meet
-        wantToMeet = modal!.data![0].filter[0].wantToMeet;
-        // preffered age
-        prefferedAge = modal!.data![0].filter[0].ageRange;
-        // preffered language
-        prefferedlanguage = modal!.data![0].filter[0].language;
-        // user dob
-        userBirthdate = modal!.data![0].birthDate.isNotEmpty
-            ? DateFormat('dd-MM-yyyy')
-                .format(DateTime.parse(modal!.data![0].birthDate))
-            : "";
-        // user About
-        userAbout = modal!.data![0].about;
+  //       // longitude
+  //       longitude = modal!.data![0].location.isEmpty
+  //           ? modal4longitude
+  //           : modal!.data![0].location[0].longitude;
+  //       // latitude
+  //       latitude = modal!.data![0].location.isEmpty
+  //           ? modal4latitude
+  //           : modal!.data![0].location[0].latitude;
+  //       // horoscope value
+  //       userhoroscope = modal!.data![0].zodiac;
+  //       // user gender Value
+  //       userGender = modal!.data![0].gender;
+  //       // here to
+  //       hereTo = modal!.data![0].filter[0].hereTo;
+  //       // want to meet
+  //       wantToMeet = modal!.data![0].filter[0].wantToMeet;
+  //       // preffered age
+  //       prefferedAge = modal!.data![0].filter[0].ageRange;
+  //       // preffered language
+  //       prefferedlanguage = modal!.data![0].filter[0].language;
+  //       // user dob
+  //       // userBirthdate = modal!.data![0].birthDate.isNotEmpty
+  //       //     ? DateFormat('dd-MM-yyyy')
+  //       //         .format(DateTime.parse(modal!.data![0].birthDate))
+  //       //     : "";
+  //       // user About
+  //       userAbout = modal!.data![0].about;
 
-        notifyListeners();
-      }
-    } on DioException catch (e) {
-      if (context.mounted) {
-        CommonWidgets.showflushbar(context, e.toString());
-      }
-    }
-  }
+  //       notifyListeners();
+  //     }
+  //   } on DioException catch (e) {
+  //     if (context.mounted) {
+  //       CommonWidgets.showflushbar(context, e.toString());
+  //     }
+  //   }
+  // }
 
   // get user location
   Future<void> getAddress() async {
@@ -174,7 +179,7 @@ class GettingUserDetailsProvider extends BaseProvider {
   }
 
   void hitgettinguserDetailApi(BuildContext context) async {
-    await hitUserById(context);
+   // await hitUserById(context);
     await getAddress();
     notifyListeners();
   }
@@ -188,8 +193,7 @@ class GettingUserDetailsProvider extends BaseProvider {
     // ignore: use_build_context_synchronously
     await hituserUpdateProfileApi(context);
 
-    // ignore: use_build_context_synchronously
-    hitUserById(context);
+   // hitUserById(context);
 
     notifyListeners();
   }
@@ -310,15 +314,20 @@ class GettingUserDetailsProvider extends BaseProvider {
         latitude: exactLoaction!.latitude.toDouble(),
         tokenValue: SharedpreferenceKeys.prefs!
             .getString(SharedpreferenceKeys.jwtToken));
+    if (modal4!.success == true) {
+      longitude = modal4!.data!.longitude;
+      latitude = modal4!.data!.latitude;
+    }
     notifyListeners();
   }
 
   // update user location
   Future<void> hitupdateuserlocationApi(BuildContext context) async {
     await updateUserLocation(context);
-    await getAddress();
-    // ignore: use_build_context_synchronously
-    hitUserById(context);
+
+    if (context.mounted) {
+      hitgettinguserDetailApi(context);
+    }
     notifyListeners();
   }
 
@@ -395,16 +404,35 @@ class GettingUserDetailsProvider extends BaseProvider {
       opponentUserLongitude = modal6!.data[0].userLocation[0].longitude;
       opponentUserLatitude = modal6!.data[0].userLocation[0].latitude;
       await getAddress();
-      /* double opponentdistance = await Geolocator.distanceBetween(
+      double opponentdistance = Geolocator.distanceBetween(
           double.parse(SharedpreferenceKeys.prefs!
               .getString(SharedpreferenceKeys.myLatitude)!),
           double.parse(SharedpreferenceKeys.prefs!
               .getString(SharedpreferenceKeys.myLongitude)!),
           opponentUserLatitude!.toDouble(),
           opponentUserLongitude!);
-      opponentDistance = (opponentdistance * 1000).toInt(); */
+      opponentDistance = (opponentdistance * 1000).toInt();
+      log(opponentDistance.toString());
 
       notifyListeners();
+    } on DioException catch (e) {
+      if (context.mounted) {
+        CommonWidgets.showflushbar(context, e.toString());
+      }
+    }
+  }
+
+  Future<void> deleteAccount(BuildContext context) async {
+    try {
+      modal7 = await Api.deleteAccount(
+          tokenvalue: SharedpreferenceKeys.prefs!
+              .getString(SharedpreferenceKeys.jwtToken));
+      if (modal7!.success == true) {
+        if (context.mounted) {
+          CommonWidgets.showflushbar(context, modal7!.message.toString());
+          Navigator.pushReplacementNamed(context, RouteConstants.splashPage);
+        }
+      }
     } on DioException catch (e) {
       if (context.mounted) {
         CommonWidgets.showflushbar(context, e.toString());

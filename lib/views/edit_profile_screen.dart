@@ -637,15 +637,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                             });
                                           },
                                           positiveTap: () {
-                                            setState(() {
+                                            
                                               SharedpreferenceKeys.prefs!
                                                   .clear();
-                                              SharedpreferenceKeys.prefs!.setBool(SharedpreferenceKeys.islogin, false);
+                                              SharedpreferenceKeys.prefs!
+                                                  .setBool(
+                                                      SharedpreferenceKeys
+                                                          .islogin,
+                                                      false);
                                               Navigator.pushNamedAndRemoveUntil(
                                                   context,
                                                   RouteConstants.loginScreen,
                                                   (route) => false);
-                                            });
+                                            
                                           },
                                         );
                                       });
@@ -682,6 +686,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           setState(() {
                                             Navigator.pop(context);
                                           });
+                                        },
+                                        positiveTap: () {
+                                          provider.deleteAccount(context);
                                         },
                                       );
                                     });
@@ -1033,14 +1040,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   // user Interests
   Widget userInterestsContainer({String? containerchildText}) {
     return Container(
-      height: DimensionConstants.d37.h,
+      height: DimensionConstants.d38.h,
       width: DimensionConstants.d118.w,
       alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(DimensionConstants.d7.r),
           color: ColorConstant.inboxScreenGradientColor),
       child: Container(
-        height: DimensionConstants.d36.h,
+        height: DimensionConstants.d37.h,
         width: DimensionConstants.d112.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(

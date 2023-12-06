@@ -68,13 +68,13 @@ class _DashboardScreenState extends State<BottomNavigationScreen> {
     return Scaffold(
       body: screeens.elementAt(currentIndex),
       bottomNavigationBar: Container(
-        height: DimensionConstants.d83.h,
+        height: DimensionConstants.d81.h,
         width: DimensionConstants.d414.w,
         color: ColorConstant.textcolor,
         child: Stack(
           children: [
             Container(
-              height: DimensionConstants.d3.h,
+              height: DimensionConstants.d2.h,
               width: DimensionConstants.d414.w,
               color: ColorConstant.grey,
             ),
@@ -138,12 +138,12 @@ class _DashboardScreenState extends State<BottomNavigationScreen> {
               ),
             ),
             Positioned(
-              top: DimensionConstants.d20.h,
+              top: DimensionConstants.d18.h,
               //left: DimensionConstants.d30.w,
               //bottom: DimensionConstants.d5.h,
               right: DimensionConstants.d5.w,
               child: SizedBox(
-                height: DimensionConstants.d80.h,
+                height: DimensionConstants.d82.h,
                 width: DimensionConstants.d413.w,
                 child: BottomNavigationBar(
                     type: BottomNavigationBarType.fixed,

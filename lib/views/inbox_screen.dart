@@ -22,51 +22,51 @@ class InboxScreen extends StatefulWidget {
 class _InboxScreenState extends State<InboxScreen> {
   List<dynamic> userDetail = [
     UserImageAndName(
-        imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
+        imagePathOfInboxScreen: ImageConstants.userAccountgirlImage,
         name: StringConstants.lelani,
         userMessage: StringConstants.hello),
     UserImageAndName(
-        imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
+        imagePathOfInboxScreen: ImageConstants.userAccountgirlImage,
         name: StringConstants.mona,
         userMessage: StringConstants.hello),
     UserImageAndName(
-        imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
+        imagePathOfInboxScreen: ImageConstants.userAccountgirlImage,
         name: StringConstants.lily,
         userMessage: StringConstants.hello),
     UserImageAndName(
-        imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
+        imagePathOfInboxScreen: ImageConstants.userAccountgirlImage,
         name: StringConstants.reshma,
         userMessage: StringConstants.hello),
     UserImageAndName(
-        imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
+        imagePathOfInboxScreen: ImageConstants.userAccountgirlImage,
         name: StringConstants.kiran,
         userMessage: StringConstants.hello),
     UserImageAndName(
-        imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
+        imagePathOfInboxScreen: ImageConstants.userAccountgirlImage,
         name: StringConstants.pooja,
         userMessage: StringConstants.hello),
     UserImageAndName(
-        imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
+        imagePathOfInboxScreen: ImageConstants.userAccountgirlImage,
         name: StringConstants.shreya,
         userMessage: StringConstants.hello),
     UserImageAndName(
-        imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
+        imagePathOfInboxScreen: ImageConstants.userAccountgirlImage,
         name: StringConstants.kajal,
         userMessage: StringConstants.hello),
     UserImageAndName(
-        imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
+        imagePathOfInboxScreen: ImageConstants.userAccountgirlImage,
         name: StringConstants.roma,
         userMessage: StringConstants.hello),
     UserImageAndName(
-        imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
+        imagePathOfInboxScreen: ImageConstants.userAccountgirlImage,
         name: StringConstants.lily,
         userMessage: StringConstants.hello),
     UserImageAndName(
-        imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
+        imagePathOfInboxScreen: ImageConstants.userAccountgirlImage,
         name: StringConstants.pooja,
         userMessage: StringConstants.hello),
     UserImageAndName(
-        imagePathOfInboxScreen: StringConstants.imageurlInboxScreen,
+        imagePathOfInboxScreen: ImageConstants.userAccountgirlImage,
         name: StringConstants.reshma,
         userMessage: StringConstants.hello),
   ];
@@ -230,8 +230,8 @@ class _InboxScreenState extends State<InboxScreen> {
                 radius: DimensionConstants.d31.r,
                 path: imagePath,
                 fit: BoxFit.cover,
-                 height: DimensionConstants.d66.h,
-                   width: DimensionConstants.d58.w,
+                 height: DimensionConstants.d68.h,
+                   width: DimensionConstants.d56.w,
                    ),
              )
               ),

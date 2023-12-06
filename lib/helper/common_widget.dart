@@ -278,7 +278,7 @@ class CommonWidgets {
         borderRadius: BorderRadius.circular(DimensionConstants.d13.r),
       ),
       child: Container(
-        height: DimensionConstants.d59.h,
+        height: DimensionConstants.d60.h,
         width: DimensionConstants.d173.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(

@@ -84,7 +84,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
                                 return ImageView(
-                                   height: DimensionConstants.d470.h,
+                                 //  height: DimensionConstants.d470.h,
                                   fit: BoxFit.cover,
                                   path:  provider.imagePaths.isEmpty ? ImageConstants.personIcon :   ApiUrls.baseUrl + provider.imagePaths[index],
                                 );
@@ -111,7 +111,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                                       context, RouteConstants.editProfileScreen)
                                   .then((value) {
                                 if (value == true) {
-                                  provider.hitUserById(context);
+                                //  provider.hitUserById(context);
                                   //hitUserById();
                                   // setState(() {});
                                 }

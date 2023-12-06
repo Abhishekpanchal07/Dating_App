@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:demoapp/api_modals/delete_account.dart';
 import 'package:demoapp/api_modals/get_detail_matched_user.dart';
 import 'package:demoapp/api_modals/get_user_details.dart';
 import 'package:demoapp/api_modals/swipe_left.dart';
@@ -324,53 +325,67 @@ class Api {
   }
 
   // Swipe left
-  static Future<SwipeLeft> swipeleft({String? opponentId,String? tokenValue}) async {
+  static Future<SwipeLeft> swipeleft(
+      {String? opponentId, String? tokenValue}) async {
     var map = {"opponentId": opponentId};
-     dio.options.headers["authorization"] = tokenValue;
+    dio.options.headers["authorization"] = tokenValue;
     try {
-      Response response =
-          await dio.post(ApiUrls.swipeLeftApiUrl, data: map);
+      Response response = await dio.post(ApiUrls.swipeLeftApiUrl, data: map);
       return SwipeLeft.fromJson(jsonDecode(response.toString()));
     } on DioException {
       throw const SocketException(StringConstants.socketExceptionErrorMessage);
     }
   }
+
   // swipe Right
-  static Future<SwipeRight> swipeRight({String? opponentId,String? tokenValue}) async {
+  static Future<SwipeRight> swipeRight(
+      {String? opponentId, String? tokenValue}) async {
     var map = {"opponentId": opponentId};
-     dio.options.headers["authorization"] = tokenValue;
+    dio.options.headers["authorization"] = tokenValue;
     try {
-      Response response =
-          await dio.post(ApiUrls.swipeRightApiUrl, data: map);
+      Response response = await dio.post(ApiUrls.swipeRightApiUrl, data: map);
       return SwipeRight.fromJson(jsonDecode(response.toString()));
     } on DioException {
       throw const SocketException(StringConstants.socketExceptionErrorMessage);
     }
   }
 
-  // user Match list 
-   static Future<UserMatchList> userMatchList(
-      {String? tokenValue}) async {
-   
+  // user Match list
+  static Future<UserMatchList> userMatchList({String? tokenValue}) async {
     dio.options.headers["authorization"] = tokenValue;
     try {
-      Response response = await dio.post(ApiUrls.userMatchListApiUrl,);
+      Response response = await dio.post(
+        ApiUrls.userMatchListApiUrl,
+      );
       return UserMatchList.fromJson(jsonDecode(response.toString()));
     } on DioException {
       throw const SocketException(StringConstants.socketExceptionErrorMessage);
     }
   }
-  // get details of matched user 
-   static Future<GetSingleMatchedUserDetail> getDetailMatchedUser(
-      {String? tokenValue,String? userId}) async {
-   
+
+  // get details of matched user
+  static Future<GetSingleMatchedUserDetail> getDetailMatchedUser(
+      {String? tokenValue, String? userId}) async {
     dio.options.headers["authorization"] = tokenValue;
     try {
-      Response response = await dio.get(ApiUrls.getDetailsSingleMatchedApiUrl + userId!,);
-      return GetSingleMatchedUserDetail.fromJson(jsonDecode(response.toString()));
+      Response response = await dio.get(
+        ApiUrls.getDetailsSingleMatchedApiUrl + userId!,
+      );
+      return GetSingleMatchedUserDetail.fromJson(
+          jsonDecode(response.toString()));
     } on DioException {
       throw const SocketException(StringConstants.socketExceptionErrorMessage);
     }
   }
 
+  // Delete Account
+  static Future<DeleteAccount> deleteAccount({String? tokenvalue}) async {
+    dio.options.headers["authorization"] = tokenvalue;
+    try {
+      Response response = await dio.delete(ApiUrls.deleteAccountApiUrl);
+      return DeleteAccount.fromJson(jsonDecode(response.toString()));
+    } on DioException {
+      throw const SocketException(StringConstants.socketExceptionErrorMessage);
+    }
+  }
 }

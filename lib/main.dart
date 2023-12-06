@@ -18,26 +18,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(
-        "++++++${SharedpreferenceKeys.prefs!.getString(SharedpreferenceKeys.jwtToken)}");
-         print(
-        "login++++++${SharedpreferenceKeys.islogin }");
-
-    return ScreenUtilInit(
+   return ScreenUtilInit(
       designSize: const Size(414, 896),
       minTextAdapt: true,
       builder: (context, child) {
-        return MaterialApp(
+        return  MaterialApp(
             debugShowCheckedModeBanner: false,
             onGenerateRoute: MyRoutes.ongenerateroute,
             // home: FindYourBestMatchScreen(),
 
-            initialRoute: SharedpreferenceKeys.prefs!
+            initialRoute:
+             SharedpreferenceKeys.prefs!
                             .getString(SharedpreferenceKeys.jwtToken) !=
                         null &&
                     SharedpreferenceKeys.prefs!.getBool(SharedpreferenceKeys.islogin) == true
                 ? RouteConstants.bottonNavigationScreen
-                : RouteConstants.splashPage);
+                : RouteConstants.splashPage
+                );
       },
     );
   }
