@@ -6,7 +6,6 @@ import 'package:demoapp/api_modals/get_user_details.dart';
 import 'package:demoapp/api_modals/swipe_left.dart';
 import 'package:demoapp/api_modals/swipe_right.dart';
 import 'package:demoapp/api_modals/update_user_interests.dart';
-import 'package:demoapp/api_modals/update_user_location.dart';
 import 'package:demoapp/api_modals/update_user_profile.dart';
 import 'package:demoapp/api_modals/update_user_single_image.dart';
 import 'package:demoapp/api_modals/user_add_filters.dart';
@@ -25,6 +24,7 @@ import 'package:demoapp/constants/string_constants.dart';
 import 'package:demoapp/api_modals/user_location.dart';
 import 'package:dio/dio.dart';
 
+import '../api_modals/update_user_location.dart';
 import '../api_modals/user_matchlist.dart';
 
 class Api {
@@ -266,7 +266,8 @@ class Api {
       "wantToMeet": wantTomeet,
       "ageRange": agerange,
       "language": language,
-      "about": about
+      "about": about,
+      "status": 5
     };
     dio.options.headers["authorization"] = tokenValue;
     try {

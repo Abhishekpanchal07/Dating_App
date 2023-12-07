@@ -71,7 +71,8 @@ class MyRoutes {
         return MaterialPageRoute(
             builder: (_) => const BottomNavigationScreen());
       case RouteConstants.sendMessageScreen:
-        return MaterialPageRoute(builder: (_) => const SendMessageScreen());
+        final args = settings.arguments as SendMessageScreen;
+        return MaterialPageRoute(builder: (_) =>  SendMessageScreen( opponentId:  args.opponentId,));
       case RouteConstants.signInWithNameScreen:
         return MaterialPageRoute(builder: (_) => SignInByName());
       case RouteConstants.matchScreen:
@@ -90,8 +91,11 @@ class MyRoutes {
                   singleUserDetail: args,
                 ));
       case RouteConstants.messageScreen:
-       final args = settings.arguments as GettingUserDetailsProvider;
-        return MaterialPageRoute(builder: (_) =>  MessageScreen( provider:  args,));
+        final args = settings.arguments as GettingUserDetailsProvider;
+        return MaterialPageRoute(
+            builder: (_) => MessageScreen(
+                  provider: args,
+                ));
       case RouteConstants.inboxScreen:
         return MaterialPageRoute(builder: (_) => const InboxScreen());
       case RouteConstants.oneToOneScreen:

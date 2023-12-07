@@ -5,6 +5,7 @@ import 'package:demoapp/helper/common_widget.dart';
 import 'package:demoapp/modals/homepage_data.dart';
 import 'package:demoapp/providers/base_provider.dart';
 import 'package:demoapp/services/api.dart';
+import 'package:demoapp/views/send_message.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -12,6 +13,7 @@ class HomePageProvider extends BaseProvider {
   UserListing? modal;
   List<HomepageDetailsOfUser> userDetails = [];
   List opponentId = [];
+  String? opponentid;
   int? usercurrentindex;
 
   // get user listing
@@ -41,7 +43,7 @@ class HomePageProvider extends BaseProvider {
             );
           }
         }
-         SharedpreferenceKeys.prefs!.setBool(SharedpreferenceKeys.islogin, true);
+        SharedpreferenceKeys.prefs!.setBool(SharedpreferenceKeys.islogin, true);
         notifyListeners();
       }
     } on DioException catch (e) {
@@ -82,11 +84,11 @@ class HomePageProvider extends BaseProvider {
       );
       if (model.success == true) {
         if (model.data!.matchRequestStatus == 1) {
-           if (context.mounted) {
-            Navigator.pushNamed(context, RouteConstants.sendMessageScreen);
-         
-        }
-          
+          opponentid = model.data!.opponentId;
+
+          if (context.mounted) {
+            Navigator.pushNamed(context, RouteConstants.sendMessageScreen, arguments: SendMessageScreen(opponentId: opponentid ?? ""));
+          }
         }
 
         if (context.mounted) {

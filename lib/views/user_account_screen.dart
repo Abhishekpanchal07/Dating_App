@@ -111,7 +111,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                                       context, RouteConstants.editProfileScreen)
                                   .then((value) {
                                 if (value == true) {
-                                //  provider.hitUserById(context);
+                                  provider.hitUserById(context);
                                   //hitUserById();
                                   // setState(() {});
                                 }

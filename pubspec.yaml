@@ -40,7 +40,7 @@ dependencies:
   # for show error with flushbar
   another_flushbar: ^1.12.30
   # for add an image from internet and to load big size image
-  cached_network_image: ^3.2.3
+  cached_network_image: ^3.3.0
   # for picking the images from gallery and camera
   image_picker: ^1.0.4
   # for date format 
@@ -52,7 +52,7 @@ dependencies:
   syncfusion_flutter_core: ^23.1.38
   # for fetch the current location of user
   geolocator: ^10.1.0
-  geocoding: ^2.1.0
+  geocoding: ^2.1.1
   # for toggle button 
   toggle_switch: ^2.1.0
   # for 

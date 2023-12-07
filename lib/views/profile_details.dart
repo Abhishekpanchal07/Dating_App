@@ -60,29 +60,28 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     StringConstants.pisces
   ];
   UserDetail? modal;
-  Future<void> accountCreatedSuccessfully() async {
-    if (mounted) {
-      CommonWidgets.showflushbar(
-          context,
-          SharedpreferenceKeys.prefs!
-              .getString(SharedpreferenceKeys.createAccountSuccessfully)
-              .toString());
-    }
-  }
 
-  Future<void> userloginSuccessfully() async {
-    if (mounted) {
-      CommonWidgets.showflushbar(
-          context,
-          SharedpreferenceKeys.prefs!
-              .getString(SharedpreferenceKeys.loginSuccessfully)
-              .toString());
-    }
-  }
+  // void accountCreatedSuccessfully()  {
+  //   SharedpreferenceKeys.prefs!
+  //           .getString(SharedpreferenceKeys.createAccountSuccessfully)
+  //           .toString()
+  //           .isEmpty
+  //       ? CommonWidgets.showflushbar(
+  //           context,
+  //           SharedpreferenceKeys.prefs!
+  //               .getString(SharedpreferenceKeys.loginSuccessfully)
+  //               .toString())
+  //       : CommonWidgets.showflushbar(
+  //           context,
+  //           SharedpreferenceKeys.prefs!
+  //               .getString(SharedpreferenceKeys.createAccountSuccessfully)
+  //               .toString());
+  // }
 
   @override
   void initState() {
-  
+    //accountCreatedSuccessfully();
+
     super.initState();
   }
 
@@ -155,9 +154,11 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                     clipBehavior: Clip.none,
                     children: [
                       Container(
-                       height:  DimensionConstants.d116.h,
-                       width: DimensionConstants.d116.h,
-                       decoration: const BoxDecoration(shape: BoxShape.circle,),
+                        height: DimensionConstants.d116.h,
+                        width: DimensionConstants.d116.h,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
                         child: Center(
                           child: ImageView(
                               path: _image.isNotEmpty
@@ -168,14 +169,16 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                                   ? DimensionConstants.d116.h
                                   : DimensionConstants.d46.h,
                               width: DimensionConstants.d116.h,
-                              fit: _image.isNotEmpty ?  BoxFit.cover : BoxFit.none,
+                              fit: _image.isNotEmpty
+                                  ? BoxFit.cover
+                                  : BoxFit.none,
                               circleCrop: true,
                               color: ColorConstant.bggradientcolor1),
                         ),
                       ),
                       Positioned(
-                         top: DimensionConstants.d79.h,
-                         left: DimensionConstants.d70.w,
+                        top: DimensionConstants.d79.h,
+                        left: DimensionConstants.d70.w,
                         // bottom: DimensionConstants.d2.h,
                         // right: DimensionConstants.d2.w,
                         child: Container(
@@ -472,9 +475,8 @@ class _ProfileDetailsState extends State<ProfileDetails> {
       String? userAbout,
       String? userDOB,
       String? userGender}) async {
-   
     try {
-       modal = await Api.uploadUserDetails(
+      modal = await Api.uploadUserDetails(
           userAbout: userAbout,
           userDOB: userDOB,
           firstName: firstName,
@@ -482,18 +484,22 @@ class _ProfileDetailsState extends State<ProfileDetails> {
           zodiacValue: zodiacValue,
           userImagepath: userImagepath,
           userGender: userGender,
-          tokenValue:  SharedpreferenceKeys.prefs!.getString(SharedpreferenceKeys.jwtToken));
+          tokenValue: SharedpreferenceKeys.prefs!
+              .getString(SharedpreferenceKeys.jwtToken));
       SharedPreferences setValue = await SharedPreferences.getInstance();
       setValue.setString(SharedpreferenceKeys.profileUpdatedSuccessfully,
           modal!.message.toString());
 
       if (modal!.success == true) {
-         SharedpreferenceKeys.prefs!.setString(
-            SharedpreferenceKeys.loginStatus,
-            modal!.data!.status.toString());
+        SharedpreferenceKeys.prefs!.setString(
+            SharedpreferenceKeys.loginStatus, modal!.data!.status.toString());
         if (mounted) {
           CommonWidgets.showflushbar(context, modal!.message.toString());
-          Navigator.pushNamed(context, RouteConstants.interestScreen ,arguments: const InterestScreen(userinterests: [],isfromeditprofileScreen: false,));
+          Navigator.pushNamed(context, RouteConstants.interestScreen,
+              arguments: const InterestScreen(
+                userinterests: [],
+                isfromeditprofileScreen: false,
+              ));
         }
       }
     } on SocketException catch (e) {

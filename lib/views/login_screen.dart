@@ -20,8 +20,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool isobsecure = false;
-  bool ischeckbox = false;
+  // bool isobsecure = false;
+  // bool ischeckbox = false;
   final formkey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();

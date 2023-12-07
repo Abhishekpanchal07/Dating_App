@@ -59,7 +59,7 @@ class _MessageScreenState extends State<MessageScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.provider.matchedUserFirstName).regularText(
+                    Text(widget.provider.matchedUserFullName).regularText(
                         ColorConstant.black,
                         TextAlign.center,
                         DimensionConstants.d20.sp),
@@ -84,7 +84,7 @@ class _MessageScreenState extends State<MessageScreen> {
                 imageWidth: DimensionConstants.d119.w,
                 imagePath:
                     ApiUrls.baseUrl + widget.provider.matchedUserprofilepicurl),
-            Text('${widget.provider.matchedUserFirstName},${widget.provider.matchedUserAge}')
+            Text('${widget.provider.matchedUserFullName},${widget.provider.matchedUserAge}')
                 .bold(ColorConstant.black, TextAlign.center,
                     DimensionConstants.d24.sp),
             const Text(StringConstants.friendsOnDating).regularText(

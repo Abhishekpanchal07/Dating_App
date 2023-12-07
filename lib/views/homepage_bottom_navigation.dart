@@ -352,6 +352,7 @@ class _HomePageBottomNavigationScreenState
                                             provider.usercurrentindex!]);
                                 swipeNotifier.value = Swipe.right;
                                 _animationController.forward();
+                                
                               },
                               child: Container(
                                 decoration: const BoxDecoration(
